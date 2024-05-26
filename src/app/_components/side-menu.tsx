@@ -62,14 +62,14 @@ export const SideMenu = ({
     <>
       {isSideMenuOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-70 transition-opacity"
+          className="fixed inset-0 bg-black opacity-80 transition-opacity"
           onClick={() => setIsSideMenuOpen(false)}
         ></div>
       )}
 
       <aside
         className={cn(
-          "fixed left-0 top-0 flex flex-col bg-black text-white transition-[left]",
+          "fixed bottom-0 left-0 top-0 flex flex-col bg-black  text-white shadow shadow-slate-800 transition-[left]",
           isSideMenuOpen ? "left-0" : "-left-80",
         )}
       >
