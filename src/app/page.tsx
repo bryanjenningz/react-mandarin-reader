@@ -1,9 +1,13 @@
 import { ContentPasteGoIcon } from "./_icons/content-paste-go";
+import { HearingIcon } from "./_icons/hearing";
 import { HistoryIcon } from "./_icons/history";
+import { ManageSearch } from "./_icons/manage-search";
 import { MenuIcon } from "./_icons/menu";
 import { MenuBookIcon } from "./_icons/menu-book";
 import { PictureAsPdfIcon } from "./_icons/picture-as-pdf";
+import { SchoolIcon } from "./_icons/school";
 import { SubtitlesIcon } from "./_icons/subtitles";
+import { TranslateIcon } from "./_icons/translate";
 
 const HomePage = (): JSX.Element => {
   return (
@@ -44,13 +48,27 @@ const HomePage = (): JSX.Element => {
         </div>
 
         <h3 className="bg-slate-800 px-4 py-1 text-sm uppercase">Flashcards</h3>
-        <div className="px-4 py-1 text-lg">Browse flashcards</div>
-        <div className="px-4 py-1 text-lg">Audio-only</div>
-        <div className="px-4 py-1 text-lg">Mandarin to English</div>
-        <div className="px-4 py-1 text-lg">English to Mandarin</div>
+        <div className="flex items-center gap-2 px-4 py-1 text-lg">
+          <ManageSearch />
+          Browse flashcards
+        </div>
+        <div className="flex items-center gap-2 px-4 py-1 text-lg">
+          <HearingIcon />
+          Audio-only
+        </div>
+        <div className="flex items-center gap-2 px-4 py-1 text-lg">
+          <SchoolIcon />
+          Mandarin to English
+        </div>
+        <div className="flex items-center gap-2 px-4 py-1 text-lg">
+          <TranslateIcon />
+          English to Mandarin
+        </div>
 
         <h3 className="bg-slate-800 px-4 py-1 text-sm uppercase">Settings</h3>
-        <div className="px-4 py-1 text-lg">Settings</div>
+        <div className="flex items-center gap-2 px-4 py-1 text-lg">
+          Settings
+        </div>
       </aside>
     </div>
   );
