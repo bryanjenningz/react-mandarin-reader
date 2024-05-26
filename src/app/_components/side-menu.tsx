@@ -11,6 +11,41 @@ import { SubtitlesIcon } from "../_icons/subtitles";
 import { TranslateIcon } from "../_icons/translate";
 import { cn } from "../_utils/class-names";
 
+type MenuSection = {
+  name: string;
+  items: MenuItem[];
+};
+
+type MenuItem = {
+  name: string;
+  icon: JSX.Element;
+};
+
+const menuSections: MenuSection[] = [
+  {
+    name: "Reader",
+    items: [
+      { name: "Reader", icon: <MenuBookIcon /> },
+      { name: "Import PDF", icon: <PictureAsPdfIcon /> },
+      { name: "Import subtitles", icon: <SubtitlesIcon /> },
+      { name: "History", icon: <HistoryIcon /> },
+    ],
+  },
+  {
+    name: "Flashcards",
+    items: [
+      { name: "Browse flashcards", icon: <ManageSearch /> },
+      { name: "Audio only", icon: <HearingIcon /> },
+      { name: "Mandarin to English", icon: <SchoolIcon /> },
+      { name: "English to Mandarin", icon: <TranslateIcon /> },
+    ],
+  },
+  {
+    name: "Settings",
+    items: [{ name: "Settings", icon: <SettingsIcon /> }],
+  },
+];
+
 export const SideMenu = ({
   isSideMenuOpen,
   setIsSideMenuOpen,
@@ -35,47 +70,27 @@ export const SideMenu = ({
       >
         <h2 className="flex h-12 items-center justify-center text-xl">Menu</h2>
 
-        <h3 className="bg-slate-800 px-4 py-1 text-sm uppercase">Reader</h3>
-        <div className="flex items-center gap-2 px-4 py-1 text-lg">
-          <MenuBookIcon />
-          Reader
-        </div>
-        <div className="flex items-center gap-2 px-4 py-1 text-lg">
-          <PictureAsPdfIcon />
-          Import PDF
-        </div>
-        <div className="flex items-center gap-2 px-4 py-1 text-lg">
-          <SubtitlesIcon />
-          Import subtitles
-        </div>
-        <div className="flex items-center gap-2 px-4 py-1 text-lg">
-          <HistoryIcon />
-          History
-        </div>
+        {menuSections.map((menuSection) => {
+          return (
+            <section key={menuSection.name}>
+              <h3 className="bg-slate-800 px-4 py-1 text-sm uppercase">
+                {menuSection.name}
+              </h3>
 
-        <h3 className="bg-slate-800 px-4 py-1 text-sm uppercase">Flashcards</h3>
-        <div className="flex items-center gap-2 px-4 py-1 text-lg">
-          <ManageSearch />
-          Browse flashcards
-        </div>
-        <div className="flex items-center gap-2 px-4 py-1 text-lg">
-          <HearingIcon />
-          Audio-only
-        </div>
-        <div className="flex items-center gap-2 px-4 py-1 text-lg">
-          <SchoolIcon />
-          Mandarin to English
-        </div>
-        <div className="flex items-center gap-2 px-4 py-1 text-lg">
-          <TranslateIcon />
-          English to Mandarin
-        </div>
-
-        <h3 className="bg-slate-800 px-4 py-1 text-sm uppercase">Settings</h3>
-        <div className="flex items-center gap-2 px-4 py-1 text-lg">
-          <SettingsIcon />
-          Settings
-        </div>
+              {menuSection.items.map((menuItem) => {
+                return (
+                  <div
+                    key={menuItem.name}
+                    className="flex items-center gap-2 px-4 py-1 text-lg"
+                  >
+                    {menuItem.icon}
+                    {menuItem.name}
+                  </div>
+                );
+              })}
+            </section>
+          );
+        })}
       </aside>
     </>
   );
