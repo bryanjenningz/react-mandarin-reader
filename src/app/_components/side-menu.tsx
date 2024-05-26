@@ -26,18 +26,18 @@ const menuSections: MenuSection[] = [
     name: "Reader",
     items: [
       { name: "Reader", icon: <MenuBookIcon /> },
+      { name: "History", icon: <HistoryIcon /> },
       { name: "Import PDF", icon: <PictureAsPdfIcon /> },
       { name: "Import subtitles", icon: <SubtitlesIcon /> },
-      { name: "History", icon: <HistoryIcon /> },
     ],
   },
   {
     name: "Flashcards",
     items: [
       { name: "Browse flashcards", icon: <ManageSearch /> },
-      { name: "Audio only", icon: <HearingIcon /> },
       { name: "Mandarin to English", icon: <SchoolIcon /> },
       { name: "English to Mandarin", icon: <TranslateIcon /> },
+      { name: "Audio only", icon: <HearingIcon /> },
     ],
   },
   {
