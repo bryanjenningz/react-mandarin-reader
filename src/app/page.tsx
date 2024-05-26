@@ -1,5 +1,9 @@
 import { ContentPasteGoIcon } from "./_icons/content-paste-go";
+import { HistoryIcon } from "./_icons/history";
 import { MenuIcon } from "./_icons/menu";
+import { MenuBookIcon } from "./_icons/menu-book";
+import { PictureAsPdfIcon } from "./_icons/picture-as-pdf";
+import { SubtitlesIcon } from "./_icons/subtitles";
 
 const HomePage = (): JSX.Element => {
   return (
@@ -22,10 +26,22 @@ const HomePage = (): JSX.Element => {
         <h2 className="flex h-12 items-center justify-center text-xl">Menu</h2>
 
         <h3 className="bg-slate-800 px-4 py-1 text-sm uppercase">Reader</h3>
-        <div className="px-4 py-1 text-lg">Reader</div>
-        <div className="px-4 py-1 text-lg">Import PDF</div>
-        <div className="px-4 py-1 text-lg">Import subtitles</div>
-        <div className="px-4 py-1 text-lg">History</div>
+        <div className="flex items-center gap-2 px-4 py-1 text-lg">
+          <MenuBookIcon />
+          Reader
+        </div>
+        <div className="flex items-center gap-2 px-4 py-1 text-lg">
+          <PictureAsPdfIcon />
+          Import PDF
+        </div>
+        <div className="flex items-center gap-2 px-4 py-1 text-lg">
+          <SubtitlesIcon />
+          Import subtitles
+        </div>
+        <div className="flex items-center gap-2 px-4 py-1 text-lg">
+          <HistoryIcon />
+          History
+        </div>
 
         <h3 className="bg-slate-800 px-4 py-1 text-sm uppercase">Flashcards</h3>
         <div className="px-4 py-1 text-lg">Browse flashcards</div>
