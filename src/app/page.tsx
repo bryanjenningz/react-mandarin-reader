@@ -9,7 +9,7 @@ const HomePage = (): JSX.Element => {
           <MenuIcon />
           <span className="sr-only">Open menu</span>
         </button>
-        <h1 className="grow text-center text-xl">Mandarin Reader</h1>
+        <h1 className="grow text-center text-xl">Reader</h1>
         <button className="flex h-12 w-12 shrink-0 items-center justify-center">
           <ContentPasteGoIcon />
           <span className="sr-only">Paste clipboard</span>
