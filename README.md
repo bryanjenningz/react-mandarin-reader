@@ -1,29 +1,22 @@
-# Create T3 App
+# Mandarin Reader
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A Mandarin Chinese PDF, subtitle, and clipboard text reader with a popup dictionary and built-in spaced-repetition flashcards. Installable as a progressive web app on mobile and desktop (Android, iOS, Windows, Mac OS, and Linux) and works entirely offline. Written with [React](https://react.dev), [TypeScript](https://www.typescriptlang.org), [Next.js](https://nextjs.org), [TailwindCSS](https://tailwindcss.com), and [Zustand](https://github.com/pmndrs/zustand). Inspired by [Pleco](https://www.pleco.com). Initialized with [create-react-app](https://create.t3.gg).
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- Import Mandarin PDFs, subtitle files, and paste clipboard text to convert them to readable text
+- Look up Mandarin words you don't know by clicking on them in the reader
+- Save words as flashcards by clicking on the "+" button
+- Learn words in context by having the word's context automatically saved to each flashcard
+- Flashcards use a spaced-repetition algorithm to maximize learning efficiency
+- Works entirely offline
+- Installable on mobile and desktop as a progressive web app (works on Android, iOS, Windows, Mac OS, and Linux)
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Screenshots
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- TODO
 
-## Learn More
+## Credits
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- [Pleco](https://www.pleco.com) for design inspiration
+- [CC-CEDICT](https://www.mdbg.net/chinese/dictionary?page=cedict) for the Mandarin Chinese dictionary text file
