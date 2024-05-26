@@ -9,7 +9,7 @@ import { SchoolIcon } from "../_icons/school";
 import { SettingsIcon } from "../_icons/settings";
 import { SubtitlesIcon } from "../_icons/subtitles";
 import { TranslateIcon } from "../_icons/translate";
-import { cn } from "../utils/class-names";
+import { cn } from "../_utils/class-names";
 
 export const SideMenu = ({
   isSideMenuOpen,
