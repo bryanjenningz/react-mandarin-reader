@@ -6,6 +6,7 @@ import { MenuIcon } from "./_icons/menu";
 import { MenuBookIcon } from "./_icons/menu-book";
 import { PictureAsPdfIcon } from "./_icons/picture-as-pdf";
 import { SchoolIcon } from "./_icons/school";
+import { SettingsIcon } from "./_icons/settings";
 import { SubtitlesIcon } from "./_icons/subtitles";
 import { TranslateIcon } from "./_icons/translate";
 
@@ -67,6 +68,7 @@ const HomePage = (): JSX.Element => {
 
         <h3 className="bg-slate-800 px-4 py-1 text-sm uppercase">Settings</h3>
         <div className="flex items-center gap-2 px-4 py-1 text-lg">
+          <SettingsIcon />
           Settings
         </div>
       </aside>
