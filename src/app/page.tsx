@@ -1,3 +1,4 @@
+import { ContentPasteGoIcon } from "./_icons/content-paste-go";
 import { MenuIcon } from "./_icons/menu";
 
 const HomePage = (): JSX.Element => {
@@ -9,7 +10,10 @@ const HomePage = (): JSX.Element => {
           <span className="sr-only">Open menu</span>
         </button>
         <h1 className="grow text-center text-xl">Mandarin Reader</h1>
-        <div className="flex h-12 w-12"></div>
+        <button className="flex h-12 w-12 shrink-0 items-center justify-center">
+          <ContentPasteGoIcon />
+          <span className="sr-only">Paste clipboard</span>
+        </button>
       </header>
     </div>
   );
