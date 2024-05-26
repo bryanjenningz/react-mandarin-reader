@@ -44,6 +44,10 @@ const menuSections = [
     name: "Settings",
     items: [{ name: "Settings", icon: <SettingsIcon /> }],
   },
+  {
+    name: "Tutorial",
+    items: [{ name: "Tutorial", icon: <SchoolIcon /> }],
+  },
 ] as const satisfies MenuSection[];
 
 type SelectedMenuItemName =
