@@ -21,7 +21,7 @@ type MenuItem = {
   icon: JSX.Element;
 };
 
-const menuSections: MenuSection[] = [
+const menuSections = [
   {
     name: "Reader",
     items: [
@@ -44,7 +44,7 @@ const menuSections: MenuSection[] = [
     name: "Settings",
     items: [{ name: "Settings", icon: <SettingsIcon /> }],
   },
-];
+] as const satisfies MenuSection[];
 
 export const SideMenu = ({
   isSideMenuOpen,
