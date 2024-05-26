@@ -55,6 +55,7 @@ const HomePage = (): JSX.Element => {
       })()}
 
       <SideMenu
+        selectedItem="Reader"
         isSideMenuOpen={isSideMenuOpen}
         setIsSideMenuOpen={setIsSideMenuOpen}
       />

@@ -46,10 +46,15 @@ const menuSections = [
   },
 ] as const satisfies MenuSection[];
 
+type SelectedMenuItemName =
+  (typeof menuSections)[number]["items"][number]["name"];
+
 export const SideMenu = ({
+  selectedItem,
   isSideMenuOpen,
   setIsSideMenuOpen,
 }: {
+  selectedItem: SelectedMenuItemName;
   isSideMenuOpen: boolean;
   setIsSideMenuOpen: (isSideMenuOpen: boolean) => void;
 }): JSX.Element => {
@@ -81,7 +86,10 @@ export const SideMenu = ({
                 return (
                   <div
                     key={menuItem.name}
-                    className="flex items-center gap-2 px-4 py-1 text-lg"
+                    className={cn(
+                      "flex items-center gap-2 px-4 py-1 text-lg",
+                      menuItem.name === selectedItem && "bg-blue-900",
+                    )}
                   >
                     {menuItem.icon}
                     {menuItem.name}
