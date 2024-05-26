@@ -2,6 +2,7 @@
 
 import { HearingIcon } from "../_icons/hearing";
 import { HistoryIcon } from "../_icons/history";
+import { LocalLibraryIcon } from "../_icons/local-library";
 import { ManageSearch } from "../_icons/manage-search";
 import { MenuBookIcon } from "../_icons/menu-book";
 import { PictureAsPdfIcon } from "../_icons/picture-as-pdf";
@@ -35,7 +36,7 @@ const menuSections = [
     name: "Flashcards",
     items: [
       { name: "Browse flashcards", icon: <ManageSearch /> },
-      { name: "Mandarin to English", icon: <SchoolIcon /> },
+      { name: "Mandarin to English", icon: <LocalLibraryIcon /> },
       { name: "English to Mandarin", icon: <TranslateIcon /> },
       { name: "Audio only", icon: <HearingIcon /> },
     ],
