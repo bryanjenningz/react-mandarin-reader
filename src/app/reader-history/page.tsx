@@ -32,6 +32,7 @@ const ReaderHistoryPage = (): JSX.Element => {
                       dispatch({
                         type: "SET_READER_TEXT",
                         text: historyItem.text,
+                        date: Date.now(),
                       });
                     }}
                   >

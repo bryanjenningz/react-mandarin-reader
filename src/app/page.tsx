@@ -8,7 +8,7 @@ import { useStateStore } from "./_stores/state";
 
 const HomePage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
-  const readerText = useStateStore((state) => state.readerText);
+  const reader = useStateStore((state) => state.reader);
   const dispatch = useStateStore((state) => state.dispatch);
 
   return (
@@ -24,7 +24,7 @@ const HomePage = (): JSX.Element => {
         }}
       />
 
-      <ReaderText readerText={readerText} />
+      <ReaderText readerText={reader.text} readerDate={reader.date} />
 
       <SideMenu
         selectedItem="Reader"
