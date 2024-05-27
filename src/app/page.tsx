@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { SideMenu } from "./_components/side-menu";
-import { StarIcon } from "./_icons/star";
 import { ReaderHeader } from "./_components/reader-header";
+import { ReaderText } from "./_components/reader-text";
 
 const HomePage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -16,21 +16,7 @@ const HomePage = (): JSX.Element => {
         setReaderText={setReaderText}
       />
 
-      {((): JSX.Element => {
-        if (!readerText) {
-          return (
-            <article className="flex grow flex-col items-center justify-center gap-4">
-              <StarIcon width={120} height={120} />
-              <p>{`You haven't added any text.`}</p>
-              <button className="rounded-lg bg-blue-900 px-4 py-2 text-white transition hover:brightness-110">
-                Take the tutorial
-              </button>
-            </article>
-          );
-        }
-
-        return <p className="w-full max-w-2xl grow">{readerText}</p>;
-      })()}
+      <ReaderText readerText={readerText} />
 
       <SideMenu
         selectedItem="Reader"
