@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { EmptyMessage } from "./empty-message";
 import { cn } from "../_utils/class-names";
+import { chunk } from "../_utils/chunk";
 
 export const ReaderText = ({
   readerText,
@@ -49,17 +50,4 @@ export const ReaderText = ({
       })}
     </section>
   );
-};
-
-const chunk = <T,>(values: T[], size: number): T[][] => {
-  const chunks: T[][] = [];
-  let lastChunk: T[] = [];
-  for (const [i, value] of values.entries()) {
-    lastChunk.push(value);
-    if (lastChunk.length >= size || i === values.length - 1) {
-      chunks.push(lastChunk);
-      lastChunk = [];
-    }
-  }
-  return chunks;
 };
