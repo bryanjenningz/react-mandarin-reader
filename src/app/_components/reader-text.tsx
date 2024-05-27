@@ -28,8 +28,8 @@ export const ReaderText = ({
   }
 
   return (
-    <div>
-      <section className="max-h-[70vh] w-full max-w-2xl grow overflow-auto px-2 text-center text-2xl">
+    <div className="flex grow flex-col justify-between px-2 pb-4 ps-2">
+      <section className="max-h-[70vh] w-full max-w-2xl grow overflow-auto text-center text-2xl">
         {chunk(pageText.split(""), charsPerLine).map((line, y) => {
           return (
             <div key={`${readerDate}-${y}`}>
