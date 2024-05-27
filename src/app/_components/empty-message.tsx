@@ -3,6 +3,8 @@ import { StarIcon } from "../_icons/star";
 import { cn } from "../_utils/class-names";
 
 export const EmptyMessage = ({ message }: { message: string }): JSX.Element => {
+  // We hide the empty message on the first render while Zustand is getting the
+  // persisted state from localStorage.
   const [isShown, setIsShown] = useState(false);
 
   useEffect(() => {
