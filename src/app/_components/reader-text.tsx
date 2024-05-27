@@ -57,6 +57,7 @@ export const ReaderText = ({
           className="h-12 w-12 rounded-lg bg-blue-900 text-white transition hover:brightness-110"
           onClick={() => {
             setPageIndex((pageIndex) => Math.max(0, pageIndex - 1));
+            setSelection(null);
           }}
         >
           Prev
@@ -68,6 +69,7 @@ export const ReaderText = ({
             setPageIndex((pageIndex) =>
               Math.min(Math.max(0, pageCount - 1), pageIndex + 1),
             );
+            setSelection(null);
           }}
         >
           Next
