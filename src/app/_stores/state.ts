@@ -10,7 +10,9 @@ type ReaderHistoryItem = {
   date: number;
 };
 
-type Action = { type: "PASTE_READER_TEXT"; text: string; date: number };
+type Action =
+  | { type: "PASTE_READER_TEXT"; text: string; date: number }
+  | { type: "SET_READER_TEXT"; text: string };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
@@ -24,6 +26,10 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         ...state.readerHistory,
       ];
       return [{ ...state, readerText, readerHistory }, noop];
+    }
+    case "SET_READER_TEXT": {
+      const readerText = action.text;
+      return [{ ...state, readerText }, noop];
     }
   }
 };
