@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { HearingIcon } from "../_icons/hearing";
 import { HistoryIcon } from "../_icons/history";
 import { LocalLibraryIcon } from "../_icons/local-library";
@@ -20,34 +21,55 @@ type MenuSection = {
 type MenuItem = {
   name: string;
   icon: JSX.Element;
+  href: string;
 };
 
 const menuSections = [
   {
     name: "Reader",
     items: [
-      { name: "Reader", icon: <MenuBookIcon /> },
-      { name: "History", icon: <HistoryIcon /> },
-      { name: "Import PDF", icon: <PictureAsPdfIcon /> },
-      { name: "Import subtitles", icon: <SubtitlesIcon /> },
+      { name: "Reader", icon: <MenuBookIcon />, href: "/" },
+      { name: "History", icon: <HistoryIcon />, href: "/reader-history" },
+      { name: "Import PDF", icon: <PictureAsPdfIcon />, href: "/import-pdf" },
+      {
+        name: "Import subtitles",
+        icon: <SubtitlesIcon />,
+        href: "/import-subtitles",
+      },
     ],
   },
   {
     name: "Flashcards",
     items: [
-      { name: "Browse flashcards", icon: <ManageSearch /> },
-      { name: "Mandarin to English", icon: <LocalLibraryIcon /> },
-      { name: "English to Mandarin", icon: <TranslateIcon /> },
-      { name: "Audio only", icon: <HearingIcon /> },
+      {
+        name: "Browse flashcards",
+        icon: <ManageSearch />,
+        href: "/browse-flashcards",
+      },
+      {
+        name: "Mandarin to English",
+        icon: <LocalLibraryIcon />,
+        href: "/mandarin-to-english-flashcards",
+      },
+      {
+        name: "English to Mandarin",
+        icon: <TranslateIcon />,
+        href: "/english-to-mandarin-flashcards",
+      },
+      {
+        name: "Audio flashcards",
+        icon: <HearingIcon />,
+        href: "/audio-flashcards",
+      },
     ],
   },
   {
     name: "Settings",
-    items: [{ name: "Settings", icon: <SettingsIcon /> }],
+    items: [{ name: "Settings", icon: <SettingsIcon />, href: "/settings" }],
   },
   {
     name: "Tutorial",
-    items: [{ name: "Tutorial", icon: <SchoolIcon /> }],
+    items: [{ name: "Tutorial", icon: <SchoolIcon />, href: "/tutorial" }],
   },
 ] as const satisfies MenuSection[];
 
@@ -89,8 +111,9 @@ export const SideMenu = ({
 
               {menuSection.items.map((menuItem) => {
                 return (
-                  <div
+                  <Link
                     key={menuItem.name}
+                    href={menuItem.href}
                     className={cn(
                       "flex items-center gap-2 px-4 py-1 text-lg",
                       menuItem.name === selectedItem && "bg-blue-900",
@@ -98,7 +121,7 @@ export const SideMenu = ({
                   >
                     {menuItem.icon}
                     {menuItem.name}
-                  </div>
+                  </Link>
                 );
               })}
             </section>
