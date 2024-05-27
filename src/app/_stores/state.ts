@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 type State = {
   readerText: string;
@@ -38,13 +39,18 @@ type Dispatch = (action: Action) => void;
 
 type StateStore = State & { dispatch: Dispatch };
 
-export const useStateStore = create<StateStore>()((set) => ({
-  readerText: "",
-  readerHistory: [],
-  dispatch: (action: Action): void =>
-    set((state) => {
-      const [newState, sideEffect] = reducer(state, action);
-      setTimeout(() => sideEffect(), 1);
-      return newState;
+export const useStateStore = create<StateStore>()(
+  persist(
+    (set) => ({
+      readerText: "",
+      readerHistory: [],
+      dispatch: (action: Action): void =>
+        set((state) => {
+          const [newState, sideEffect] = reducer(state, action);
+          setTimeout(() => sideEffect(), 1);
+          return newState;
+        }),
     }),
-}));
+    { name: "state" },
+  ),
+);
