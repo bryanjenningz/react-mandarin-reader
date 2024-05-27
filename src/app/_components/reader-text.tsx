@@ -9,5 +9,5 @@ export const ReaderText = ({
     return <EmptyMessage message="You haven't added any text." />;
   }
 
-  return <p className="w-full max-w-2xl grow">{readerText}</p>;
+  return <p className="w-full max-w-2xl grow p-4">{readerText}</p>;
 };
