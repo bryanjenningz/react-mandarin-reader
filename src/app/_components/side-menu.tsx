@@ -74,7 +74,7 @@ export const SideMenu = ({
 
       <aside
         className={cn(
-          "fixed bottom-0 left-0 top-0 flex flex-col bg-black  text-white shadow shadow-slate-800 transition-[left]",
+          "fixed bottom-0 top-0 flex flex-col bg-black text-white shadow shadow-slate-800 transition-[left]",
           isSideMenuOpen ? "left-0" : "-left-80",
         )}
       >
