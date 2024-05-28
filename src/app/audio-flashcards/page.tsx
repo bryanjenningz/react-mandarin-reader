@@ -6,6 +6,7 @@ import { SideMenu } from "~/app/_components/side-menu";
 import { AudioFlashcardsHeader } from "./_components/audio-flashcards-header";
 import { EmptyMessage } from "../_components/empty-message";
 import { textToSpeech } from "../_utils/text-to-speech";
+import { VolumeUpIcon } from "../_icons/volume-up";
 
 const AudioFlashcardsPage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -34,7 +35,8 @@ const AudioFlashcardsPage = (): JSX.Element => {
               <button
                 onClick={() => textToSpeech(firstFlashcard.entry.simplified)}
               >
-                Play audio
+                <VolumeUpIcon width={60} height={60} />
+                <span className="sr-only">Play audio</span>
               </button>
 
               {((): JSX.Element => {

@@ -6,6 +6,7 @@ import { SideMenu } from "~/app/_components/side-menu";
 import { MandarinToEnglishFlashcardsHeader } from "./_components/mandarin-to-english-flashcards-header";
 import { EmptyMessage } from "../_components/empty-message";
 import { textToSpeech } from "../_utils/text-to-speech";
+import { VolumeUpIcon } from "../_icons/volume-up";
 
 const MandarinToEnglishFlashcardsPage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -50,7 +51,8 @@ const MandarinToEnglishFlashcardsPage = (): JSX.Element => {
                           textToSpeech(firstFlashcard.entry.simplified)
                         }
                       >
-                        Play audio
+                        <VolumeUpIcon width={60} height={60} />
+                        <span className="sr-only">Play audio</span>
                       </button>
                       <div>{firstFlashcard.entry.meanings.join(", ")}</div>
                     </>
