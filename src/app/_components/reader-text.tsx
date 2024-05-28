@@ -73,7 +73,7 @@ export const ReaderText = ({
       <section className="max-h-[70vh] w-full max-w-2xl shrink-0 overflow-auto text-center text-2xl">
         {chunk(pageText.split(""), charsPerLine).map((line, y) => {
           return (
-            <div key={`${readerDate}-${y}`}>
+            <div key={`${readerDate}-${y}`} className="h-8">
               {line.map((char, x) => {
                 const i = charsPerLine * y + x;
                 return (
