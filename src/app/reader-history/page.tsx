@@ -1,13 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { useStateStore } from "~/app/_stores/state";
 import { SideMenu } from "~/app/_components/side-menu";
 import { ReaderHistoryHeader } from "./_components/reader-history-header";
 import { EmptyMessage } from "../_components/empty-message";
+import { useRouter } from "next/navigation";
 
 const ReaderHistoryPage = (): JSX.Element => {
+  const router = useRouter();
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const readerHistory = useStateStore((state) => state.readerHistory);
   const dispatch = useStateStore((state) => state.dispatch);
@@ -26,14 +27,18 @@ const ReaderHistoryPage = (): JSX.Element => {
             {readerHistory.map((historyItem) => {
               return (
                 <li key={historyItem.date}>
-                  <Link
-                    href="/"
+                  <button
                     onClick={() => {
+                      console.log({
+                        "historyItem.pageIndex": historyItem.pageIndex,
+                      });
                       dispatch({
                         type: "SET_READER_TEXT",
                         text: historyItem.text,
-                        date: Date.now(),
+                        date: historyItem.date,
+                        pageIndex: historyItem.pageIndex,
                       });
+                      void router.push("/");
                     }}
                     className="flex flex-col px-4 py-2"
                   >
@@ -43,7 +48,7 @@ const ReaderHistoryPage = (): JSX.Element => {
                     <span className="line-clamp-4 text-sm">
                       {historyItem.text}
                     </span>
-                  </Link>
+                  </button>
                 </li>
               );
             })}

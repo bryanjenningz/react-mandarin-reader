@@ -25,7 +25,17 @@ const HomePage = (): JSX.Element => {
           }}
         />
 
-        <ReaderText readerText={reader.text} readerDate={reader.date} />
+        <ReaderText
+          readerText={reader.text}
+          readerDate={reader.date}
+          pageIndex={reader.pageIndex}
+          incrementPage={() => {
+            dispatch({ type: "INCREMENT_PAGE_INDEX" });
+          }}
+          decrementPage={() => {
+            dispatch({ type: "DECREMENT_PAGE_INDEX" });
+          }}
+        />
 
         <SideMenu
           selectedItem="Reader"

@@ -7,26 +7,32 @@ import { lookupLongest } from "../_utils/dictionary";
 import { ArrowBackIcon } from "../_icons/arrow-back";
 import { ArrowForwardIcon } from "../_icons/arrow-forward";
 
+export const charsPerLine = 14;
+export const linesPerPage = 13;
+export const charsPerPage = charsPerLine * linesPerPage;
+
 export const ReaderText = ({
   readerText,
   readerDate,
+  pageIndex,
+  incrementPage,
+  decrementPage,
 }: {
   readerText: string;
   readerDate: number;
+  pageIndex: number;
+  incrementPage: () => void;
+  decrementPage: () => void;
 }): JSX.Element => {
   const loadDictionary = useDictionaryStore((x) => x.loadDictionary);
   const dictionary = useDictionaryStore((x) => x.dictionary);
   const [selection, setSelection] = useState<number | null>(null);
-  const [pageIndex, setPageIndex] = useState(0);
   useEffect(() => loadDictionary(), [loadDictionary]);
 
   if (!readerText) {
     return <EmptyMessage message="You haven't added any text." />;
   }
 
-  const charsPerLine = 14;
-  const linesPerPage = 13;
-  const charsPerPage = charsPerLine * linesPerPage;
   const pageText = readerText.slice(
     pageIndex * charsPerPage,
     (pageIndex + 1) * charsPerPage,
@@ -89,7 +95,7 @@ export const ReaderText = ({
         <button
           className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-900 text-white transition hover:brightness-110"
           onClick={() => {
-            setPageIndex((pageIndex) => Math.max(0, pageIndex - 1));
+            decrementPage();
             setSelection(null);
           }}
         >
@@ -100,9 +106,7 @@ export const ReaderText = ({
         <button
           className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-900 text-white transition hover:brightness-110"
           onClick={() => {
-            setPageIndex((pageIndex) =>
-              Math.min(Math.max(0, pageCount - 1), pageIndex + 1),
-            );
+            incrementPage();
             setSelection(null);
           }}
         >
