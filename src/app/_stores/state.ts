@@ -7,6 +7,7 @@ type State = {
   reader: Reader;
   readerHistory: Reader[];
   flashcards: Flashcard[];
+  settings: SettingsOption[];
 };
 
 type Reader = {
@@ -20,12 +21,19 @@ type Flashcard = {
   correct: number;
 };
 
+type SettingsOption = {
+  name: string;
+  description: string;
+  enabled: boolean;
+};
+
 type Action =
   | { type: "PASTE_READER_TEXT"; text: string; date: number }
   | { type: "SET_READER_TEXT"; text: string; date: number; pageIndex: number }
   | { type: "INCREMENT_PAGE_INDEX" }
   | { type: "DECREMENT_PAGE_INDEX" }
-  | { type: "ADD_OR_REMOVE_FLASHCARD"; entry: DictionaryEntry };
+  | { type: "ADD_OR_REMOVE_FLASHCARD"; entry: DictionaryEntry }
+  | { type: "TOGGLE_SETTINGS_OPTION"; name: string };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
@@ -91,6 +99,15 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
       ];
       return [{ ...state, flashcards }, noop];
     }
+    case "TOGGLE_SETTINGS_OPTION": {
+      const settings = state.settings.map((settingsOption) => {
+        if (settingsOption.name === action.name) {
+          return { ...settingsOption, enabled: !settingsOption.enabled };
+        }
+        return settingsOption;
+      });
+      return [{ ...state, settings }, noop];
+    }
   }
 };
 
@@ -104,6 +121,14 @@ export const useStateStore = create<StateStore>()(
       reader: { text: "", date: 0, pageIndex: 0 },
       readerHistory: [],
       flashcards: [],
+      settings: [
+        {
+          name: "Play audio on word lookup",
+          description:
+            "Autoplay the pronunciation audio on each word lookup in the reader.",
+          enabled: true,
+        },
+      ],
       dispatch: (action: Action): void =>
         set((state) => {
           const [newState, sideEffect] = reducer(state, action);
