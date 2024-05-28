@@ -70,17 +70,17 @@ export const ReaderText = ({
 
   return (
     <div className="flex grow flex-col justify-between gap-2 px-2 pb-2">
-      <section className="flex max-h-[70vh] w-full max-w-2xl shrink-0 flex-col text-center text-2xl">
+      <section className="flex max-h-[70vh] w-full max-w-2xl shrink-0 flex-col text-2xl">
         {chunk(pageText.split(""), charsPerLine).map((line, y) => {
           return (
-            <div key={`${readerDate}-${y}`} className="h-8">
+            <div key={`${readerDate}-${y}`} className="flex h-8 justify-center">
               {line.map((char, x) => {
                 const i = charsPerLine * y + x;
                 return (
                   <button
                     key={`${readerDate}-${y}-${x}`}
                     className={cn(
-                      "inline-flex h-8 w-6 items-center justify-center",
+                      "flex h-8 w-6 items-center justify-center",
                       selection !== null &&
                         i >= selection &&
                         i < selection + wordLength &&
