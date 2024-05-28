@@ -6,6 +6,9 @@ import { useDictionaryStore } from "../_stores/dictionary";
 import { lookupLongest } from "../_utils/dictionary";
 import { ArrowBackIcon } from "../_icons/arrow-back";
 import { ArrowForwardIcon } from "../_icons/arrow-forward";
+import { AddCircleIcon } from "../_icons/add-circle";
+import { CancelCircleIcon } from "../_icons/cancel-circle";
+import { useStateStore } from "../_stores/state";
 
 export const charsPerLine = 14;
 export const linesPerPage = 13;
@@ -26,6 +29,8 @@ export const ReaderText = ({
 }): JSX.Element => {
   const loadDictionary = useDictionaryStore((x) => x.loadDictionary);
   const dictionary = useDictionaryStore((x) => x.dictionary);
+  const flashcards = useStateStore((x) => x.flashcards);
+  const dispatch = useStateStore((x) => x.dispatch);
   const [selection, setSelection] = useState<number | null>(null);
   useEffect(() => loadDictionary(), [loadDictionary]);
 
@@ -46,6 +51,11 @@ export const ReaderText = ({
       : "";
   const dictionaryEntry = lookupLongest(dictionary, selectedText);
   const wordLength = dictionaryEntry?.traditional.length ?? 0;
+  const containsFlashcard =
+    !!dictionaryEntry &&
+    !!flashcards.find(
+      (card) => card.entry.traditional === dictionaryEntry.traditional,
+    );
 
   return (
     <div className="flex grow flex-col justify-between gap-2 px-2 pb-4 ps-2">
@@ -78,13 +88,32 @@ export const ReaderText = ({
 
       {dictionaryEntry && (
         <article className="flex w-full max-w-2xl shrink grow flex-col overflow-auto rounded-lg border border-white px-4 py-2">
-          <div className="flex items-center gap-2">
-            <div className="text-xl">{dictionaryEntry.traditional}</div>
-            {dictionaryEntry.simplified !== dictionaryEntry.traditional && (
-              <div className="text-xl">{dictionaryEntry.simplified}</div>
-            )}
-            <div>{dictionaryEntry.pinyin}</div>
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <div className="text-xl">{dictionaryEntry.traditional}</div>
+              {dictionaryEntry.simplified !== dictionaryEntry.traditional && (
+                <div className="text-xl">{dictionaryEntry.simplified}</div>
+              )}
+              <div>{dictionaryEntry.pinyin}</div>
+            </div>
+
+            <button
+              onClick={() => {
+                dispatch({
+                  type: "ADD_OR_REMOVE_FLASHCARD",
+                  entry: dictionaryEntry,
+                });
+              }}
+            >
+              {(() => {
+                if (containsFlashcard) {
+                  return <CancelCircleIcon />;
+                }
+                return <AddCircleIcon />;
+              })()}
+            </button>
           </div>
+
           <div className="line-clamp-3 overflow-auto">
             {dictionaryEntry.meanings.join(", ")}
           </div>
