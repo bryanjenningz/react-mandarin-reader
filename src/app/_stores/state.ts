@@ -1,10 +1,12 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { charsPerPage } from "../_components/reader-text";
+import { type DictionaryEntry } from "../_utils/dictionary";
 
 type State = {
   reader: Reader;
   readerHistory: Reader[];
+  flashcards: Flashcard[];
 };
 
 type Reader = {
@@ -13,11 +15,17 @@ type Reader = {
   pageIndex: number;
 };
 
+type Flashcard = {
+  entry: DictionaryEntry;
+  correct: number;
+};
+
 type Action =
   | { type: "PASTE_READER_TEXT"; text: string; date: number }
   | { type: "SET_READER_TEXT"; text: string; date: number; pageIndex: number }
   | { type: "INCREMENT_PAGE_INDEX" }
-  | { type: "DECREMENT_PAGE_INDEX" };
+  | { type: "DECREMENT_PAGE_INDEX" }
+  | { type: "ADD_OR_REMOVE_FLASHCARD"; entry: DictionaryEntry };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
@@ -67,6 +75,22 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         noop,
       ];
     }
+    case "ADD_OR_REMOVE_FLASHCARD": {
+      const containsFlashcard = !!state.flashcards.find(
+        (card) => card.entry.traditional === action.entry.traditional,
+      );
+      if (containsFlashcard) {
+        const flashcards = state.flashcards.filter(
+          (card) => card.entry.traditional !== action.entry.traditional,
+        );
+        return [{ ...state, flashcards }, noop];
+      }
+      const flashcards: Flashcard[] = [
+        ...state.flashcards,
+        { entry: action.entry, correct: 0 },
+      ];
+      return [{ ...state, flashcards }, noop];
+    }
   }
 };
 
@@ -79,6 +103,7 @@ export const useStateStore = create<StateStore>()(
     (set) => ({
       reader: { text: "", date: 0, pageIndex: 0 },
       readerHistory: [],
+      flashcards: [],
       dispatch: (action: Action): void =>
         set((state) => {
           const [newState, sideEffect] = reducer(state, action);
