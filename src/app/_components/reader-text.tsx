@@ -54,12 +54,15 @@ export const ReaderText = ({
     !!flashcards.find(
       (card) => card.entry.traditional === dictionaryEntry.traditional,
     );
+  const playAudioOnWordLookupEnabled = useStateStore(
+    (x) => x.settings.playAudioOnWordLookup.enabled,
+  );
 
   useEffect(() => {
-    if (dictionaryEntry) {
+    if (dictionaryEntry && playAudioOnWordLookupEnabled) {
       textToSpeech(dictionaryEntry.simplified);
     }
-  }, [dictionaryEntry]);
+  }, [dictionaryEntry, playAudioOnWordLookupEnabled]);
 
   if (!readerText) {
     return <EmptyMessage message="You haven't added any text." />;

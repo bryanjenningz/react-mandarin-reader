@@ -7,7 +7,7 @@ type State = {
   reader: Reader;
   readerHistory: Reader[];
   flashcards: Flashcard[];
-  settings: SettingsOption[];
+  settings: SettingsOptions;
 };
 
 type Reader = {
@@ -21,7 +21,11 @@ type Flashcard = {
   correct: number;
 };
 
-type SettingsOption = {
+export type SettingsOptions = {
+  playAudioOnWordLookup: SettingsOption;
+};
+
+export type SettingsOption = {
   name: string;
   description: string;
   enabled: boolean;
@@ -33,7 +37,7 @@ type Action =
   | { type: "INCREMENT_PAGE_INDEX" }
   | { type: "DECREMENT_PAGE_INDEX" }
   | { type: "ADD_OR_REMOVE_FLASHCARD"; entry: DictionaryEntry }
-  | { type: "TOGGLE_SETTINGS_OPTION"; name: string };
+  | { type: "TOGGLE_SETTINGS_OPTION"; name: keyof SettingsOptions };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
@@ -100,18 +104,19 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
       return [{ ...state, flashcards }, noop];
     }
     case "TOGGLE_SETTINGS_OPTION": {
-      const settings = state.settings.map((settingsOption) => {
-        if (settingsOption.name === action.name) {
-          return { ...settingsOption, enabled: !settingsOption.enabled };
-        }
-        return settingsOption;
-      });
+      const settings: SettingsOptions = {
+        ...state.settings,
+        [action.name]: {
+          ...state.settings[action.name],
+          enabled: !state.settings[action.name].enabled,
+        },
+      };
       return [{ ...state, settings }, noop];
     }
   }
 };
 
-type Dispatch = (action: Action) => void;
+export type Dispatch = (action: Action) => void;
 
 type StateStore = State & { dispatch: Dispatch };
 
@@ -121,14 +126,14 @@ export const useStateStore = create<StateStore>()(
       reader: { text: "", date: 0, pageIndex: 0 },
       readerHistory: [],
       flashcards: [],
-      settings: [
-        {
+      settings: {
+        playAudioOnWordLookup: {
           name: "Play audio on word lookup",
           description:
             "Autoplay the pronunciation audio on each word lookup in the reader.",
           enabled: true,
         },
-      ],
+      },
       dispatch: (action: Action): void =>
         set((state) => {
           const [newState, sideEffect] = reducer(state, action);
