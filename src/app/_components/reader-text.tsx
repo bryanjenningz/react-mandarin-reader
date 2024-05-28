@@ -100,16 +100,11 @@ export const ReaderText = ({
       {dictionaryEntry && (
         <article className="flex w-full max-w-2xl shrink grow flex-col overflow-auto rounded-lg border border-white px-4 py-2">
           <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <div className="text-xl">{dictionaryEntry.traditional}</div>
+            <div className="flex items-center gap-2 text-xl">
+              <div>{dictionaryEntry.traditional}</div>
               {dictionaryEntry.simplified !== dictionaryEntry.traditional && (
-                <div className="text-xl">{dictionaryEntry.simplified}</div>
+                <div>{dictionaryEntry.simplified}</div>
               )}
-              <div>{dictionaryEntry.pinyin}</div>
-              <button onClick={() => textToSpeech(dictionaryEntry.simplified)}>
-                <VolumeUpIcon />
-                <span className="sr-only">Play audio</span>
-              </button>
             </div>
 
             <button
@@ -126,6 +121,14 @@ export const ReaderText = ({
                 }
                 return <AddCircleIcon />;
               })()}
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div>{dictionaryEntry.pinyin}</div>
+            <button onClick={() => textToSpeech(dictionaryEntry.simplified)}>
+              <VolumeUpIcon />
+              <span className="sr-only">Play audio</span>
             </button>
           </div>
 
