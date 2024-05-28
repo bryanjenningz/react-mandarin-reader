@@ -9,6 +9,7 @@ import { ArrowForwardIcon } from "../_icons/arrow-forward";
 import { AddCircleIcon } from "../_icons/add-circle";
 import { CancelCircleIcon } from "../_icons/cancel-circle";
 import { useStateStore } from "../_stores/state";
+import { textToSpeech } from "../_utils/text-to-speech";
 
 export const charsPerLine = 14;
 export const linesPerPage = 13;
@@ -34,10 +35,6 @@ export const ReaderText = ({
   const [selection, setSelection] = useState<number | null>(null);
   useEffect(() => loadDictionary(), [loadDictionary]);
 
-  if (!readerText) {
-    return <EmptyMessage message="You haven't added any text." />;
-  }
-
   const pageText = readerText.slice(
     pageIndex * charsPerPage,
     (pageIndex + 1) * charsPerPage,
@@ -56,6 +53,16 @@ export const ReaderText = ({
     !!flashcards.find(
       (card) => card.entry.traditional === dictionaryEntry.traditional,
     );
+
+  useEffect(() => {
+    if (dictionaryEntry) {
+      textToSpeech(dictionaryEntry.simplified);
+    }
+  }, [dictionaryEntry]);
+
+  if (!readerText) {
+    return <EmptyMessage message="You haven't added any text." />;
+  }
 
   return (
     <div className="flex grow flex-col justify-between gap-2 px-2 pb-4 ps-2">
