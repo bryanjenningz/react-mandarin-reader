@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EmptyMessage } from "./empty-message";
 import { cn } from "../_utils/class-names";
 import { chunk } from "../_utils/chunk";
+import { useDictionaryStore } from "../_stores/dictionary";
+import { lookupLongest } from "../_utils/dictionary";
 
 export const ReaderText = ({
   readerText,
@@ -10,10 +12,18 @@ export const ReaderText = ({
   readerText: string;
   readerDate: number;
 }): JSX.Element => {
+  const loadDictionary = useDictionaryStore((x) => x.loadDictionary);
+  const dictionary = useDictionaryStore((x) => x.dictionary);
   const [selection, setSelection] = useState<{ x: number; y: number } | null>(
     null,
   );
   const [pageIndex, setPageIndex] = useState(0);
+  useEffect(() => loadDictionary(), [loadDictionary]);
+
+  if (!readerText) {
+    return <EmptyMessage message="You haven't added any text." />;
+  }
+
   const charsPerLine = 14;
   const linesPerPage = 14;
   const charsPerPage = charsPerLine * linesPerPage;
@@ -23,9 +33,15 @@ export const ReaderText = ({
   );
   const pageCount = Math.ceil(readerText.length / charsPerPage);
 
-  if (!readerText) {
-    return <EmptyMessage message="You haven't added any text." />;
-  }
+  const maxSelectedTextLength = 12;
+  const selectedIndex = selection
+    ? selection.y * charsPerLine + selection.x
+    : null;
+  const selectedText =
+    selectedIndex !== null
+      ? pageText.slice(selectedIndex, selectedIndex + maxSelectedTextLength)
+      : "";
+  const dictionaryEntry = lookupLongest(dictionary, selectedText);
 
   return (
     <div className="flex grow flex-col justify-between px-2 pb-4 ps-2">
@@ -51,6 +67,17 @@ export const ReaderText = ({
           );
         })}
       </section>
+
+      {dictionaryEntry && (
+        <article>
+          <div>{dictionaryEntry.traditional}</div>
+          {dictionaryEntry.simplified !== dictionaryEntry.traditional && (
+            <div>{dictionaryEntry.simplified}</div>
+          )}
+          <div>{dictionaryEntry.pinyin}</div>
+          <div>{dictionaryEntry.meanings.join(", ")}</div>
+        </article>
+      )}
 
       <div className="flex items-center justify-between">
         <button
