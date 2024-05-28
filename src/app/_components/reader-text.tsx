@@ -136,7 +136,7 @@ export const ReaderText = ({
               </button>
             </div>
 
-            <div className="line-clamp-2 overflow-auto md:line-clamp-none">
+            <div className="line-clamp-3 overflow-auto text-sm md:line-clamp-none">
               {dictionaryEntry.meanings.join(", ")}
             </div>
           </article>
