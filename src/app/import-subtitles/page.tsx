@@ -4,10 +4,14 @@ import { useState } from "react";
 import { SideMenu } from "~/app/_components/side-menu";
 import { SubtitlesIcon } from "~/app/_icons/subtitles";
 import { ImportSubtitlesHeader } from "./_components/import-subtitles-header";
+import { useStateStore } from "../_stores/state";
+import { useRouter } from "next/navigation";
 
 const ImportSubtitlesPage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [subtitlesText, setSubtitlesText] = useState("");
+  const dispatch = useStateStore((x) => x.dispatch);
+  const router = useRouter();
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
@@ -40,7 +44,19 @@ const ImportSubtitlesPage = (): JSX.Element => {
           </div>
         )}
 
-        <button className="rounded-lg bg-blue-900 px-4 py-2 text-white transition hover:brightness-110">
+        <button
+          className="rounded-lg bg-blue-900 px-4 py-2 text-white transition hover:brightness-110"
+          onClick={() => {
+            if (subtitlesText) {
+              dispatch({
+                type: "PASTE_READER_TEXT",
+                text: subtitlesText,
+                date: Date.now(),
+              });
+              router.push("/");
+            }
+          }}
+        >
           Save subtitles
         </button>
       </div>
