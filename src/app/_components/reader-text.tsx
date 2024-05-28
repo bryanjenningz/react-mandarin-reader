@@ -4,6 +4,8 @@ import { cn } from "../_utils/class-names";
 import { chunk } from "../_utils/chunk";
 import { useDictionaryStore } from "../_stores/dictionary";
 import { lookupLongest } from "../_utils/dictionary";
+import { ArrowBackIcon } from "../_icons/arrow-back";
+import { ArrowForwardIcon } from "../_icons/arrow-forward";
 
 export const ReaderText = ({
   readerText,
@@ -85,17 +87,18 @@ export const ReaderText = ({
 
       <div className="flex shrink-0 items-center justify-between">
         <button
-          className="h-12 w-12 rounded-lg bg-blue-900 text-white transition hover:brightness-110"
+          className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-900 text-white transition hover:brightness-110"
           onClick={() => {
             setPageIndex((pageIndex) => Math.max(0, pageIndex - 1));
             setSelection(null);
           }}
         >
-          Prev
+          <ArrowBackIcon />
+          <span className="sr-only">Previous page</span>
         </button>
         <div className="text-xl">{`${pageIndex + 1} / ${pageCount}`}</div>
         <button
-          className="h-12 w-12 rounded-lg bg-blue-900 text-white transition hover:brightness-110"
+          className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-900 text-white transition hover:brightness-110"
           onClick={() => {
             setPageIndex((pageIndex) =>
               Math.min(Math.max(0, pageCount - 1), pageIndex + 1),
@@ -103,7 +106,8 @@ export const ReaderText = ({
             setSelection(null);
           }}
         >
-          Next
+          <ArrowForwardIcon />
+          <span className="sr-only">Next page</span>
         </button>
       </div>
     </div>
