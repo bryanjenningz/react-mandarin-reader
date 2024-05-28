@@ -12,25 +12,27 @@ const HomePage = (): JSX.Element => {
   const dispatch = useStateStore((state) => state.dispatch);
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <ReaderHeader
-        setIsSideMenuOpen={setIsSideMenuOpen}
-        setReaderText={(readerText) => {
-          dispatch({
-            type: "PASTE_READER_TEXT",
-            text: readerText,
-            date: Date.now(),
-          });
-        }}
-      />
+    <div className="flex h-screen flex-col items-center overflow-hidden bg-black text-white">
+      <div className="flex h-full w-full max-w-2xl grow flex-col">
+        <ReaderHeader
+          setIsSideMenuOpen={setIsSideMenuOpen}
+          setReaderText={(readerText) => {
+            dispatch({
+              type: "PASTE_READER_TEXT",
+              text: readerText,
+              date: Date.now(),
+            });
+          }}
+        />
 
-      <ReaderText readerText={reader.text} readerDate={reader.date} />
+        <ReaderText readerText={reader.text} readerDate={reader.date} />
 
-      <SideMenu
-        selectedItem="Reader"
-        isSideMenuOpen={isSideMenuOpen}
-        setIsSideMenuOpen={setIsSideMenuOpen}
-      />
+        <SideMenu
+          selectedItem="Reader"
+          isSideMenuOpen={isSideMenuOpen}
+          setIsSideMenuOpen={setIsSideMenuOpen}
+        />
+      </div>
     </div>
   );
 };
