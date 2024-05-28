@@ -84,7 +84,7 @@ const AudioFlashcardsPage = (): JSX.Element => {
       })()}
 
       <SideMenu
-        selectedItem="History"
+        selectedItem="Audio flashcards"
         isSideMenuOpen={isSideMenuOpen}
         setIsSideMenuOpen={setIsSideMenuOpen}
       />

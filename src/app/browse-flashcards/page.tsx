@@ -49,7 +49,7 @@ const BrowseFlashcardsPage = (): JSX.Element => {
       })()}
 
       <SideMenu
-        selectedItem="History"
+        selectedItem="Browse flashcards"
         isSideMenuOpen={isSideMenuOpen}
         setIsSideMenuOpen={setIsSideMenuOpen}
       />

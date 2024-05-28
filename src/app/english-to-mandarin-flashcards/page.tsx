@@ -83,7 +83,7 @@ const EnglishToMandarinFlashcardsPage = (): JSX.Element => {
       })()}
 
       <SideMenu
-        selectedItem="History"
+        selectedItem="English to Mandarin"
         isSideMenuOpen={isSideMenuOpen}
         setIsSideMenuOpen={setIsSideMenuOpen}
       />
