@@ -31,7 +31,11 @@ const AudioFlashcardsPage = (): JSX.Element => {
         return (
           <div className="flex w-full max-w-2xl grow flex-col">
             <div className="flex w-full grow flex-col items-center gap-2">
-              <button>Play audio</button>
+              <button
+                onClick={() => textToSpeech(firstFlashcard.entry.simplified)}
+              >
+                Play audio
+              </button>
 
               {((): JSX.Element => {
                 if (isFlashcardBackShown) {
