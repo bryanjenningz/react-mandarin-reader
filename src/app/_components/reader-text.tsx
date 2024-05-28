@@ -14,9 +14,7 @@ export const ReaderText = ({
 }): JSX.Element => {
   const loadDictionary = useDictionaryStore((x) => x.loadDictionary);
   const dictionary = useDictionaryStore((x) => x.dictionary);
-  const [selection, setSelection] = useState<{ x: number; y: number } | null>(
-    null,
-  );
+  const [selection, setSelection] = useState<number | null>(null);
   const [pageIndex, setPageIndex] = useState(0);
   useEffect(() => loadDictionary(), [loadDictionary]);
 
@@ -34,14 +32,12 @@ export const ReaderText = ({
   const pageCount = Math.ceil(readerText.length / charsPerPage);
 
   const maxSelectedTextLength = 12;
-  const selectedIndex = selection
-    ? selection.y * charsPerLine + selection.x
-    : null;
   const selectedText =
-    selectedIndex !== null
-      ? pageText.slice(selectedIndex, selectedIndex + maxSelectedTextLength)
+    selection !== null
+      ? pageText.slice(selection, selection + maxSelectedTextLength)
       : "";
   const dictionaryEntry = lookupLongest(dictionary, selectedText);
+  const wordLength = dictionaryEntry?.traditional.length ?? 0;
 
   return (
     <div className="flex grow flex-col justify-between gap-2 px-2 pb-4 ps-2">
@@ -50,14 +46,18 @@ export const ReaderText = ({
           return (
             <div key={`${readerDate}-${y}`}>
               {line.map((char, x) => {
+                const i = charsPerLine * y + x;
                 return (
                   <button
                     key={`${readerDate}-${y}-${x}`}
                     className={cn(
                       "inline-flex h-8 w-6 items-center justify-center",
-                      selection?.x === x && selection.y === y && "bg-blue-600",
+                      selection !== null &&
+                        i >= selection &&
+                        i < selection + wordLength &&
+                        "bg-blue-600",
                     )}
-                    onClick={() => setSelection({ x, y })}
+                    onClick={() => setSelection(i)}
                   >
                     {char}
                   </button>
