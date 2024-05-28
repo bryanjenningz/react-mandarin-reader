@@ -69,8 +69,8 @@ export const ReaderText = ({
   }
 
   return (
-    <div className="flex grow flex-col justify-between gap-2 px-2 pb-4 ps-2">
-      <section className="max-h-[70vh] w-full max-w-2xl shrink-0 overflow-auto text-center text-2xl">
+    <div className="flex grow flex-col justify-between gap-2 px-2 pb-2">
+      <section className="flex max-h-[70vh] w-full max-w-2xl shrink-0 flex-col text-center text-2xl">
         {chunk(pageText.split(""), charsPerLine).map((line, y) => {
           return (
             <div key={`${readerDate}-${y}`} className="h-8">
@@ -98,7 +98,7 @@ export const ReaderText = ({
       </section>
 
       {dictionaryEntry && (
-        <article className="flex w-full max-w-2xl shrink grow flex-col overflow-auto rounded-lg border border-white px-4 py-2">
+        <article className="flex w-full max-w-2xl shrink flex-col overflow-auto rounded-lg border border-white px-4 py-2">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 text-xl">
               <div>{dictionaryEntry.traditional}</div>
@@ -132,7 +132,7 @@ export const ReaderText = ({
             </button>
           </div>
 
-          <div className="line-clamp-3 overflow-auto">
+          <div className="line-clamp-2 overflow-auto lg:line-clamp-none">
             {dictionaryEntry.meanings.join(", ")}
           </div>
         </article>
@@ -149,7 +149,7 @@ export const ReaderText = ({
           <ArrowBackIcon />
           <span className="sr-only">Previous page</span>
         </button>
-        <div className="text-xl">{`${pageIndex + 1} / ${pageCount}`}</div>
+        <div className="flex grow items-center justify-center text-xl">{`${pageIndex + 1} / ${pageCount}`}</div>
         <button
           className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-900 text-white transition hover:brightness-110"
           onClick={() => {
