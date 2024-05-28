@@ -29,9 +29,6 @@ const ReaderHistoryPage = (): JSX.Element => {
                 <li key={historyItem.date}>
                   <button
                     onClick={() => {
-                      console.log({
-                        "historyItem.pageIndex": historyItem.pageIndex,
-                      });
                       dispatch({
                         type: "SET_READER_TEXT",
                         text: historyItem.text,
