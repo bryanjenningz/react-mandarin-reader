@@ -42,6 +42,13 @@ const EnglishToMandarinFlashcardsPage = (): JSX.Element => {
                       <div className="text-lg">
                         {firstFlashcard.entry.pinyin}
                       </div>
+                      <button
+                        onClick={() =>
+                          textToSpeech(firstFlashcard.entry.simplified)
+                        }
+                      >
+                        Play audio
+                      </button>
                       <div>{firstFlashcard.entry.traditional}</div>
                       {firstFlashcard.entry.traditional !==
                         firstFlashcard.entry.simplified && (

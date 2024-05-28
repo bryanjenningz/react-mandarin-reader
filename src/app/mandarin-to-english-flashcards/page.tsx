@@ -45,6 +45,13 @@ const MandarinToEnglishFlashcardsPage = (): JSX.Element => {
                       <div className="text-lg">
                         {firstFlashcard.entry.pinyin}
                       </div>
+                      <button
+                        onClick={() =>
+                          textToSpeech(firstFlashcard.entry.simplified)
+                        }
+                      >
+                        Play audio
+                      </button>
                       <div>{firstFlashcard.entry.meanings.join(", ")}</div>
                     </>
                   );
