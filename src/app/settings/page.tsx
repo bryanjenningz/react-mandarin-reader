@@ -63,7 +63,7 @@ const SettingsOptionItem = ({
           });
         }}
       >
-        <span className="flex items-center gap-2">
+        <span className="flex items-center justify-between gap-2">
           <span className="flex flex-col gap-2">
             <span className="">{settingsOption.name}</span>
             <span className="text-sm text-slate-400">
@@ -71,7 +71,7 @@ const SettingsOptionItem = ({
             </span>
           </span>
           <input
-            className="h-6 w-6"
+            className="h-5 w-5 shrink-0"
             type="checkbox"
             checked={settingsOption.enabled}
             // Do nothing on change because we're already handling the state change on the button click
