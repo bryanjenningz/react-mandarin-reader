@@ -70,73 +70,78 @@ export const ReaderText = ({
 
   return (
     <div className="flex grow flex-col justify-between gap-2 px-2 pb-2">
-      <section className="flex max-h-[70vh] w-full max-w-2xl shrink-0 flex-col text-2xl">
-        {chunk(pageText.split(""), charsPerLine).map((line, y) => {
-          return (
-            <div key={`${readerDate}-${y}`} className="flex h-8 justify-center">
-              {line.map((char, x) => {
-                const i = charsPerLine * y + x;
-                return (
-                  <button
-                    key={`${readerDate}-${y}-${x}`}
-                    className={cn(
-                      "flex h-8 w-6 items-center justify-center",
-                      selection !== null &&
-                        i >= selection &&
-                        i < selection + wordLength &&
-                        "bg-blue-600",
-                    )}
-                    onClick={() => setSelection(i)}
-                  >
-                    {char}
-                  </button>
-                );
-              })}
+      <div className="flex flex-col gap-2">
+        <section className="flex max-h-[70vh] w-full max-w-2xl shrink-0 flex-col text-2xl">
+          {chunk(pageText.split(""), charsPerLine).map((line, y) => {
+            return (
+              <div
+                key={`${readerDate}-${y}`}
+                className="flex h-8 justify-center"
+              >
+                {line.map((char, x) => {
+                  const i = charsPerLine * y + x;
+                  return (
+                    <button
+                      key={`${readerDate}-${y}-${x}`}
+                      className={cn(
+                        "flex h-8 w-6 items-center justify-center",
+                        selection !== null &&
+                          i >= selection &&
+                          i < selection + wordLength &&
+                          "bg-blue-600",
+                      )}
+                      onClick={() => setSelection(i)}
+                    >
+                      {char}
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </section>
+
+        {dictionaryEntry && (
+          <article className="flex w-full max-w-2xl shrink flex-col overflow-auto rounded-lg border border-white px-4 py-2">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 text-xl">
+                <div>{dictionaryEntry.traditional}</div>
+                {dictionaryEntry.simplified !== dictionaryEntry.traditional && (
+                  <div>{dictionaryEntry.simplified}</div>
+                )}
+              </div>
+
+              <button
+                onClick={() => {
+                  dispatch({
+                    type: "ADD_OR_REMOVE_FLASHCARD",
+                    entry: dictionaryEntry,
+                  });
+                }}
+              >
+                {(() => {
+                  if (containsFlashcard) {
+                    return <CancelCircleIcon />;
+                  }
+                  return <AddCircleIcon />;
+                })()}
+              </button>
             </div>
-          );
-        })}
-      </section>
 
-      {dictionaryEntry && (
-        <article className="flex w-full max-w-2xl shrink flex-col overflow-auto rounded-lg border border-white px-4 py-2">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2 text-xl">
-              <div>{dictionaryEntry.traditional}</div>
-              {dictionaryEntry.simplified !== dictionaryEntry.traditional && (
-                <div>{dictionaryEntry.simplified}</div>
-              )}
+            <div className="flex items-center gap-2">
+              <div>{dictionaryEntry.pinyin}</div>
+              <button onClick={() => textToSpeech(dictionaryEntry.simplified)}>
+                <VolumeUpIcon />
+                <span className="sr-only">Play audio</span>
+              </button>
             </div>
 
-            <button
-              onClick={() => {
-                dispatch({
-                  type: "ADD_OR_REMOVE_FLASHCARD",
-                  entry: dictionaryEntry,
-                });
-              }}
-            >
-              {(() => {
-                if (containsFlashcard) {
-                  return <CancelCircleIcon />;
-                }
-                return <AddCircleIcon />;
-              })()}
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div>{dictionaryEntry.pinyin}</div>
-            <button onClick={() => textToSpeech(dictionaryEntry.simplified)}>
-              <VolumeUpIcon />
-              <span className="sr-only">Play audio</span>
-            </button>
-          </div>
-
-          <div className="line-clamp-2 overflow-auto lg:line-clamp-none">
-            {dictionaryEntry.meanings.join(", ")}
-          </div>
-        </article>
-      )}
+            <div className="line-clamp-2 overflow-auto md:line-clamp-none">
+              {dictionaryEntry.meanings.join(", ")}
+            </div>
+          </article>
+        )}
+      </div>
 
       <div className="flex shrink-0 items-center justify-between">
         <button
