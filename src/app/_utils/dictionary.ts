@@ -33,3 +33,31 @@ const lineToDictionaryEntry = (line: string): DictionaryEntry | null => {
   if (!traditional || !simplified || !pinyin || !meanings) return null;
   return { traditional, simplified, pinyin, meanings: meanings.split("/") };
 };
+
+export const lookupLongest = (
+  dictionary: Dictionary,
+  text: string,
+): DictionaryEntry | null => {
+  while (text.length > 0) {
+    let low = 0;
+    let high = dictionary.traditional.length - 1;
+    while (low <= high) {
+      const mid = Math.floor((low + high) / 2);
+      const line = dictionary.traditional[mid];
+      if (!line) return null;
+      const entry = lineToDictionaryEntry(line);
+      if (!entry) return null;
+      const word = entry.traditional;
+      if (text === word) {
+        return entry;
+      }
+      if (text < word) {
+        high = mid - 1;
+      } else {
+        low = mid + 1;
+      }
+    }
+    text = text.slice(0, -1);
+  }
+  return null;
+};
