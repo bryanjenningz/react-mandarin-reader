@@ -133,6 +133,12 @@ export const useStateStore = create<StateStore>()(
             "Autoplay the pronunciation audio on each word lookup in the reader.",
           enabled: true,
         },
+        playAudioOnFlashcardBack: {
+          name: "Play audio on flashcard back",
+          description:
+            "Autoplay the pronunciation audio on the back of each flashcard while you're reviewing.",
+          enabled: true,
+        },
       },
       dispatch: (action: Action): void =>
         set((state) => {
