@@ -13,12 +13,19 @@ const EnglishToMandarinFlashcardsPage = (): JSX.Element => {
   const [isFlashcardBackShown, setIsFlashcardBackShown] = useState(false);
   const flashcards = useStateStore((state) => state.flashcards);
   const firstFlashcard = flashcards[0];
+  const playAudioOnFlashcardBackEnabled = useStateStore(
+    (x) => x.settings.playAudioOnFlashcardBack.enabled,
+  );
 
   useEffect(() => {
-    if (firstFlashcard && isFlashcardBackShown) {
+    if (
+      firstFlashcard &&
+      isFlashcardBackShown &&
+      playAudioOnFlashcardBackEnabled
+    ) {
       textToSpeech(firstFlashcard.entry.simplified);
     }
-  }, [firstFlashcard, isFlashcardBackShown]);
+  }, [firstFlashcard, isFlashcardBackShown, playAudioOnFlashcardBackEnabled]);
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">

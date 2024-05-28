@@ -23,6 +23,7 @@ type Flashcard = {
 
 export type SettingsOptions = {
   playAudioOnWordLookup: SettingsOption;
+  playAudioOnFlashcardBack: SettingsOption;
 };
 
 export type SettingsOption = {
