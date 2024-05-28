@@ -1,26 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { SideMenu } from "../_components/side-menu";
-import { PictureAsPdfIcon } from "../_icons/picture-as-pdf";
-import { ImportPdfHeader } from "./_components/import-pdf-header";
+import { SideMenu } from "~/app/_components/side-menu";
+import { SubtitlesIcon } from "~/app/_icons/subtitles";
+import { ImportSubtitlesHeader } from "./_components/import-subtitles-header";
 
-const ImportPdfPage = (): JSX.Element => {
+const ImportSubtitlesPage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <ImportPdfHeader setIsSideMenuOpen={setIsSideMenuOpen} />
+      <ImportSubtitlesHeader setIsSideMenuOpen={setIsSideMenuOpen} />
 
       <div className="flex grow flex-col items-center justify-center gap-2">
-        <PictureAsPdfIcon width={120} height={120} />
+        <SubtitlesIcon width={120} height={120} />
         <button className="rounded-lg bg-blue-900 px-4 py-2 text-white transition hover:brightness-110">
-          Import PDF
+          Import subtitles
         </button>
       </div>
 
       <SideMenu
-        selectedItem="Import PDF"
+        selectedItem="Import subtitles"
         isSideMenuOpen={isSideMenuOpen}
         setIsSideMenuOpen={setIsSideMenuOpen}
       />
@@ -28,4 +28,4 @@ const ImportPdfPage = (): JSX.Element => {
   );
 };
 
-export default ImportPdfPage;
+export default ImportSubtitlesPage;
