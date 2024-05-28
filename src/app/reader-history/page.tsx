@@ -22,7 +22,7 @@ const ReaderHistoryPage = (): JSX.Element => {
         }
 
         return (
-          <ul>
+          <ul className="flex flex-col">
             {readerHistory.map((historyItem) => {
               return (
                 <li key={historyItem.date}>
@@ -35,8 +35,14 @@ const ReaderHistoryPage = (): JSX.Element => {
                         date: Date.now(),
                       });
                     }}
+                    className="flex flex-col px-4 py-2"
                   >
-                    {historyItem.text}
+                    <time className="text-left text-sm font-bold text-blue-500">
+                      {formatTime(historyItem.date)}
+                    </time>
+                    <span className="line-clamp-4 text-sm">
+                      {historyItem.text}
+                    </span>
                   </Link>
                 </li>
               );
@@ -55,3 +61,15 @@ const ReaderHistoryPage = (): JSX.Element => {
 };
 
 export default ReaderHistoryPage;
+
+const formatTime = (time: number): string => {
+  const date = new Date(time);
+  return (
+    date.toLocaleDateString() +
+    " " +
+    date.toLocaleTimeString(undefined, {
+      timeStyle: "short",
+      hourCycle: "h12",
+    })
+  );
+};
