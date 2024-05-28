@@ -39,25 +39,32 @@ export const lookupLongest = (
   text: string,
 ): DictionaryEntry | null => {
   while (text.length > 0) {
-    let low = 0;
-    let high = dictionary.traditional.length - 1;
-    while (low <= high) {
-      const mid = Math.floor((low + high) / 2);
-      const line = dictionary.traditional[mid];
-      if (!line) return null;
-      const entry = lineToDictionaryEntry(line);
-      if (!entry) return null;
-      const word = entry.traditional;
-      if (text === word) {
-        return entry;
-      }
-      if (text < word) {
-        high = mid - 1;
-      } else {
-        low = mid + 1;
-      }
-    }
+    const entry = lookup(dictionary, text);
+    if (entry) return entry;
     text = text.slice(0, -1);
+  }
+  return null;
+};
+
+const lookup = (
+  dictionary: Dictionary,
+  text: string,
+): DictionaryEntry | null => {
+  let low = 0;
+  let high = dictionary.traditional.length - 1;
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+    const line = dictionary.traditional[mid];
+    if (!line) return null;
+    const entry = lineToDictionaryEntry(line);
+    if (!entry) return null;
+    const word = entry.traditional;
+    if (text === word) return entry;
+    if (text < word) {
+      high = mid - 1;
+    } else {
+      low = mid + 1;
+    }
   }
   return null;
 };
