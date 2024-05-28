@@ -6,6 +6,7 @@ import { SubtitlesIcon } from "~/app/_icons/subtitles";
 import { ImportSubtitlesHeader } from "./_components/import-subtitles-header";
 import { useStateStore } from "../_stores/state";
 import { useRouter } from "next/navigation";
+import { formatSubtitles } from "./_utils/format-subtitles";
 
 const ImportSubtitlesPage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -29,7 +30,7 @@ const ImportSubtitlesPage = (): JSX.Element => {
             fileReader.onload = () => {
               const fileText = fileReader.result;
               if (typeof fileText === "string") {
-                setSubtitlesText(fileText);
+                setSubtitlesText(formatSubtitles(fileText));
               }
             };
           }}
