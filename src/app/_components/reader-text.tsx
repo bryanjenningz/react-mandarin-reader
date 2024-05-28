@@ -10,6 +10,7 @@ import { AddCircleIcon } from "../_icons/add-circle";
 import { CancelCircleIcon } from "../_icons/cancel-circle";
 import { useStateStore } from "../_stores/state";
 import { textToSpeech } from "../_utils/text-to-speech";
+import { VolumeUpIcon } from "../_icons/volume-up";
 
 export const charsPerLine = 14;
 export const linesPerPage = 13;
@@ -102,6 +103,10 @@ export const ReaderText = ({
                 <div className="text-xl">{dictionaryEntry.simplified}</div>
               )}
               <div>{dictionaryEntry.pinyin}</div>
+              <button onClick={() => textToSpeech(dictionaryEntry.simplified)}>
+                <VolumeUpIcon />
+                <span className="sr-only">Play audio</span>
+              </button>
             </div>
 
             <button
