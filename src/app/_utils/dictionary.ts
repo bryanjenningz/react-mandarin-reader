@@ -39,7 +39,8 @@ export const lookupLongest = (
   text: string,
 ): DictionaryEntry | null => {
   while (text.length > 0) {
-    const entry = lookup(dictionary, text);
+    const entry =
+      lookup(dictionary, text, false) ?? lookup(dictionary, text, true);
     if (entry) return entry;
     text = text.slice(0, -1);
   }
@@ -49,16 +50,19 @@ export const lookupLongest = (
 const lookup = (
   dictionary: Dictionary,
   text: string,
+  isSimplified: boolean,
 ): DictionaryEntry | null => {
   let low = 0;
   let high = dictionary.traditional.length - 1;
   while (low <= high) {
     const mid = Math.floor((low + high) / 2);
-    const line = dictionary.traditional[mid];
+    const line = isSimplified
+      ? dictionary.simplified[mid]
+      : dictionary.traditional[mid];
     if (!line) return null;
     const entry = lineToDictionaryEntry(line);
     if (!entry) return null;
-    const word = entry.traditional;
+    const word = isSimplified ? entry.simplified : entry.traditional;
     if (text === word) return entry;
     if (text < word) {
       high = mid - 1;
