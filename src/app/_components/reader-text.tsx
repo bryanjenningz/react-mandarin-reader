@@ -16,6 +16,31 @@ export const charsPerLine = 14;
 export const linesPerPage = 13;
 export const charsPerPage = charsPerLine * linesPerPage;
 
+const readerContainerId = "reader-container";
+
+type Dimensions = {
+  width: number;
+  height: number;
+};
+
+const getDimensions = (element: HTMLElement): Dimensions => {
+  const { clientWidth: width, clientHeight: height } = element;
+  return { width, height };
+};
+
+const getReaderContainerDimensions = (): Promise<Dimensions> => {
+  const start = Date.now();
+  return new Promise((resolve, reject) => {
+    const check = () => {
+      if (Date.now() - start >= 10_000) return reject("No reader container");
+      const readerContainer = document.getElementById(readerContainerId);
+      if (readerContainer) return resolve(getDimensions(readerContainer));
+      setTimeout(check, 1000);
+    };
+    check();
+  });
+};
+
 export const ReaderText = ({
   readerText,
   readerDate,
@@ -64,6 +89,13 @@ export const ReaderText = ({
     }
   }, [dictionaryEntry, playAudioOnWordLookupEnabled]);
 
+  useEffect(() => {
+    void (async () => {
+      const dimensions = await getReaderContainerDimensions();
+      console.log(dimensions);
+    })();
+  }, []);
+
   if (!readerText) {
     return <EmptyMessage message="You haven't added any text." />;
   }
@@ -71,7 +103,10 @@ export const ReaderText = ({
   return (
     <div className="flex grow flex-col justify-between gap-2 px-2 pb-2">
       <div className="flex flex-col gap-2">
-        <section className="flex h-[70vh] w-full max-w-2xl shrink-0 flex-col text-2xl">
+        <section
+          id={readerContainerId}
+          className="flex h-[70vh] w-full max-w-2xl shrink-0 flex-col text-2xl"
+        >
           {chunk(pageText.split(""), charsPerLine).map((line, y) => {
             return (
               <div
