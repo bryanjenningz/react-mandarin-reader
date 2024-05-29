@@ -71,7 +71,7 @@ export const ReaderText = ({
   return (
     <div className="flex grow flex-col justify-between gap-2 px-2 pb-2">
       <div className="flex flex-col gap-2">
-        <section className="flex max-h-[70vh] w-full max-w-2xl shrink-0 flex-col text-2xl">
+        <section className="flex h-[70vh] w-full max-w-2xl shrink-0 flex-col text-2xl">
           {chunk(pageText.split(""), charsPerLine).map((line, y) => {
             return (
               <div
