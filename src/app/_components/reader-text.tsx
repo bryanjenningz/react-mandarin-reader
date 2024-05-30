@@ -15,14 +15,12 @@ export const ReaderText = ({
   readerText,
   readerDate,
   readerSelection,
-  wordLength,
   setReaderSelection,
   pageIndex,
 }: {
   readerText: string;
   readerDate: number;
-  readerSelection: number | null;
-  wordLength: number;
+  readerSelection: { start: number; end: number } | null;
   setReaderSelection: (selection: number) => void;
   pageIndex: number;
 }): JSX.Element => {
@@ -70,8 +68,8 @@ export const ReaderText = ({
                   className={cn(
                     "flex items-center justify-center",
                     readerSelection !== null &&
-                      i >= readerSelection &&
-                      i < readerSelection + wordLength &&
+                      i >= readerSelection.start &&
+                      i < readerSelection.end &&
                       "bg-blue-600",
                   )}
                   style={{ width: charWidth, height: charHeight }}

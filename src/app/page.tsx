@@ -71,8 +71,14 @@ const HomePage = (): JSX.Element => {
             <ReaderText
               readerText={reader.text}
               readerDate={reader.date}
-              readerSelection={reader.selection}
-              wordLength={wordLength}
+              readerSelection={
+                reader.selection !== null
+                  ? {
+                      start: reader.selection,
+                      end: reader.selection + wordLength,
+                    }
+                  : null
+              }
               setReaderSelection={(selection) => {
                 dispatch({ type: "SET_READER_SELECTION", selection });
               }}
