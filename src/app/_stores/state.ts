@@ -5,7 +5,7 @@ import { getCharsPerPage } from "../_components/reader-text";
 
 type State = {
   readerSize: BoxSize;
-  reader: Reader;
+  reader: ActiveReader;
   readerHistory: Reader[];
   flashcards: Flashcard[];
   settings: SettingsOptions;
@@ -15,6 +15,8 @@ type BoxSize = {
   width: number;
   height: number;
 };
+
+type ActiveReader = Reader & { selection: number | null };
 
 type Reader = {
   text: string;
@@ -62,19 +64,21 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
       return [{ ...state, readerSize }, noop];
     }
     case "PASTE_READER_TEXT": {
-      const reader: Reader = {
+      const reader: ActiveReader = {
         text: action.text,
         date: action.date,
         pageIndex: 0,
+        selection: null,
       };
       const readerHistory: Reader[] = [reader, ...state.readerHistory];
       return [{ ...state, reader, readerHistory }, noop];
     }
     case "SET_READER_TEXT": {
-      const reader: Reader = {
+      const reader: ActiveReader = {
         text: action.text,
         date: action.date,
         pageIndex: action.pageIndex,
+        selection: null,
       };
       return [{ ...state, reader }, noop];
     }
@@ -175,7 +179,7 @@ export const useStateStore = create<StateStore>()(
   persist(
     (set) => ({
       readerSize: { width: 390, height: 600 },
-      reader: { text: "", date: 0, pageIndex: 0 },
+      reader: { text: "", date: 0, pageIndex: 0, selection: null },
       readerHistory: [],
       flashcards: [],
       settings: {
