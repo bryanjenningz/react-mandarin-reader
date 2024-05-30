@@ -72,4 +72,21 @@ describe("reducer", () => {
     };
     expect(actual).toEqual(expected);
   });
+
+  it("deletes the reader history item", () => {
+    const initState: State = {
+      ...state,
+      readerHistory: [
+        { date: 123, pageIndex: 0, text: "new text" },
+        { date: 1, pageIndex: 2, text: "before text" },
+      ],
+    };
+    const action: Action = { type: "DELETE_READER_HISTORY_ITEM", date: 123 };
+    const actual = reducer(initState, action);
+    const expected: State = {
+      ...state,
+      readerHistory: [{ date: 1, pageIndex: 2, text: "before text" }],
+    };
+    expect(actual).toEqual(expected);
+  });
 });
