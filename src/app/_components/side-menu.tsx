@@ -73,15 +73,14 @@ const menuSections = [
   },
 ] as const satisfies MenuSection[];
 
-type SelectedMenuItemName =
-  (typeof menuSections)[number]["items"][number]["name"];
+type MenuItemName = (typeof menuSections)[number]["items"][number]["name"];
 
 export const SideMenu = ({
   selectedItem,
   isSideMenuOpen,
   setIsSideMenuOpen,
 }: {
-  selectedItem: SelectedMenuItemName;
+  selectedItem: MenuItemName;
   isSideMenuOpen: boolean;
   setIsSideMenuOpen: (isSideMenuOpen: boolean) => void;
 }): JSX.Element => {
