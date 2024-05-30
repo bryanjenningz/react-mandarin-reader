@@ -141,7 +141,7 @@ export const ReaderText = ({
                           "bg-blue-600",
                       )}
                       style={{ width: charWidth, height: charHeight }}
-                      onClick={() => setSelection(i)}
+                      onPointerDown={() => setSelection(i)}
                     >
                       {char}
                     </button>
