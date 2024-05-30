@@ -117,4 +117,18 @@ describe("reducer", () => {
     };
     expect(actual).toEqual(expected);
   });
+
+  it("only closes the selection if the reader page index is already the maximum page index", () => {
+    const initState: State = {
+      ...state,
+      reader: { text: "a", date: 1, pageIndex: 0, selection: 3 },
+    };
+    const action: Action = { type: "INCREMENT_PAGE_INDEX" };
+    const actual = reducer(initState, action);
+    const expected: State = {
+      ...initState,
+      reader: { ...initState.reader, selection: null },
+    };
+    expect(actual).toEqual(expected);
+  });
 });
