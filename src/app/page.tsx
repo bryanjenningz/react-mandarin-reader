@@ -14,15 +14,13 @@ import { getReaderInfo } from "./_utils/reader/get-reader-info";
 import { getReaderBoxSize } from "./_utils/reader/box-size";
 
 const HomePage = (): JSX.Element => {
-  const loadDictionary = useDictionaryStore((x) => x.loadDictionary);
-  useEffect(() => loadDictionary(), [loadDictionary]);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
-  const reader = useStateStore((state) => state.reader);
+
   const dispatch = useStateStore((state) => state.dispatch);
+  const reader = useStateStore((state) => state.reader);
   const readerSize = useStateStore((x) => x.readerSize);
   const { charsPerPage } = getReaderInfo(readerSize);
   const pageCount = Math.ceil(reader.text.length / charsPerPage);
-
   const dictionary = useDictionaryStore((x) => x.dictionary);
   const flashcards = useStateStore((x) => x.flashcards);
   const pageText = reader.text.slice(
@@ -47,6 +45,13 @@ const HomePage = (): JSX.Element => {
       (card) => card.entry.traditional === dictionaryEntry.traditional,
     );
 
+  // LOAD DICTIONARY
+  const loadDictionary = useDictionaryStore((x) => x.loadDictionary);
+  useEffect(() => {
+    loadDictionary();
+  }, [loadDictionary]);
+
+  // PLAY AUDIO ON WORD LOOKUP
   const playAudioOnWordLookupEnabled = useStateStore(
     (x) => x.settings.playAudioOnWordLookup.enabled,
   );
@@ -57,6 +62,7 @@ const HomePage = (): JSX.Element => {
   }, [dictionaryEntry, playAudioOnWordLookupEnabled]);
   const wordLength = dictionaryEntry?.traditional.length ?? 0;
 
+  // SET READER SIZE
   useEffect(() => {
     const setReaderSize = () =>
       void (async () => {
