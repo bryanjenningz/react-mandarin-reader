@@ -12,7 +12,7 @@ const HomePage = (): JSX.Element => {
   const dispatch = useStateStore((state) => state.dispatch);
 
   return (
-    <div className="flex h-screen flex-col items-center overflow-hidden bg-black text-white">
+    <div className="flex h-[100dvh] flex-col items-center overflow-hidden bg-black text-white">
       <div className="flex h-full w-full max-w-2xl grow flex-col">
         <ReaderHeader
           setIsSideMenuOpen={setIsSideMenuOpen}

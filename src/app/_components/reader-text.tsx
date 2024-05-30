@@ -110,7 +110,7 @@ export const ReaderText = ({
       <div className="flex flex-col gap-2">
         <section
           id={readerContainerId}
-          className="flex h-[70vh] w-full max-w-2xl shrink-0 flex-col"
+          className="flex h-[70dvh] w-full max-w-2xl shrink-0 flex-col"
           style={{ fontSize: charWidth }}
         >
           {chunk(pageText.split(""), charsPerLine).map((line, y) => {
