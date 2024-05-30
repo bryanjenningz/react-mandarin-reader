@@ -13,8 +13,9 @@ import { WordLookup } from "./word-lookup";
 const charsPerLine = 14;
 const linesPerPage = 13;
 export const charsPerPage = charsPerLine * linesPerPage;
-const charWidth = 24;
-const charHeight = 32;
+const charSizeScalar = 1.2;
+const charWidth = 24 * charSizeScalar;
+const charHeight = 32 * charSizeScalar;
 
 const readerContainerId = "reader-container";
 
@@ -109,7 +110,8 @@ export const ReaderText = ({
       <div className="flex flex-col gap-2">
         <section
           id={readerContainerId}
-          className="flex h-[70vh] w-full max-w-2xl shrink-0 flex-col text-2xl"
+          className="flex h-[70vh] w-full max-w-2xl shrink-0 flex-col"
+          style={{ fontSize: charWidth }}
         >
           {chunk(pageText.split(""), charsPerLine).map((line, y) => {
             return (
