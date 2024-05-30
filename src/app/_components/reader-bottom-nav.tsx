@@ -15,18 +15,18 @@ export const ReaderBottomNav = ({
   return (
     <div className="flex shrink-0 items-center justify-between">
       <button
-        className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-900 text-white transition hover:brightness-110"
+        className="flex h-14 w-14 items-center justify-center rounded-lg bg-blue-900 text-white transition hover:brightness-110"
         onClick={onClickLeft}
       >
-        <ArrowBackIcon />
+        <ArrowBackIcon width={32} height={32} />
         <span className="sr-only">Previous page</span>
       </button>
       <div className="flex grow items-center justify-center text-xl">{`${pageIndex + 1} / ${pageCount}`}</div>
       <button
-        className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-900 text-white transition hover:brightness-110"
+        className="flex h-14 w-14 items-center justify-center rounded-lg bg-blue-900 text-white transition hover:brightness-110"
         onClick={onClickRight}
       >
-        <ArrowForwardIcon />
+        <ArrowForwardIcon width={32} height={32} />
         <span className="sr-only">Next page</span>
       </button>
     </div>
