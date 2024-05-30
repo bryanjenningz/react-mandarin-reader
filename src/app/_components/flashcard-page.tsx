@@ -44,7 +44,7 @@ export const FlashcardPage = ({
               }
             }}
           >
-            <DeleteForever />
+            <DeleteForever width={32} height={32} />
             <span className="sr-only">Delete flashcard</span>
           </button>
         }

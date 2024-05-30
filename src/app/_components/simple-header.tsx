@@ -10,16 +10,16 @@ export const SimpleHeader = ({
   rightButton?: JSX.Element;
 }): JSX.Element => {
   return (
-    <header className="flex h-12 w-full max-w-2xl items-center">
+    <header className="flex h-14 w-full max-w-2xl items-center">
       <button
-        className="flex h-12 w-12 shrink-0 items-center justify-center"
+        className="flex h-14 w-14 shrink-0 items-center justify-center"
         onClick={() => setIsSideMenuOpen(true)}
       >
-        <MenuIcon />
+        <MenuIcon width={32} height={32} />
         <span className="sr-only">Open menu</span>
       </button>
-      <h1 className="grow text-center text-xl">{title}</h1>
-      <div className="flex h-12 w-12 items-center justify-center">
+      <h1 className="grow text-center text-2xl">{title}</h1>
+      <div className="flex h-14 w-14 items-center justify-center">
         {rightButton}
       </div>
     </header>
