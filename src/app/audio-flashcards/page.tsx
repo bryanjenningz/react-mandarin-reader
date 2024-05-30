@@ -11,11 +11,12 @@ import { VolumeUpIcon } from "../_icons/volume-up";
 const AudioFlashcardsPage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [isFlashcardBackShown, setIsFlashcardBackShown] = useState(false);
-  const flashcards = useStateStore((state) => state.flashcards);
+  const flashcards = useStateStore((x) => x.flashcards);
   const firstFlashcard = flashcards[0];
   const playAudioOnFlashcardBackEnabled = useStateStore(
     (x) => x.settings.playAudioOnFlashcardBack.enabled,
   );
+  const dispatch = useStateStore((x) => x.dispatch);
 
   useEffect(() => {
     if (
@@ -74,13 +75,19 @@ const AudioFlashcardsPage = (): JSX.Element => {
                     <>
                       <button
                         className="flex grow basis-1 items-center justify-center bg-red-900 text-lg hover:brightness-110"
-                        onClick={() => setIsFlashcardBackShown(false)}
+                        onClick={() => {
+                          dispatch({ type: "FAIL_FLASHCARD" });
+                          setIsFlashcardBackShown(false);
+                        }}
                       >
                         Fail
                       </button>
                       <button
                         className="flex grow basis-1 items-center justify-center bg-blue-900 text-lg hover:brightness-110"
-                        onClick={() => setIsFlashcardBackShown(false)}
+                        onClick={() => {
+                          dispatch({ type: "PASS_FLASHCARD" });
+                          setIsFlashcardBackShown(false);
+                        }}
                       >
                         Pass
                       </button>
