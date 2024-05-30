@@ -41,7 +41,7 @@ export const FlashcardPage = ({
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
       <SimpleHeader
-        title="Audio Flashcards"
+        title={selectedMenuItem}
         setIsSideMenuOpen={setIsSideMenuOpen}
       />
 
