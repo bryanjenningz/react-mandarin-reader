@@ -10,7 +10,7 @@ import { WordLookup } from "./_components/word-lookup";
 import { lookupLongest } from "./_utils/dictionary";
 import { useDictionaryStore } from "./_stores/dictionary";
 import { textToSpeech } from "./_utils/text-to-speech";
-import { getCharsPerPage } from "./_utils/reader/get-chars-per-page";
+import { getReaderInfo } from "./_utils/reader/get-reader-info";
 import { getReaderBoxSize } from "./_utils/reader/box-size";
 
 const HomePage = (): JSX.Element => {
@@ -20,7 +20,7 @@ const HomePage = (): JSX.Element => {
   const reader = useStateStore((state) => state.reader);
   const dispatch = useStateStore((state) => state.dispatch);
   const readerSize = useStateStore((x) => x.readerSize);
-  const { charsPerPage } = getCharsPerPage(readerSize);
+  const { charsPerPage } = getReaderInfo(readerSize);
   const pageCount = Math.ceil(reader.text.length / charsPerPage);
 
   const dictionary = useDictionaryStore((x) => x.dictionary);
@@ -46,6 +46,7 @@ const HomePage = (): JSX.Element => {
     !!flashcards.find(
       (card) => card.entry.traditional === dictionaryEntry.traditional,
     );
+
   const playAudioOnWordLookupEnabled = useStateStore(
     (x) => x.settings.playAudioOnWordLookup.enabled,
   );

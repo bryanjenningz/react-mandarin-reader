@@ -7,7 +7,7 @@ import {
   charHeight,
   readerContainerId,
 } from "../_utils/reader/constants";
-import { getCharsPerPage } from "../_utils/reader/get-chars-per-page";
+import { getReaderInfo } from "../_utils/reader/get-reader-info";
 
 export const ReaderText = ({
   size,
@@ -28,7 +28,7 @@ export const ReaderText = ({
     return <EmptyMessage message="You haven't added any text." />;
   }
 
-  const { charsPerLine, charsPerPage } = getCharsPerPage(size);
+  const { charsPerLine, charsPerPage } = getReaderInfo(size);
   const pageText = text.slice(
     pageIndex * charsPerPage,
     (pageIndex + 1) * charsPerPage,
