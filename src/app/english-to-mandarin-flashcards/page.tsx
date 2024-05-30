@@ -13,13 +13,15 @@ const front = (entry: DictionaryEntry): JSX.Element => (
 
 const back = (entry: DictionaryEntry): JSX.Element => (
   <>
+    <div className="flex gap-2 text-3xl">
+      <div>{entry.traditional}</div>
+      {entry.traditional !== entry.simplified && <div>{entry.simplified}</div>}
+    </div>
     <div className="text-lg">{entry.pinyin}</div>
     <button onClick={() => textToSpeech(entry.simplified)}>
       <VolumeUpIcon width={60} height={60} />
       <span className="sr-only">Play audio</span>
     </button>
-    <div>{entry.traditional}</div>
-    {entry.traditional !== entry.simplified && <div>{entry.simplified}</div>}
   </>
 );
 
