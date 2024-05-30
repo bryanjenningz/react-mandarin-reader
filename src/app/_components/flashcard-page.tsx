@@ -6,18 +6,22 @@ import { type MenuItemName, SideMenu } from "~/app/_components/side-menu";
 import { EmptyMessage } from "../_components/empty-message";
 import { textToSpeech } from "../_utils/text-to-speech";
 import { SimpleHeader } from "../_components/simple-header";
+import { type DictionaryEntry } from "../_utils/dictionary";
 
 export const FlashcardPage = ({
   selectedMenuItem,
+  isFlashcardBackShown,
+  setIsFlashcardBackShown,
   front,
   back,
 }: {
   selectedMenuItem: MenuItemName;
-  front: JSX.Element;
-  back: JSX.Element;
+  isFlashcardBackShown: boolean;
+  setIsFlashcardBackShown: (isFlashcardBackShown: boolean) => void;
+  front: (dictionaryEntry: DictionaryEntry) => JSX.Element;
+  back: (dictionaryEntry: DictionaryEntry) => JSX.Element;
 }): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
-  const [isFlashcardBackShown, setIsFlashcardBackShown] = useState(false);
   const flashcards = useStateStore((x) => x.flashcards);
   const firstFlashcard = flashcards[0];
   const playAudioOnFlashcardBackEnabled = useStateStore(
@@ -49,11 +53,11 @@ export const FlashcardPage = ({
         return (
           <div className="flex w-full max-w-2xl grow flex-col">
             <div className="flex w-full grow flex-col items-center gap-2">
-              {front}
+              {front(firstFlashcard.entry)}
 
               {((): JSX.Element => {
                 if (isFlashcardBackShown) {
-                  return back;
+                  return back(firstFlashcard.entry);
                 }
 
                 return <></>;
