@@ -53,11 +53,17 @@ export const FlashcardPage = ({
         return (
           <div className="flex w-full max-w-2xl grow flex-col">
             <div className="flex w-full grow flex-col items-center gap-2">
-              {front(firstFlashcard.entry)}
+              <section className="flex w-full flex-col items-center gap-2 p-4 text-center">
+                {front(firstFlashcard.entry)}
+              </section>
 
               {((): JSX.Element => {
                 if (isFlashcardBackShown) {
-                  return back(firstFlashcard.entry);
+                  return (
+                    <section className="flex w-full flex-col items-center gap-2 p-4 text-center">
+                      {back(firstFlashcard.entry)}
+                    </section>
+                  );
                 }
 
                 return <></>;
