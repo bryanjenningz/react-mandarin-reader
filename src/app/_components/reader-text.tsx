@@ -1,7 +1,7 @@
 import { EmptyMessage } from "./empty-message";
 import { cn } from "../_utils/class-names";
 import { chunk } from "../_utils/chunk";
-import { useStateStore } from "../_stores/state";
+import { type BoxSize } from "../_stores/state";
 import {
   charWidth,
   charHeight,
@@ -10,20 +10,20 @@ import {
 import { getCharsPerPage } from "../_utils/reader/get-chars-per-page";
 
 export const ReaderText = ({
+  readerSize,
   readerText,
   readerDate,
   readerSelection,
   setReaderSelection,
   pageIndex,
 }: {
+  readerSize: BoxSize;
   readerText: string;
   readerDate: number;
   readerSelection: { start: number; end: number } | null;
   setReaderSelection: (selection: number) => void;
   pageIndex: number;
 }): JSX.Element => {
-  const readerSize = useStateStore((x) => x.readerSize);
-
   if (!readerText) {
     return <EmptyMessage message="You haven't added any text." />;
   }

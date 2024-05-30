@@ -81,6 +81,7 @@ const HomePage = (): JSX.Element => {
         <div className="flex grow flex-col justify-between gap-2 px-2 pb-2">
           <div className="flex flex-col gap-2">
             <ReaderText
+              readerSize={readerSize}
               readerText={reader.text}
               readerDate={reader.date}
               readerSelection={
