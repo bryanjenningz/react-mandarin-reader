@@ -69,7 +69,10 @@ export const reducer = (state: State, action: Action): State => {
         pageIndex: 0,
         selection: null,
       };
-      const readerHistory: Reader[] = [reader, ...state.readerHistory];
+      const readerHistory: Reader[] = [
+        { text: reader.text, date: reader.date, pageIndex: reader.pageIndex },
+        ...state.readerHistory,
+      ];
       return { ...state, reader, readerHistory };
     }
     case "SET_READER_TEXT": {
