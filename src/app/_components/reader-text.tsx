@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { EmptyMessage } from "./empty-message";
 import { cn } from "../_utils/class-names";
 import { chunk } from "../_utils/chunk";
@@ -50,12 +50,16 @@ const getReaderContainerDimensions = (): Promise<Dimensions> => {
 export const ReaderText = ({
   readerText,
   readerDate,
+  readerSelection,
+  setReaderSelection,
   pageIndex,
   incrementPage,
   decrementPage,
 }: {
   readerText: string;
   readerDate: number;
+  readerSelection: number | null;
+  setReaderSelection: (selection: number) => void;
   pageIndex: number;
   incrementPage: () => void;
   decrementPage: () => void;
@@ -64,7 +68,6 @@ export const ReaderText = ({
   const dictionary = useDictionaryStore((x) => x.dictionary);
   const flashcards = useStateStore((x) => x.flashcards);
   const dispatch = useStateStore((x) => x.dispatch);
-  const [selection, setSelection] = useState<number | null>(null);
   useEffect(() => loadDictionary(), [loadDictionary]);
 
   const readerSize = useStateStore((x) => x.readerSize);
@@ -77,8 +80,8 @@ export const ReaderText = ({
 
   const maxSelectedTextLength = 12;
   const selectedText =
-    selection !== null
-      ? pageText.slice(selection, selection + maxSelectedTextLength)
+    readerSelection !== null
+      ? pageText.slice(readerSelection, readerSelection + maxSelectedTextLength)
       : "";
   const dictionaryEntry = lookupLongest(dictionary, selectedText);
   const wordLength = dictionaryEntry?.traditional.length ?? 0;
@@ -134,13 +137,13 @@ export const ReaderText = ({
                       key={`${readerDate}-${y}-${x}`}
                       className={cn(
                         "flex items-center justify-center",
-                        selection !== null &&
-                          i >= selection &&
-                          i < selection + wordLength &&
+                        readerSelection !== null &&
+                          i >= readerSelection &&
+                          i < readerSelection + wordLength &&
                           "bg-blue-600",
                       )}
                       style={{ width: charWidth, height: charHeight }}
-                      onPointerDown={() => setSelection(i)}
+                      onPointerDown={() => setReaderSelection(i)}
                     >
                       {char}
                     </button>
@@ -163,14 +166,8 @@ export const ReaderText = ({
       <ReaderBottomNav
         pageIndex={pageIndex}
         pageCount={pageCount}
-        onClickLeft={() => {
-          decrementPage();
-          setSelection(null);
-        }}
-        onClickRight={() => {
-          incrementPage();
-          setSelection(null);
-        }}
+        onClickLeft={decrementPage}
+        onClickRight={incrementPage}
       />
     </div>
   );

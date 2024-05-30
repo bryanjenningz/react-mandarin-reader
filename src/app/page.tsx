@@ -28,6 +28,10 @@ const HomePage = (): JSX.Element => {
         <ReaderText
           readerText={reader.text}
           readerDate={reader.date}
+          readerSelection={reader.selection}
+          setReaderSelection={(selection) => {
+            dispatch({ type: "SET_READER_SELECTION", selection });
+          }}
           pageIndex={reader.pageIndex}
           incrementPage={() => {
             dispatch({ type: "INCREMENT_PAGE_INDEX" });
