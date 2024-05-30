@@ -73,7 +73,8 @@ const menuSections = [
   },
 ] as const satisfies MenuSection[];
 
-type MenuItemName = (typeof menuSections)[number]["items"][number]["name"];
+export type MenuItemName =
+  (typeof menuSections)[number]["items"][number]["name"];
 
 export const SideMenu = ({
   selectedItem,
