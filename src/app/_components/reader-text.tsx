@@ -2,37 +2,14 @@ import { useEffect } from "react";
 import { EmptyMessage } from "./empty-message";
 import { cn } from "../_utils/class-names";
 import { chunk } from "../_utils/chunk";
-import { type BoxSize, useStateStore } from "../_stores/state";
-import { charWidth, charHeight } from "../_utils/reader/constants";
+import { useStateStore } from "../_stores/state";
+import {
+  charWidth,
+  charHeight,
+  readerContainerId,
+} from "../_utils/reader/constants";
 import { getCharsPerPage } from "../_utils/reader/get-chars-per-page";
-
-const readerContainerId = "reader-container";
-
-const getElementBox = (element: HTMLElement): BoxSize => {
-  const { clientWidth: width, clientHeight: height } = element;
-  return { width, height };
-};
-
-const getReaderContainerBox = (): Promise<BoxSize> => {
-  const start = Date.now();
-  const giveUpTime = 10_000;
-  const retryTime = 1_000;
-  return new Promise((resolve, reject) => {
-    const check = (): void => {
-      if (Date.now() - start >= giveUpTime) {
-        return reject(
-          new Error(`No reader container with id "${readerContainerId}"`),
-        );
-      }
-      const readerContainer = document.getElementById(readerContainerId);
-      if (!readerContainer) {
-        return void setTimeout(check, retryTime);
-      }
-      return resolve(getElementBox(readerContainer));
-    };
-    check();
-  });
-};
+import { getReaderContainerBox } from "../_utils/reader/box-size";
 
 export const ReaderText = ({
   readerText,
