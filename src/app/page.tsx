@@ -11,6 +11,7 @@ import { lookupLongest } from "./_utils/dictionary";
 import { useDictionaryStore } from "./_stores/dictionary";
 import { textToSpeech } from "./_utils/text-to-speech";
 import { getCharsPerPage } from "./_utils/reader/get-chars-per-page";
+import { getReaderBoxSize } from "./_utils/reader/box-size";
 
 const HomePage = (): JSX.Element => {
   const loadDictionary = useDictionaryStore((x) => x.loadDictionary);
@@ -51,6 +52,17 @@ const HomePage = (): JSX.Element => {
     }
   }, [dictionaryEntry, playAudioOnWordLookupEnabled]);
   const wordLength = dictionaryEntry?.traditional.length ?? 0;
+
+  useEffect(() => {
+    const setReaderSize = () =>
+      void (async () => {
+        const { width, height } = await getReaderBoxSize();
+        dispatch({ type: "SET_READER_SIZE", width, height });
+      })();
+    setReaderSize();
+    addEventListener("resize", setReaderSize);
+    return () => removeEventListener("resize", setReaderSize);
+  }, [dispatch]);
 
   return (
     <div className="flex h-[100dvh] flex-col items-center overflow-hidden bg-black text-white">

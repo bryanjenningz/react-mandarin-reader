@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { EmptyMessage } from "./empty-message";
 import { cn } from "../_utils/class-names";
 import { chunk } from "../_utils/chunk";
@@ -9,7 +8,6 @@ import {
   readerContainerId,
 } from "../_utils/reader/constants";
 import { getCharsPerPage } from "../_utils/reader/get-chars-per-page";
-import { getReaderBoxSize } from "../_utils/reader/box-size";
 
 export const ReaderText = ({
   readerText,
@@ -24,24 +22,12 @@ export const ReaderText = ({
   setReaderSelection: (selection: number) => void;
   pageIndex: number;
 }): JSX.Element => {
-  const dispatch = useStateStore((x) => x.dispatch);
   const readerSize = useStateStore((x) => x.readerSize);
   const { charsPerLine, charsPerPage } = getCharsPerPage(readerSize);
   const pageText = readerText.slice(
     pageIndex * charsPerPage,
     (pageIndex + 1) * charsPerPage,
   );
-
-  useEffect(() => {
-    const setReaderSize = () =>
-      void (async () => {
-        const { width, height } = await getReaderBoxSize();
-        dispatch({ type: "SET_READER_SIZE", width, height });
-      })();
-    setReaderSize();
-    addEventListener("resize", setReaderSize);
-    return () => removeEventListener("resize", setReaderSize);
-  }, [dispatch]);
 
   if (!readerText) {
     return <EmptyMessage message="You haven't added any text." />;
