@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { SideMenu } from "~/app/_components/side-menu";
 import { SubtitlesIcon } from "~/app/_icons/subtitles";
-import { ImportSubtitlesHeader } from "./_components/import-subtitles-header";
 import { useStateStore } from "../_stores/state";
 import { useRouter } from "next/navigation";
 import { formatSubtitles } from "./_utils/format-subtitles";
+import { SimpleHeader } from "../_components/simple-header";
 
 const ImportSubtitlesPage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -16,7 +16,10 @@ const ImportSubtitlesPage = (): JSX.Element => {
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <ImportSubtitlesHeader setIsSideMenuOpen={setIsSideMenuOpen} />
+      <SimpleHeader
+        title="Import subtitles"
+        setIsSideMenuOpen={setIsSideMenuOpen}
+      />
 
       <div className="flex grow flex-col items-center justify-center gap-2">
         <SubtitlesIcon width={120} height={120} />

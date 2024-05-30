@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { useStateStore } from "~/app/_stores/state";
 import { SideMenu } from "~/app/_components/side-menu";
-import { MandarinToEnglishFlashcardsHeader } from "./_components/mandarin-to-english-flashcards-header";
 import { EmptyMessage } from "../_components/empty-message";
 import { textToSpeech } from "../_utils/text-to-speech";
 import { VolumeUpIcon } from "../_icons/volume-up";
+import { SimpleHeader } from "../_components/simple-header";
 
 const MandarinToEnglishFlashcardsPage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -30,7 +30,8 @@ const MandarinToEnglishFlashcardsPage = (): JSX.Element => {
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <MandarinToEnglishFlashcardsHeader
+      <SimpleHeader
+        title="Mandarin Flashcards"
         setIsSideMenuOpen={setIsSideMenuOpen}
       />
 

@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { useStateStore } from "~/app/_stores/state";
 import { SideMenu } from "~/app/_components/side-menu";
-import { BrowseFlashcardsHeader } from "./_components/browse-flashcards-header";
+
 import { EmptyMessage } from "../_components/empty-message";
+import { SimpleHeader } from "../_components/simple-header";
 
 const BrowseFlashcardsPage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -12,7 +13,7 @@ const BrowseFlashcardsPage = (): JSX.Element => {
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <BrowseFlashcardsHeader setIsSideMenuOpen={setIsSideMenuOpen} />
+      <SimpleHeader title="Flashcards" setIsSideMenuOpen={setIsSideMenuOpen} />
 
       {((): JSX.Element => {
         if (flashcards.length === 0) {

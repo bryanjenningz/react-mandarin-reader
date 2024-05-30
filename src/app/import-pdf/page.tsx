@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { SideMenu } from "../_components/side-menu";
 import { PictureAsPdfIcon } from "../_icons/picture-as-pdf";
-import { ImportPdfHeader } from "./_components/import-pdf-header";
 import { useStateStore } from "../_stores/state";
 import { useRouter } from "next/navigation";
+import { SimpleHeader } from "../_components/simple-header";
 
 const ImportPdfPage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -15,7 +15,7 @@ const ImportPdfPage = (): JSX.Element => {
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <ImportPdfHeader setIsSideMenuOpen={setIsSideMenuOpen} />
+      <SimpleHeader title="Import PDF" setIsSideMenuOpen={setIsSideMenuOpen} />
 
       <div className="flex grow flex-col items-center justify-center gap-2">
         <PictureAsPdfIcon width={120} height={120} />

@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useStateStore } from "~/app/_stores/state";
 import { SideMenu } from "~/app/_components/side-menu";
-import { ReaderHistoryHeader } from "./_components/reader-history-header";
 import { EmptyMessage } from "../_components/empty-message";
 import { useRouter } from "next/navigation";
+import { SimpleHeader } from "../_components/simple-header";
 
 const ReaderHistoryPage = (): JSX.Element => {
   const router = useRouter();
@@ -15,7 +15,7 @@ const ReaderHistoryPage = (): JSX.Element => {
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <ReaderHistoryHeader setIsSideMenuOpen={setIsSideMenuOpen} />
+      <SimpleHeader title="History" setIsSideMenuOpen={setIsSideMenuOpen} />
 
       {((): JSX.Element => {
         if (readerHistory.length === 0) {

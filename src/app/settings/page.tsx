@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { SideMenu } from "~/app/_components/side-menu";
-import { SettingsHeader } from "./_components/settings-header";
 import {
   type Dispatch,
   type SettingsOption,
   type SettingsOptions,
   useStateStore,
 } from "../_stores/state";
+import { SimpleHeader } from "../_components/simple-header";
 
 const SettingsPage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -17,7 +17,7 @@ const SettingsPage = (): JSX.Element => {
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <SettingsHeader setIsSideMenuOpen={setIsSideMenuOpen} />
+      <SimpleHeader title="Settings" setIsSideMenuOpen={setIsSideMenuOpen} />
 
       <ul className="w-full max-w-2xl">
         {Object.entries(settings).map(([settingsName, settingsOption]) => {
