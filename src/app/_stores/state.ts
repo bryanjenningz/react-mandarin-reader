@@ -4,10 +4,16 @@ import { charsPerPage } from "../_components/reader-text";
 import { type DictionaryEntry } from "../_utils/dictionary";
 
 type State = {
+  readerSize: BoxSize;
   reader: Reader;
   readerHistory: Reader[];
   flashcards: Flashcard[];
   settings: SettingsOptions;
+};
+
+type BoxSize = {
+  width: number;
+  height: number;
 };
 
 type Reader = {
@@ -33,6 +39,7 @@ export type SettingsOption = {
 };
 
 type Action =
+  | { type: "SET_READER_SIZE"; width: number; height: number }
   | { type: "PASTE_READER_TEXT"; text: string; date: number }
   | { type: "SET_READER_TEXT"; text: string; date: number; pageIndex: number }
   | { type: "INCREMENT_PAGE_INDEX" }
@@ -45,6 +52,13 @@ const noop = () => {};
 
 export const reducer = (state: State, action: Action): [State, () => void] => {
   switch (action.type) {
+    case "SET_READER_SIZE": {
+      const readerSize: BoxSize = {
+        width: action.width,
+        height: action.height,
+      };
+      return [{ ...state, readerSize }, noop];
+    }
     case "PASTE_READER_TEXT": {
       const reader: Reader = {
         text: action.text,
@@ -124,6 +138,7 @@ type StateStore = State & { dispatch: Dispatch };
 export const useStateStore = create<StateStore>()(
   persist(
     (set) => ({
+      readerSize: { width: 390, height: 600 },
       reader: { text: "", date: 0, pageIndex: 0 },
       readerHistory: [],
       flashcards: [],

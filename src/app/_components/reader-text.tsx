@@ -13,7 +13,6 @@ import { WordLookup } from "./word-lookup";
 const charsPerLine = 14;
 const linesPerPage = 13;
 export const charsPerPage = charsPerLine * linesPerPage;
-
 const charWidth = 24;
 const charHeight = 32;
 
@@ -62,6 +61,10 @@ export const ReaderText = ({
   const [selection, setSelection] = useState<number | null>(null);
   useEffect(() => loadDictionary(), [loadDictionary]);
 
+  const readerSize = useStateStore((x) => x.readerSize);
+  const charsPerLine = Math.floor(readerSize.width / charWidth);
+  const linesPerPage = Math.floor(readerSize.height / charHeight);
+  const charsPerPage = linesPerPage * charsPerLine;
   const pageText = readerText.slice(
     pageIndex * charsPerPage,
     (pageIndex + 1) * charsPerPage,
@@ -92,10 +95,10 @@ export const ReaderText = ({
 
   useEffect(() => {
     void (async () => {
-      const dimensions = await getReaderContainerDimensions();
-      console.log(dimensions);
+      const { width, height } = await getReaderContainerDimensions();
+      dispatch({ type: "SET_READER_SIZE", width, height });
     })();
-  }, []);
+  }, [dispatch]);
 
   if (!readerText) {
     return <EmptyMessage message="You haven't added any text." />;
