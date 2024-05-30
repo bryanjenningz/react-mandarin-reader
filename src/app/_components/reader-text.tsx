@@ -23,15 +23,17 @@ export const ReaderText = ({
   pageIndex: number;
 }): JSX.Element => {
   const readerSize = useStateStore((x) => x.readerSize);
+
+  if (!readerText) {
+    return <EmptyMessage message="You haven't added any text." />;
+  }
+
   const { charsPerLine, charsPerPage } = getCharsPerPage(readerSize);
   const pageText = readerText.slice(
     pageIndex * charsPerPage,
     (pageIndex + 1) * charsPerPage,
   );
-
-  if (!readerText) {
-    return <EmptyMessage message="You haven't added any text." />;
-  }
+  const readerLines = chunk(pageText.split(""), charsPerLine);
 
   return (
     <section
@@ -39,7 +41,7 @@ export const ReaderText = ({
       className="flex h-[60dvh] w-full max-w-2xl shrink-0 flex-col"
       style={{ fontSize: charWidth }}
     >
-      {chunk(pageText.split(""), charsPerLine).map((line, y) => {
+      {readerLines.map((line, y) => {
         return (
           <div
             key={`${readerDate}-${y}`}
