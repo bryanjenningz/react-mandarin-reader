@@ -45,6 +45,8 @@ type Action =
   | { type: "INCREMENT_PAGE_INDEX" }
   | { type: "DECREMENT_PAGE_INDEX" }
   | { type: "ADD_OR_REMOVE_FLASHCARD"; entry: DictionaryEntry }
+  | { type: "PASS_FLASHCARD" }
+  | { type: "FAIL_FLASHCARD" }
   | { type: "TOGGLE_SETTINGS_OPTION"; name: keyof SettingsOptions };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -116,6 +118,39 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
       const flashcards: Flashcard[] = [
         ...state.flashcards,
         { entry: action.entry, correct: 0 },
+      ];
+      return [{ ...state, flashcards }, noop];
+    }
+    case "PASS_FLASHCARD": {
+      const flashcard = state.flashcards[0];
+      if (!flashcard) return [state, noop];
+      const newFlashcard: Flashcard = {
+        ...flashcard,
+        correct: flashcard.correct + 1,
+      };
+      const intervalScalar = 5;
+      const index = newFlashcard.correct * intervalScalar;
+      const remainingFlashcards = state.flashcards.slice(1);
+      const flashcards: Flashcard[] = [
+        ...remainingFlashcards.slice(0, index),
+        newFlashcard,
+        ...remainingFlashcards.slice(index),
+      ];
+      return [{ ...state, flashcards }, noop];
+    }
+    case "FAIL_FLASHCARD": {
+      const flashcard = state.flashcards[0];
+      if (!flashcard) return [state, noop];
+      const newFlashcard: Flashcard = {
+        ...flashcard,
+        correct: 0,
+      };
+      const index = 2;
+      const remainingFlashcards = state.flashcards.slice(1);
+      const flashcards: Flashcard[] = [
+        ...remainingFlashcards.slice(0, index),
+        newFlashcard,
+        ...remainingFlashcards.slice(index),
       ];
       return [{ ...state, flashcards }, noop];
     }
