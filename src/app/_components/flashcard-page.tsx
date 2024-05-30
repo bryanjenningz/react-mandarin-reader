@@ -7,6 +7,7 @@ import { EmptyMessage } from "../_components/empty-message";
 import { textToSpeech } from "../_utils/text-to-speech";
 import { SimpleHeader } from "../_components/simple-header";
 import { type DictionaryEntry } from "../_utils/dictionary";
+import { DeleteForever } from "../_icons/delete-forever";
 
 export const FlashcardPage = ({
   selectedMenuItem,
@@ -43,6 +44,23 @@ export const FlashcardPage = ({
       <SimpleHeader
         title={selectedMenuItem}
         setIsSideMenuOpen={setIsSideMenuOpen}
+        rightButton={
+          <button
+            className="flex h-full w-full items-center justify-center"
+            onClick={() => {
+              if (firstFlashcard) {
+                dispatch({
+                  type: "ADD_OR_REMOVE_FLASHCARD",
+                  entry: firstFlashcard.entry,
+                });
+                setIsFlashcardBackShown(false);
+              }
+            }}
+          >
+            <DeleteForever />
+            <span className="sr-only">Delete flashcard</span>
+          </button>
+        }
       />
 
       {((): JSX.Element => {
