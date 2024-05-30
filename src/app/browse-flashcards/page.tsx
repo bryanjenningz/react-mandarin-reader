@@ -38,7 +38,7 @@ const BrowseFlashcardsPage = (): JSX.Element => {
                       )}
                       <span>{flashcard.entry.pinyin}</span>
                     </span>
-                    <span className="text-sm text-slate-400">
+                    <span className="line-clamp-2 text-left text-sm text-slate-400">
                       {flashcard.entry.meanings.join(", ")}
                     </span>
                   </button>
