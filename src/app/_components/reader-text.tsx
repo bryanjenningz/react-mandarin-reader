@@ -10,11 +10,11 @@ import {
 import { getCharsPerPage } from "../_utils/reader/get-chars-per-page";
 
 export const ReaderText = ({
-  size: readerSize,
-  text: readerText,
-  date: readerDate,
-  selection: readerSelection,
-  setSelection: setReaderSelection,
+  size,
+  text,
+  date,
+  selection,
+  setSelection,
   pageIndex,
 }: {
   size: BoxSize;
@@ -24,12 +24,12 @@ export const ReaderText = ({
   setSelection: (selection: number) => void;
   pageIndex: number;
 }): JSX.Element => {
-  if (!readerText) {
+  if (!text) {
     return <EmptyMessage message="You haven't added any text." />;
   }
 
-  const { charsPerLine, charsPerPage } = getCharsPerPage(readerSize);
-  const pageText = readerText.slice(
+  const { charsPerLine, charsPerPage } = getCharsPerPage(size);
+  const pageText = text.slice(
     pageIndex * charsPerPage,
     (pageIndex + 1) * charsPerPage,
   );
@@ -44,7 +44,7 @@ export const ReaderText = ({
       {readerLines.map((line, y) => {
         return (
           <div
-            key={`${readerDate}-${y}`}
+            key={`${date}-${y}`}
             className="flex justify-center"
             style={{ height: charHeight }}
           >
@@ -52,16 +52,16 @@ export const ReaderText = ({
               const i = charsPerLine * y + x;
               return (
                 <button
-                  key={`${readerDate}-${y}-${x}`}
+                  key={`${date}-${y}-${x}`}
                   className={cn(
                     "flex items-center justify-center",
-                    readerSelection !== null &&
-                      i >= readerSelection.start &&
-                      i < readerSelection.end &&
+                    selection !== null &&
+                      i >= selection.start &&
+                      i < selection.end &&
                       "bg-blue-600",
                   )}
                   style={{ width: charWidth, height: charHeight }}
-                  onPointerDown={() => setReaderSelection(i)}
+                  onPointerDown={() => setSelection(i)}
                 >
                   {char}
                 </button>

@@ -84,6 +84,7 @@ const HomePage = (): JSX.Element => {
               size={readerSize}
               text={reader.text}
               date={reader.date}
+              pageIndex={reader.pageIndex}
               selection={
                 reader.selection !== null
                   ? {
@@ -95,7 +96,6 @@ const HomePage = (): JSX.Element => {
               setSelection={(selection) => {
                 dispatch({ type: "SET_READER_SELECTION", selection });
               }}
-              pageIndex={reader.pageIndex}
             />
 
             {dictionaryEntry && (
