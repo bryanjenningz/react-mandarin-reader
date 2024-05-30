@@ -44,6 +44,7 @@ type Action =
   | { type: "SET_READER_SIZE"; width: number; height: number }
   | { type: "PASTE_READER_TEXT"; text: string; date: number }
   | { type: "SET_READER_TEXT"; text: string; date: number; pageIndex: number }
+  | { type: "SET_READER_SELECTION"; selection: number }
   | { type: "INCREMENT_PAGE_INDEX" }
   | { type: "DECREMENT_PAGE_INDEX" }
   | { type: "ADD_OR_REMOVE_FLASHCARD"; entry: DictionaryEntry }
@@ -79,6 +80,13 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         date: action.date,
         pageIndex: action.pageIndex,
         selection: null,
+      };
+      return [{ ...state, reader }, noop];
+    }
+    case "SET_READER_SELECTION": {
+      const reader: ActiveReader = {
+        ...state.reader,
+        selection: action.selection,
       };
       return [{ ...state, reader }, noop];
     }
