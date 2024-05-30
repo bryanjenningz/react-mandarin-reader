@@ -10,7 +10,7 @@ import { WordLookup } from "./_components/word-lookup";
 import { lookupLongest } from "./_utils/dictionary";
 import { useDictionaryStore } from "./_stores/dictionary";
 import { textToSpeech } from "./_utils/text-to-speech";
-import { getReaderInfo } from "./_utils/reader/get-reader-info";
+import { getPageCount, getReaderInfo } from "./_utils/reader/get-reader-info";
 import { getReaderBoxSize } from "./_utils/reader/box-size";
 
 const HomePage = (): JSX.Element => {
@@ -20,7 +20,7 @@ const HomePage = (): JSX.Element => {
   const reader = useStateStore((state) => state.reader);
   const readerSize = useStateStore((x) => x.readerSize);
   const { charsPerPage } = getReaderInfo(readerSize);
-  const pageCount = Math.ceil(reader.text.length / charsPerPage);
+  const pageCount = getPageCount(reader.text, readerSize);
   const dictionary = useDictionaryStore((x) => x.dictionary);
   const flashcards = useStateStore((x) => x.flashcards);
   const pageText = reader.text.slice(

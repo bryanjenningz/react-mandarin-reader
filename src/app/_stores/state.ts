@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { type DictionaryEntry } from "../_utils/dictionary";
-import { getReaderInfo } from "../_utils/reader/get-reader-info";
+import { getPageCount } from "../_utils/reader/get-reader-info";
 
 type State = {
   readerSize: BoxSize;
@@ -91,8 +91,7 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
       return [{ ...state, reader }, noop];
     }
     case "INCREMENT_PAGE_INDEX": {
-      const { charsPerPage } = getReaderInfo(state.readerSize);
-      const pageCount = Math.ceil(state.reader.text.length / charsPerPage);
+      const pageCount = getPageCount(state.reader.text, state.readerSize);
       const pageIndex = Math.min(
         Math.max(0, pageCount - 1),
         state.reader.pageIndex + 1,
