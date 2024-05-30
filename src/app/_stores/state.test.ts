@@ -103,4 +103,18 @@ describe("reducer", () => {
     };
     expect(actual).toEqual(expected);
   });
+
+  it("increments the reader page index", () => {
+    const initState: State = {
+      ...state,
+      reader: { text: "a".repeat(1000), date: 1, pageIndex: 0, selection: 3 },
+    };
+    const action: Action = { type: "INCREMENT_PAGE_INDEX" };
+    const actual = reducer(initState, action);
+    const expected: State = {
+      ...state,
+      reader: { ...initState.reader, pageIndex: 1, selection: null },
+    };
+    expect(actual).toEqual(expected);
+  });
 });
