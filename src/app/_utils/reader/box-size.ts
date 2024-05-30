@@ -1,7 +1,7 @@
 import { type BoxSize } from "~/app/_stores/state";
 import { readerContainerId } from "./constants";
 
-const getElementBox = (element: HTMLElement): BoxSize => {
+const getElementBoxSize = (element: HTMLElement): BoxSize => {
   const { clientWidth: width, clientHeight: height } = element;
   return { width, height };
 };
@@ -21,7 +21,7 @@ export const getReaderBoxSize = (): Promise<BoxSize> => {
       if (!readerContainer) {
         return void setTimeout(check, retryTime);
       }
-      return resolve(getElementBox(readerContainer));
+      return resolve(getElementBoxSize(readerContainer));
     };
     check();
   });
