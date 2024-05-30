@@ -10,7 +10,8 @@ import { WordLookup } from "./_components/word-lookup";
 import { lookupLongest } from "./_utils/dictionary";
 import { useDictionaryStore } from "./_stores/dictionary";
 import { textToSpeech } from "./_utils/text-to-speech";
-import { getPageCount, getReaderInfo } from "./_utils/reader/get-reader-info";
+import { getReaderInfo } from "./_utils/reader/get-reader-info";
+import { getPageCount } from "./_utils/reader/get-page-count";
 import { getReaderBoxSize } from "./_utils/reader/get-reader-box-size";
 
 const HomePage = (): JSX.Element => {

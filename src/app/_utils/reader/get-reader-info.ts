@@ -9,11 +9,3 @@ export const getReaderInfo = (
   const charsPerPage = linesPerPage * charsPerLine;
   return { charsPerLine, linesPerPage, charsPerPage };
 };
-
-export const getPageCount = (
-  readerText: string,
-  readerSize: BoxSize,
-): number => {
-  const { charsPerPage } = getReaderInfo(readerSize);
-  return Math.ceil(readerText.length / charsPerPage);
-};

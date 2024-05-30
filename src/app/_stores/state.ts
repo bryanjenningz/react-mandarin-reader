@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { type DictionaryEntry } from "../_utils/dictionary";
-import { getPageCount } from "../_utils/reader/get-reader-info";
+import { getPageCount } from "../_utils/reader/get-page-count";
 
 type State = {
   readerSize: BoxSize;
