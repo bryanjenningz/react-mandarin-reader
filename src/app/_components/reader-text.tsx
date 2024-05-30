@@ -9,6 +9,15 @@ import {
 } from "../_utils/reader/constants";
 import { getCharsPerPage } from "../_utils/reader/get-chars-per-page";
 
+type ReaderTextProps = {
+  size: BoxSize;
+  text: string;
+  date: number;
+  selection: { start: number; end: number } | null;
+  setSelection: (selection: number) => void;
+  pageIndex: number;
+};
+
 export const ReaderText = ({
   size,
   text,
@@ -16,14 +25,7 @@ export const ReaderText = ({
   selection,
   setSelection,
   pageIndex,
-}: {
-  size: BoxSize;
-  text: string;
-  date: number;
-  selection: { start: number; end: number } | null;
-  setSelection: (selection: number) => void;
-  pageIndex: number;
-}): JSX.Element => {
+}: ReaderTextProps): JSX.Element => {
   if (!text) {
     return <EmptyMessage message="You haven't added any text." />;
   }
