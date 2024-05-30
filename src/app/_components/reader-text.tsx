@@ -2,11 +2,7 @@ import { useEffect } from "react";
 import { EmptyMessage } from "./empty-message";
 import { cn } from "../_utils/class-names";
 import { chunk } from "../_utils/chunk";
-import { useDictionaryStore } from "../_stores/dictionary";
-import { lookupLongest } from "../_utils/dictionary";
 import { useStateStore } from "../_stores/state";
-import { textToSpeech } from "../_utils/text-to-speech";
-import { WordLookup } from "./word-lookup";
 
 const charSizeScalar = 1.2;
 const charWidth = 24 * charSizeScalar;
@@ -50,49 +46,24 @@ export const ReaderText = ({
   readerText,
   readerDate,
   readerSelection,
+  wordLength,
   setReaderSelection,
   pageIndex,
 }: {
   readerText: string;
   readerDate: number;
   readerSelection: number | null;
+  wordLength: number;
   setReaderSelection: (selection: number) => void;
   pageIndex: number;
 }): JSX.Element => {
-  const loadDictionary = useDictionaryStore((x) => x.loadDictionary);
-  const dictionary = useDictionaryStore((x) => x.dictionary);
-  const flashcards = useStateStore((x) => x.flashcards);
   const dispatch = useStateStore((x) => x.dispatch);
-  useEffect(() => loadDictionary(), [loadDictionary]);
-
   const readerSize = useStateStore((x) => x.readerSize);
   const { charsPerLine, charsPerPage } = getCharsPerPage(readerSize);
   const pageText = readerText.slice(
     pageIndex * charsPerPage,
     (pageIndex + 1) * charsPerPage,
   );
-
-  const maxSelectedTextLength = 12;
-  const selectedText =
-    readerSelection !== null
-      ? pageText.slice(readerSelection, readerSelection + maxSelectedTextLength)
-      : "";
-  const dictionaryEntry = lookupLongest(dictionary, selectedText);
-  const wordLength = dictionaryEntry?.traditional.length ?? 0;
-  const containsFlashcard =
-    !!dictionaryEntry &&
-    !!flashcards.find(
-      (card) => card.entry.traditional === dictionaryEntry.traditional,
-    );
-  const playAudioOnWordLookupEnabled = useStateStore(
-    (x) => x.settings.playAudioOnWordLookup.enabled,
-  );
-
-  useEffect(() => {
-    if (dictionaryEntry && playAudioOnWordLookupEnabled) {
-      textToSpeech(dictionaryEntry.simplified);
-    }
-  }, [dictionaryEntry, playAudioOnWordLookupEnabled]);
 
   useEffect(() => {
     const setReaderSize = () =>
@@ -110,50 +81,40 @@ export const ReaderText = ({
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <section
-        id={readerContainerId}
-        className="flex h-[60dvh] w-full max-w-2xl shrink-0 flex-col"
-        style={{ fontSize: charWidth }}
-      >
-        {chunk(pageText.split(""), charsPerLine).map((line, y) => {
-          return (
-            <div
-              key={`${readerDate}-${y}`}
-              className="flex justify-center"
-              style={{ height: charHeight }}
-            >
-              {line.map((char, x) => {
-                const i = charsPerLine * y + x;
-                return (
-                  <button
-                    key={`${readerDate}-${y}-${x}`}
-                    className={cn(
-                      "flex items-center justify-center",
-                      readerSelection !== null &&
-                        i >= readerSelection &&
-                        i < readerSelection + wordLength &&
-                        "bg-blue-600",
-                    )}
-                    style={{ width: charWidth, height: charHeight }}
-                    onPointerDown={() => setReaderSelection(i)}
-                  >
-                    {char}
-                  </button>
-                );
-              })}
-            </div>
-          );
-        })}
-      </section>
-
-      {dictionaryEntry && (
-        <WordLookup
-          containsFlashcard={containsFlashcard}
-          dictionaryEntry={dictionaryEntry}
-          dispatch={dispatch}
-        />
-      )}
-    </div>
+    <section
+      id={readerContainerId}
+      className="flex h-[60dvh] w-full max-w-2xl shrink-0 flex-col"
+      style={{ fontSize: charWidth }}
+    >
+      {chunk(pageText.split(""), charsPerLine).map((line, y) => {
+        return (
+          <div
+            key={`${readerDate}-${y}`}
+            className="flex justify-center"
+            style={{ height: charHeight }}
+          >
+            {line.map((char, x) => {
+              const i = charsPerLine * y + x;
+              return (
+                <button
+                  key={`${readerDate}-${y}-${x}`}
+                  className={cn(
+                    "flex items-center justify-center",
+                    readerSelection !== null &&
+                      i >= readerSelection &&
+                      i < readerSelection + wordLength &&
+                      "bg-blue-600",
+                  )}
+                  style={{ width: charWidth, height: charHeight }}
+                  onPointerDown={() => setReaderSelection(i)}
+                >
+                  {char}
+                </button>
+              );
+            })}
+          </div>
+        );
+      })}
+    </section>
   );
 };
