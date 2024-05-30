@@ -44,6 +44,7 @@ type Action =
   | { type: "SET_READER_SIZE"; width: number; height: number }
   | { type: "PASTE_READER_TEXT"; text: string; date: number }
   | { type: "SET_READER_TEXT"; text: string; date: number; pageIndex: number }
+  | { type: "DELETE_READER_HISTORY_ITEM"; date: number }
   | { type: "SET_READER_SELECTION"; selection: number }
   | { type: "INCREMENT_PAGE_INDEX" }
   | { type: "DECREMENT_PAGE_INDEX" }
@@ -82,6 +83,12 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         selection: null,
       };
       return [{ ...state, reader }, noop];
+    }
+    case "DELETE_READER_HISTORY_ITEM": {
+      const readerHistory: Reader[] = state.readerHistory.filter(
+        (x) => x.date !== action.date,
+      );
+      return [{ ...state, readerHistory }, noop];
     }
     case "SET_READER_SELECTION": {
       const reader: ActiveReader = {
