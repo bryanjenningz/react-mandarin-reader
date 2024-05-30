@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import { type DictionaryEntry } from "../_utils/dictionary";
 import { getPageCount } from "../_utils/reader/get-page-count";
 
-type State = {
+export type State = {
   readerSize: BoxSize;
   reader: ActiveReader;
   readerHistory: Reader[];
@@ -16,15 +16,15 @@ export type BoxSize = {
   height: number;
 };
 
-type ActiveReader = Reader & { selection: number | null };
+export type ActiveReader = Reader & { selection: number | null };
 
-type Reader = {
+export type Reader = {
   text: string;
   date: number;
   pageIndex: number;
 };
 
-type Flashcard = {
+export type Flashcard = {
   entry: DictionaryEntry;
   correct: number;
 };
@@ -40,7 +40,7 @@ export type SettingsOption = {
   enabled: boolean;
 };
 
-type Action =
+export type Action =
   | { type: "SET_READER_SIZE"; width: number; height: number }
   | { type: "PASTE_READER_TEXT"; text: string; date: number }
   | { type: "SET_READER_TEXT"; text: string; date: number; pageIndex: number }
