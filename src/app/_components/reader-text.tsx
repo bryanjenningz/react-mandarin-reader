@@ -4,11 +4,10 @@ import { cn } from "../_utils/class-names";
 import { chunk } from "../_utils/chunk";
 import { useDictionaryStore } from "../_stores/dictionary";
 import { lookupLongest } from "../_utils/dictionary";
-import { ArrowBackIcon } from "../_icons/arrow-back";
-import { ArrowForwardIcon } from "../_icons/arrow-forward";
 import { useStateStore } from "../_stores/state";
 import { textToSpeech } from "../_utils/text-to-speech";
 import { WordLookup } from "./word-lookup";
+import { ReaderBottomNav } from "./reader-bottom-nav";
 
 const charSizeScalar = 1.2;
 const charWidth = 24 * charSizeScalar;
@@ -173,38 +172,6 @@ export const ReaderText = ({
           setSelection(null);
         }}
       />
-    </div>
-  );
-};
-
-const ReaderBottomNav = ({
-  pageIndex,
-  pageCount,
-  onClickLeft,
-  onClickRight,
-}: {
-  pageIndex: number;
-  pageCount: number;
-  onClickLeft: () => void;
-  onClickRight: () => void;
-}): JSX.Element => {
-  return (
-    <div className="flex shrink-0 items-center justify-between">
-      <button
-        className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-900 text-white transition hover:brightness-110"
-        onClick={onClickLeft}
-      >
-        <ArrowBackIcon />
-        <span className="sr-only">Previous page</span>
-      </button>
-      <div className="flex grow items-center justify-center text-xl">{`${pageIndex + 1} / ${pageCount}`}</div>
-      <button
-        className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-900 text-white transition hover:brightness-110"
-        onClick={onClickRight}
-      >
-        <ArrowForwardIcon />
-        <span className="sr-only">Next page</span>
-      </button>
     </div>
   );
 };
