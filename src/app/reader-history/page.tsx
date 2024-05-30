@@ -6,6 +6,7 @@ import { SideMenu } from "~/app/_components/side-menu";
 import { EmptyMessage } from "../_components/empty-message";
 import { useRouter } from "next/navigation";
 import { SimpleHeader } from "../_components/simple-header";
+import { DeleteForever } from "../_icons/delete-forever";
 
 const ReaderHistoryPage = (): JSX.Element => {
   const router = useRouter();
@@ -27,25 +28,39 @@ const ReaderHistoryPage = (): JSX.Element => {
             {readerHistory.map((historyItem) => {
               return (
                 <li key={historyItem.date}>
-                  <button
-                    onClick={() => {
-                      dispatch({
-                        type: "SET_READER_TEXT",
-                        text: historyItem.text,
-                        date: historyItem.date,
-                        pageIndex: historyItem.pageIndex,
-                      });
-                      void router.push("/");
-                    }}
-                    className="flex flex-col px-4 py-2"
-                  >
-                    <time className="text-left text-sm font-bold text-blue-500">
-                      {formatTime(historyItem.date)}
-                    </time>
-                    <span className="line-clamp-4 text-sm">
-                      {historyItem.text}
-                    </span>
-                  </button>
+                  <span className="flex items-center gap-2">
+                    <button
+                      onClick={() => {
+                        dispatch({
+                          type: "SET_READER_TEXT",
+                          text: historyItem.text,
+                          date: historyItem.date,
+                          pageIndex: historyItem.pageIndex,
+                        });
+                        void router.push("/");
+                      }}
+                      className="flex flex-col py-2 pl-4"
+                    >
+                      <time className="text-left text-sm font-bold text-blue-500">
+                        {formatTime(historyItem.date)}
+                      </time>
+                      <span className="line-clamp-4 text-sm">
+                        {historyItem.text}
+                      </span>
+                    </button>
+                    <button
+                      className="flex h-12 w-12 shrink-0 items-center justify-center"
+                      onClick={() => {
+                        dispatch({
+                          type: "DELETE_READER_HISTORY_ITEM",
+                          date: historyItem.date,
+                        });
+                      }}
+                    >
+                      <DeleteForever />
+                      <span className="sr-only">Delete history item</span>
+                    </button>
+                  </span>
                 </li>
               );
             })}
