@@ -131,4 +131,32 @@ describe("reducer", () => {
     };
     expect(actual).toEqual(expected);
   });
+
+  it("decrements the reader page index", () => {
+    const initState: State = {
+      ...state,
+      reader: { text: "a".repeat(1000), date: 1, pageIndex: 1, selection: 3 },
+    };
+    const action: Action = { type: "DECREMENT_PAGE_INDEX" };
+    const actual = reducer(initState, action);
+    const expected: State = {
+      ...state,
+      reader: { ...initState.reader, pageIndex: 0, selection: null },
+    };
+    expect(actual).toEqual(expected);
+  });
+
+  it("only closes the selection if the reader page index is already 0", () => {
+    const initState: State = {
+      ...state,
+      reader: { text: "a".repeat(1000), date: 1, pageIndex: 0, selection: 3 },
+    };
+    const action: Action = { type: "DECREMENT_PAGE_INDEX" };
+    const actual = reducer(initState, action);
+    const expected: State = {
+      ...initState,
+      reader: { ...initState.reader, selection: null },
+    };
+    expect(actual).toEqual(expected);
+  });
 });
