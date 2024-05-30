@@ -26,9 +26,9 @@ export const WordLookup = ({
         <button onClick={() => addOrRemoveFlashcard(dictionaryEntry)}>
           {(() => {
             if (containsFlashcard) {
-              return <CancelCircleIcon />;
+              return <CancelCircleIcon width={32} height={32} />;
             }
-            return <AddCircleIcon />;
+            return <AddCircleIcon width={32} height={32} />;
           })()}
         </button>
       </div>
