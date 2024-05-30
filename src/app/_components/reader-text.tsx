@@ -12,8 +12,8 @@ import { useStateStore } from "../_stores/state";
 import { textToSpeech } from "../_utils/text-to-speech";
 import { VolumeUpIcon } from "../_icons/volume-up";
 
-export const charsPerLine = 14;
-export const linesPerPage = 13;
+const charsPerLine = 14;
+const linesPerPage = 13;
 export const charsPerPage = charsPerLine * linesPerPage;
 
 const charWidth = 24;
