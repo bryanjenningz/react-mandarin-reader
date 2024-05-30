@@ -7,7 +7,6 @@ import { lookupLongest } from "../_utils/dictionary";
 import { useStateStore } from "../_stores/state";
 import { textToSpeech } from "../_utils/text-to-speech";
 import { WordLookup } from "./word-lookup";
-import { ReaderBottomNav } from "./reader-bottom-nav";
 
 const charSizeScalar = 1.2;
 const charWidth = 24 * charSizeScalar;
@@ -53,16 +52,12 @@ export const ReaderText = ({
   readerSelection,
   setReaderSelection,
   pageIndex,
-  incrementPage,
-  decrementPage,
 }: {
   readerText: string;
   readerDate: number;
   readerSelection: number | null;
   setReaderSelection: (selection: number) => void;
   pageIndex: number;
-  incrementPage: () => void;
-  decrementPage: () => void;
 }): JSX.Element => {
   const loadDictionary = useDictionaryStore((x) => x.loadDictionary);
   const dictionary = useDictionaryStore((x) => x.dictionary);
@@ -76,7 +71,6 @@ export const ReaderText = ({
     pageIndex * charsPerPage,
     (pageIndex + 1) * charsPerPage,
   );
-  const pageCount = Math.ceil(readerText.length / charsPerPage);
 
   const maxSelectedTextLength = 12;
   const selectedText =
@@ -116,59 +110,50 @@ export const ReaderText = ({
   }
 
   return (
-    <div className="flex grow flex-col justify-between gap-2 px-2 pb-2">
-      <div className="flex flex-col gap-2">
-        <section
-          id={readerContainerId}
-          className="flex h-[60dvh] w-full max-w-2xl shrink-0 flex-col"
-          style={{ fontSize: charWidth }}
-        >
-          {chunk(pageText.split(""), charsPerLine).map((line, y) => {
-            return (
-              <div
-                key={`${readerDate}-${y}`}
-                className="flex justify-center"
-                style={{ height: charHeight }}
-              >
-                {line.map((char, x) => {
-                  const i = charsPerLine * y + x;
-                  return (
-                    <button
-                      key={`${readerDate}-${y}-${x}`}
-                      className={cn(
-                        "flex items-center justify-center",
-                        readerSelection !== null &&
-                          i >= readerSelection &&
-                          i < readerSelection + wordLength &&
-                          "bg-blue-600",
-                      )}
-                      style={{ width: charWidth, height: charHeight }}
-                      onPointerDown={() => setReaderSelection(i)}
-                    >
-                      {char}
-                    </button>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </section>
+    <div className="flex flex-col gap-2">
+      <section
+        id={readerContainerId}
+        className="flex h-[60dvh] w-full max-w-2xl shrink-0 flex-col"
+        style={{ fontSize: charWidth }}
+      >
+        {chunk(pageText.split(""), charsPerLine).map((line, y) => {
+          return (
+            <div
+              key={`${readerDate}-${y}`}
+              className="flex justify-center"
+              style={{ height: charHeight }}
+            >
+              {line.map((char, x) => {
+                const i = charsPerLine * y + x;
+                return (
+                  <button
+                    key={`${readerDate}-${y}-${x}`}
+                    className={cn(
+                      "flex items-center justify-center",
+                      readerSelection !== null &&
+                        i >= readerSelection &&
+                        i < readerSelection + wordLength &&
+                        "bg-blue-600",
+                    )}
+                    style={{ width: charWidth, height: charHeight }}
+                    onPointerDown={() => setReaderSelection(i)}
+                  >
+                    {char}
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })}
+      </section>
 
-        {dictionaryEntry && (
-          <WordLookup
-            containsFlashcard={containsFlashcard}
-            dictionaryEntry={dictionaryEntry}
-            dispatch={dispatch}
-          />
-        )}
-      </div>
-
-      <ReaderBottomNav
-        pageIndex={pageIndex}
-        pageCount={pageCount}
-        onClickLeft={decrementPage}
-        onClickRight={incrementPage}
-      />
+      {dictionaryEntry && (
+        <WordLookup
+          containsFlashcard={containsFlashcard}
+          dictionaryEntry={dictionaryEntry}
+          dispatch={dispatch}
+        />
+      )}
     </div>
   );
 };

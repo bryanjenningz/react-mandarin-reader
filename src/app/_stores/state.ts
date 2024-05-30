@@ -97,25 +97,29 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         Math.max(0, pageCount - 1),
         state.reader.pageIndex + 1,
       );
+      const reader: ActiveReader = {
+        ...state.reader,
+        pageIndex,
+        selection: null,
+      };
       const readerHistory = state.readerHistory.map((reader) => {
         if (reader.date !== state.reader.date) return reader;
         return { ...reader, pageIndex };
       });
-      return [
-        { ...state, reader: { ...state.reader, pageIndex }, readerHistory },
-        noop,
-      ];
+      return [{ ...state, reader, readerHistory }, noop];
     }
     case "DECREMENT_PAGE_INDEX": {
       const pageIndex = Math.max(0, state.reader.pageIndex - 1);
+      const reader: ActiveReader = {
+        ...state.reader,
+        pageIndex,
+        selection: null,
+      };
       const readerHistory = state.readerHistory.map((reader) => {
         if (reader.date !== state.reader.date) return reader;
         return { ...reader, pageIndex };
       });
-      return [
-        { ...state, reader: { ...state.reader, pageIndex }, readerHistory },
-        noop,
-      ];
+      return [{ ...state, reader, readerHistory }, noop];
     }
     case "ADD_OR_REMOVE_FLASHCARD": {
       const containsFlashcard = !!state.flashcards.find(
