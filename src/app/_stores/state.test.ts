@@ -99,7 +99,7 @@ describe("reducer", () => {
     const actual = reducer(initState, action);
     const expected: State = {
       ...state,
-      reader: { text: "a", date: 1, pageIndex: 2, selection: 5 },
+      reader: { ...initState.reader, selection: 5 },
     };
     expect(actual).toEqual(expected);
   });
