@@ -10,12 +10,18 @@ import { useStateStore } from "../_stores/state";
 import { textToSpeech } from "../_utils/text-to-speech";
 import { WordLookup } from "./word-lookup";
 
-const charsPerLine = 14;
-const linesPerPage = 13;
-export const charsPerPage = charsPerLine * linesPerPage;
 const charSizeScalar = 1.2;
 const charWidth = 24 * charSizeScalar;
 const charHeight = 32 * charSizeScalar;
+
+export const getCharsPerPage = (
+  readerSize: Dimensions,
+): { charsPerLine: number; linesPerPage: number; charsPerPage: number } => {
+  const charsPerLine = Math.floor(readerSize.width / charWidth);
+  const linesPerPage = Math.floor(readerSize.height / charHeight);
+  const charsPerPage = linesPerPage * charsPerLine;
+  return { charsPerLine, linesPerPage, charsPerPage };
+};
 
 const readerContainerId = "reader-container";
 
@@ -63,9 +69,7 @@ export const ReaderText = ({
   useEffect(() => loadDictionary(), [loadDictionary]);
 
   const readerSize = useStateStore((x) => x.readerSize);
-  const charsPerLine = Math.floor(readerSize.width / charWidth);
-  const linesPerPage = Math.floor(readerSize.height / charHeight);
-  const charsPerPage = linesPerPage * charsPerLine;
+  const { charsPerLine, charsPerPage } = getCharsPerPage(readerSize);
   const pageText = readerText.slice(
     pageIndex * charsPerPage,
     (pageIndex + 1) * charsPerPage,
