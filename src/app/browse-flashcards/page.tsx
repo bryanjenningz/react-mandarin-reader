@@ -23,45 +23,51 @@ const BrowseFlashcardsPage = (): JSX.Element => {
         }
 
         return (
-          <ul className="flex w-full max-w-2xl flex-col">
-            {flashcards.map((flashcard) => {
-              return (
-                <li key={flashcard.entry.traditional} className="flex w-full">
-                  <span className="flex w-full items-center py-2 pl-4">
-                    <span className="flex grow flex-col">
-                      <span className="flex items-center gap-2">
-                        <span className="text-xl">
-                          {flashcard.entry.traditional}
-                        </span>
-                        {flashcard.entry.traditional !==
-                          flashcard.entry.simplified && (
+          <div className="flex w-full max-w-2xl flex-col">
+            <div className="flex gap-2 bg-slate-800 px-4 text-sm">
+              <span>Flashcard count:</span>
+              <span>{flashcards.length}</span>
+            </div>
+            <ul>
+              {flashcards.map((flashcard) => {
+                return (
+                  <li key={flashcard.entry.traditional} className="flex w-full">
+                    <span className="flex w-full items-center py-2 pl-4">
+                      <span className="flex grow flex-col">
+                        <span className="flex items-center gap-2">
                           <span className="text-xl">
-                            {flashcard.entry.simplified}
+                            {flashcard.entry.traditional}
                           </span>
-                        )}
-                        <span>{flashcard.entry.pinyin}</span>
+                          {flashcard.entry.traditional !==
+                            flashcard.entry.simplified && (
+                            <span className="text-xl">
+                              {flashcard.entry.simplified}
+                            </span>
+                          )}
+                          <span>{flashcard.entry.pinyin}</span>
+                        </span>
+                        <span className="line-clamp-2 text-left text-sm text-slate-400">
+                          {flashcard.entry.meanings.join(", ")}
+                        </span>
                       </span>
-                      <span className="line-clamp-2 text-left text-sm text-slate-400">
-                        {flashcard.entry.meanings.join(", ")}
-                      </span>
+                      <button
+                        className="flex h-12 w-12 shrink-0 items-center justify-center"
+                        onClick={() => {
+                          dispatch({
+                            type: "ADD_OR_REMOVE_FLASHCARD",
+                            entry: flashcard.entry,
+                          });
+                        }}
+                      >
+                        <DeleteForever />
+                        <span className="sr-only">Delete flashcard</span>
+                      </button>
                     </span>
-                    <button
-                      className="flex h-12 w-12 shrink-0 items-center justify-center"
-                      onClick={() => {
-                        dispatch({
-                          type: "ADD_OR_REMOVE_FLASHCARD",
-                          entry: flashcard.entry,
-                        });
-                      }}
-                    >
-                      <DeleteForever />
-                      <span className="sr-only">Delete flashcard</span>
-                    </button>
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         );
       })()}
 
