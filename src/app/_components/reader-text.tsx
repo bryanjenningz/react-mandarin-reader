@@ -10,18 +10,18 @@ import {
 import { getCharsPerPage } from "../_utils/reader/get-chars-per-page";
 
 export const ReaderText = ({
-  readerSize,
-  readerText,
-  readerDate,
-  readerSelection,
-  setReaderSelection,
+  size: readerSize,
+  text: readerText,
+  date: readerDate,
+  selection: readerSelection,
+  setSelection: setReaderSelection,
   pageIndex,
 }: {
-  readerSize: BoxSize;
-  readerText: string;
-  readerDate: number;
-  readerSelection: { start: number; end: number } | null;
-  setReaderSelection: (selection: number) => void;
+  size: BoxSize;
+  text: string;
+  date: number;
+  selection: { start: number; end: number } | null;
+  setSelection: (selection: number) => void;
   pageIndex: number;
 }): JSX.Element => {
   if (!readerText) {
