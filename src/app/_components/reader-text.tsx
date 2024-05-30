@@ -99,10 +99,14 @@ export const ReaderText = ({
   }, [dictionaryEntry, playAudioOnWordLookupEnabled]);
 
   useEffect(() => {
-    void (async () => {
-      const { width, height } = await getReaderContainerDimensions();
-      dispatch({ type: "SET_READER_SIZE", width, height });
-    })();
+    const setReaderSize = () =>
+      void (async () => {
+        const { width, height } = await getReaderContainerDimensions();
+        dispatch({ type: "SET_READER_SIZE", width, height });
+      })();
+    setReaderSize();
+    addEventListener("resize", setReaderSize);
+    return () => removeEventListener("resize", setReaderSize);
   }, [dispatch]);
 
   if (!readerText) {
