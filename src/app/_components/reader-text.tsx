@@ -31,12 +31,20 @@ const getDimensions = (element: HTMLElement): Dimensions => {
 
 const getReaderContainerDimensions = (): Promise<Dimensions> => {
   const start = Date.now();
+  const giveUpTime = 10_000;
+  const retryTime = 1_000;
   return new Promise((resolve, reject) => {
-    const check = () => {
-      if (Date.now() - start >= 10_000) return reject("No reader container");
+    const check = (): void => {
+      if (Date.now() - start >= giveUpTime) {
+        return reject(
+          new Error(`No reader container with id "${readerContainerId}"`),
+        );
+      }
       const readerContainer = document.getElementById(readerContainerId);
-      if (readerContainer) return resolve(getDimensions(readerContainer));
-      setTimeout(check, 1000);
+      if (!readerContainer) {
+        return void setTimeout(check, retryTime);
+      }
+      return resolve(getDimensions(readerContainer));
     };
     check();
   });
