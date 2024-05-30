@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { type State, reducer } from "./state";
+import { type State, reducer, type Action } from "./state";
 
 const state: State = {
   readerSize: { width: 390, height: 600 },
@@ -24,11 +24,9 @@ const state: State = {
 
 describe("reducer", () => {
   it("sets the reader size", () => {
-    const [actual] = reducer(state, {
-      type: "SET_READER_SIZE",
-      width: 1,
-      height: 2,
-    });
+    const initState: State = { ...state, readerSize: { width: 0, height: 0 } };
+    const action: Action = { type: "SET_READER_SIZE", width: 1, height: 2 };
+    const [actual] = reducer(initState, action);
     const expected: State = { ...state, readerSize: { width: 1, height: 2 } };
     expect(actual).toEqual(expected);
   });
