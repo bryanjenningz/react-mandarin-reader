@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SideMenu } from "./_components/side-menu";
 import { ReaderHeader } from "./_components/reader-header";
 import { ReaderText } from "./_components/reader-text";
@@ -37,7 +37,10 @@ const HomePage = (): JSX.Element => {
           reader.selection + maxSelectedTextLength,
         )
       : "";
-  const dictionaryEntry = lookupLongest(dictionary, selectedText);
+  const dictionaryEntry = useMemo(
+    () => lookupLongest(dictionary, selectedText),
+    [dictionary, selectedText],
+  );
   const containsFlashcard =
     !!dictionaryEntry &&
     !!flashcards.find(
