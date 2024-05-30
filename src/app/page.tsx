@@ -11,7 +11,7 @@ import { lookupLongest } from "./_utils/dictionary";
 import { useDictionaryStore } from "./_stores/dictionary";
 import { textToSpeech } from "./_utils/text-to-speech";
 import { getPageCount, getReaderInfo } from "./_utils/reader/get-reader-info";
-import { getReaderBoxSize } from "./_utils/reader/box-size";
+import { getReaderBoxSize } from "./_utils/reader/get-reader-box-size";
 
 const HomePage = (): JSX.Element => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
