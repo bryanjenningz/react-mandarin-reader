@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { type DictionaryEntry } from "../_utils/dictionary";
-import { getCharsPerPage } from "../_components/reader-text";
+import { getCharsPerPage } from "../_utils/reader/get-chars-per-page";
 
 type State = {
   readerSize: BoxSize;
@@ -11,7 +11,7 @@ type State = {
   settings: SettingsOptions;
 };
 
-type BoxSize = {
+export type BoxSize = {
   width: number;
   height: number;
 };

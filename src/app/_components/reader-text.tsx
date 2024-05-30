@@ -2,34 +2,18 @@ import { useEffect } from "react";
 import { EmptyMessage } from "./empty-message";
 import { cn } from "../_utils/class-names";
 import { chunk } from "../_utils/chunk";
-import { useStateStore } from "../_stores/state";
-
-const charSizeScalar = 1.2;
-const charWidth = 24 * charSizeScalar;
-const charHeight = 32 * charSizeScalar;
-
-export const getCharsPerPage = (
-  readerSize: Dimensions,
-): { charsPerLine: number; linesPerPage: number; charsPerPage: number } => {
-  const charsPerLine = Math.floor(readerSize.width / charWidth);
-  const linesPerPage = Math.floor(readerSize.height / charHeight);
-  const charsPerPage = linesPerPage * charsPerLine;
-  return { charsPerLine, linesPerPage, charsPerPage };
-};
+import { type BoxSize, useStateStore } from "../_stores/state";
+import { charWidth, charHeight } from "../_utils/reader/constants";
+import { getCharsPerPage } from "../_utils/reader/get-chars-per-page";
 
 const readerContainerId = "reader-container";
 
-type Dimensions = {
-  width: number;
-  height: number;
-};
-
-const getDimensions = (element: HTMLElement): Dimensions => {
+const getElementBox = (element: HTMLElement): BoxSize => {
   const { clientWidth: width, clientHeight: height } = element;
   return { width, height };
 };
 
-const getReaderContainerDimensions = (): Promise<Dimensions> => {
+const getReaderContainerBox = (): Promise<BoxSize> => {
   const start = Date.now();
   const giveUpTime = 10_000;
   const retryTime = 1_000;
@@ -44,7 +28,7 @@ const getReaderContainerDimensions = (): Promise<Dimensions> => {
       if (!readerContainer) {
         return void setTimeout(check, retryTime);
       }
-      return resolve(getDimensions(readerContainer));
+      return resolve(getElementBox(readerContainer));
     };
     check();
   });
@@ -76,7 +60,7 @@ export const ReaderText = ({
   useEffect(() => {
     const setReaderSize = () =>
       void (async () => {
-        const { width, height } = await getReaderContainerDimensions();
+        const { width, height } = await getReaderContainerBox();
         dispatch({ type: "SET_READER_SIZE", width, height });
       })();
     setReaderSize();

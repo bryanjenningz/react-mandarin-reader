@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import { SideMenu } from "./_components/side-menu";
 import { ReaderHeader } from "./_components/reader-header";
-import { ReaderText, getCharsPerPage } from "./_components/reader-text";
+import { ReaderText } from "./_components/reader-text";
 import { useStateStore } from "./_stores/state";
 import { ReaderBottomNav } from "./_components/reader-bottom-nav";
 import { WordLookup } from "./_components/word-lookup";
 import { lookupLongest } from "./_utils/dictionary";
 import { useDictionaryStore } from "./_stores/dictionary";
 import { textToSpeech } from "./_utils/text-to-speech";
+import { getCharsPerPage } from "./_utils/reader/get-chars-per-page";
 
 const HomePage = (): JSX.Element => {
   const loadDictionary = useDictionaryStore((x) => x.loadDictionary);
