@@ -3,12 +3,12 @@ import { EmptyMessage } from "./empty-message";
 import { cn } from "../_utils/class-names";
 import { chunk } from "../_utils/chunk";
 import { useDictionaryStore } from "../_stores/dictionary";
-import { lookupLongest } from "../_utils/dictionary";
+import { type DictionaryEntry, lookupLongest } from "../_utils/dictionary";
 import { ArrowBackIcon } from "../_icons/arrow-back";
 import { ArrowForwardIcon } from "../_icons/arrow-forward";
 import { AddCircleIcon } from "../_icons/add-circle";
 import { CancelCircleIcon } from "../_icons/cancel-circle";
-import { useStateStore } from "../_stores/state";
+import { type Dispatch, useStateStore } from "../_stores/state";
 import { textToSpeech } from "../_utils/text-to-speech";
 import { VolumeUpIcon } from "../_icons/volume-up";
 
@@ -142,44 +142,11 @@ export const ReaderText = ({
         </section>
 
         {dictionaryEntry && (
-          <article className="flex w-full max-w-2xl shrink flex-col overflow-auto rounded-lg border border-white px-4 py-2">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 text-xl">
-                <div>{dictionaryEntry.traditional}</div>
-                {dictionaryEntry.simplified !== dictionaryEntry.traditional && (
-                  <div>{dictionaryEntry.simplified}</div>
-                )}
-              </div>
-
-              <button
-                onClick={() => {
-                  dispatch({
-                    type: "ADD_OR_REMOVE_FLASHCARD",
-                    entry: dictionaryEntry,
-                  });
-                }}
-              >
-                {(() => {
-                  if (containsFlashcard) {
-                    return <CancelCircleIcon />;
-                  }
-                  return <AddCircleIcon />;
-                })()}
-              </button>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div>{dictionaryEntry.pinyin}</div>
-              <button onClick={() => textToSpeech(dictionaryEntry.simplified)}>
-                <VolumeUpIcon />
-                <span className="sr-only">Play audio</span>
-              </button>
-            </div>
-
-            <div className="line-clamp-3 overflow-auto text-sm md:line-clamp-none">
-              {dictionaryEntry.meanings.join(", ")}
-            </div>
-          </article>
+          <WordLookup
+            containsFlashcard={containsFlashcard}
+            dictionaryEntry={dictionaryEntry}
+            dispatch={dispatch}
+          />
         )}
       </div>
 
@@ -207,5 +174,56 @@ export const ReaderText = ({
         </button>
       </div>
     </div>
+  );
+};
+
+const WordLookup = ({
+  containsFlashcard,
+  dictionaryEntry,
+  dispatch,
+}: {
+  containsFlashcard: boolean;
+  dictionaryEntry: DictionaryEntry;
+  dispatch: Dispatch;
+}): JSX.Element => {
+  return (
+    <article className="flex w-full max-w-2xl shrink flex-col overflow-auto rounded-lg border border-white px-4 py-2">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 text-xl">
+          <div>{dictionaryEntry.traditional}</div>
+          {dictionaryEntry.simplified !== dictionaryEntry.traditional && (
+            <div>{dictionaryEntry.simplified}</div>
+          )}
+        </div>
+
+        <button
+          onClick={() => {
+            dispatch({
+              type: "ADD_OR_REMOVE_FLASHCARD",
+              entry: dictionaryEntry,
+            });
+          }}
+        >
+          {(() => {
+            if (containsFlashcard) {
+              return <CancelCircleIcon />;
+            }
+            return <AddCircleIcon />;
+          })()}
+        </button>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <div>{dictionaryEntry.pinyin}</div>
+        <button onClick={() => textToSpeech(dictionaryEntry.simplified)}>
+          <VolumeUpIcon />
+          <span className="sr-only">Play audio</span>
+        </button>
+      </div>
+
+      <div className="line-clamp-3 overflow-auto text-sm md:line-clamp-none">
+        {dictionaryEntry.meanings.join(", ")}
+      </div>
+    </article>
   );
 };
