@@ -89,4 +89,18 @@ describe("reducer", () => {
     };
     expect(actual).toEqual(expected);
   });
+
+  it("sets the reader selection", () => {
+    const initState: State = {
+      ...state,
+      reader: { text: "a", date: 1, pageIndex: 2, selection: 3 },
+    };
+    const action: Action = { type: "SET_READER_SELECTION", selection: 5 };
+    const actual = reducer(initState, action);
+    const expected: State = {
+      ...state,
+      reader: { text: "a", date: 1, pageIndex: 2, selection: 5 },
+    };
+    expect(actual).toEqual(expected);
+  });
 });
