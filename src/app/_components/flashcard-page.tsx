@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useStateStore } from "~/app/_stores/state";
 import { type MenuItemName, SideMenu } from "~/app/_components/side-menu";
 import { EmptyMessage } from "../_components/empty-message";
-import { textToSpeech } from "../_utils/text-to-speech";
 import { SimpleHeader } from "../_components/simple-header";
 import { type DictionaryEntry } from "../_utils/dictionary";
 import { DeleteForever } from "../_icons/delete-forever";
@@ -25,19 +24,7 @@ export const FlashcardPage = ({
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const flashcards = useStateStore((x) => x.flashcards);
   const firstFlashcard = flashcards[0];
-  const playAudioOnFlashcardBackEnabled = useStateStore(
-    (x) => x.settings.playAudioOnFlashcardBack.enabled,
-  );
   const dispatch = useStateStore((x) => x.dispatch);
-
-  useEffect(() => {
-    if (
-      firstFlashcard &&
-      (!isFlashcardBackShown || playAudioOnFlashcardBackEnabled)
-    ) {
-      textToSpeech(firstFlashcard.entry.simplified);
-    }
-  }, [firstFlashcard, isFlashcardBackShown, playAudioOnFlashcardBackEnabled]);
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
