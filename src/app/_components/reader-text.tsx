@@ -9,7 +9,7 @@ import {
   readerContainerId,
 } from "../_utils/reader/constants";
 import { getCharsPerPage } from "../_utils/reader/get-chars-per-page";
-import { getReaderContainerBox } from "../_utils/reader/box-size";
+import { getReaderBoxSize } from "../_utils/reader/box-size";
 
 export const ReaderText = ({
   readerText,
@@ -37,7 +37,7 @@ export const ReaderText = ({
   useEffect(() => {
     const setReaderSize = () =>
       void (async () => {
-        const { width, height } = await getReaderContainerBox();
+        const { width, height } = await getReaderBoxSize();
         dispatch({ type: "SET_READER_SIZE", width, height });
       })();
     setReaderSize();

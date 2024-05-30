@@ -6,7 +6,7 @@ const getElementBox = (element: HTMLElement): BoxSize => {
   return { width, height };
 };
 
-export const getReaderContainerBox = (): Promise<BoxSize> => {
+export const getReaderBoxSize = (): Promise<BoxSize> => {
   const start = Date.now();
   const giveUpTime = 10_000;
   const retryTime = 1_000;
