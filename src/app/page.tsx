@@ -113,7 +113,9 @@ const HomePage = (): JSX.Element => {
               <WordLookup
                 containsFlashcard={containsFlashcard}
                 dictionaryEntry={dictionaryEntry}
-                dispatch={dispatch}
+                addOrRemoveFlashcard={(entry) => {
+                  dispatch({ type: "ADD_OR_REMOVE_FLASHCARD", entry });
+                }}
               />
             )}
           </div>

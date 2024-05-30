@@ -1,18 +1,17 @@
 import { AddCircleIcon } from "../_icons/add-circle";
 import { CancelCircleIcon } from "../_icons/cancel-circle";
 import { VolumeUpIcon } from "../_icons/volume-up";
-import { type Dispatch } from "../_stores/state";
 import { type DictionaryEntry } from "../_utils/dictionary";
 import { textToSpeech } from "../_utils/text-to-speech";
 
 export const WordLookup = ({
   containsFlashcard,
   dictionaryEntry,
-  dispatch,
+  addOrRemoveFlashcard,
 }: {
   containsFlashcard: boolean;
   dictionaryEntry: DictionaryEntry;
-  dispatch: Dispatch;
+  addOrRemoveFlashcard: (dictionaryEntry: DictionaryEntry) => void;
 }): JSX.Element => {
   return (
     <article className="flex w-full max-w-2xl shrink flex-col overflow-auto rounded-lg border border-white px-4 py-2">
@@ -24,14 +23,7 @@ export const WordLookup = ({
           )}
         </div>
 
-        <button
-          onClick={() => {
-            dispatch({
-              type: "ADD_OR_REMOVE_FLASHCARD",
-              entry: dictionaryEntry,
-            });
-          }}
-        >
+        <button onClick={() => addOrRemoveFlashcard(dictionaryEntry)}>
           {(() => {
             if (containsFlashcard) {
               return <CancelCircleIcon />;
