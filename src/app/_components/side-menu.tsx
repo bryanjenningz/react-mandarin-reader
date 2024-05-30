@@ -115,7 +115,7 @@ export const SideMenu = ({
                     key={menuItem.name}
                     href={menuItem.href}
                     className={cn(
-                      "flex items-center gap-2 px-4 py-1 text-lg",
+                      "flex items-center gap-2 px-4 py-2 text-lg",
                       menuItem.name === selectedItem && "bg-blue-900",
                     )}
                   >
