@@ -16,6 +16,9 @@ export const charsPerLine = 14;
 export const linesPerPage = 13;
 export const charsPerPage = charsPerLine * linesPerPage;
 
+const charWidth = 24;
+const charHeight = 32;
+
 const readerContainerId = "reader-container";
 
 type Dimensions = {
@@ -111,7 +114,8 @@ export const ReaderText = ({
             return (
               <div
                 key={`${readerDate}-${y}`}
-                className="flex h-8 justify-center"
+                className="flex justify-center"
+                style={{ height: charHeight }}
               >
                 {line.map((char, x) => {
                   const i = charsPerLine * y + x;
@@ -119,12 +123,13 @@ export const ReaderText = ({
                     <button
                       key={`${readerDate}-${y}-${x}`}
                       className={cn(
-                        "flex h-8 w-6 items-center justify-center",
+                        "flex items-center justify-center",
                         selection !== null &&
                           i >= selection &&
                           i < selection + wordLength &&
                           "bg-blue-600",
                       )}
+                      style={{ width: charWidth, height: charHeight }}
                       onClick={() => setSelection(i)}
                     >
                       {char}
