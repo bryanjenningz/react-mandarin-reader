@@ -44,7 +44,10 @@ const MandarinToEnglishFlashcardsPage = (): JSX.Element => {
             <div className="flex w-full grow flex-col items-center gap-2">
               <div className="flex gap-2 text-3xl">
                 <div>{firstFlashcard.entry.traditional}</div>
-                <div>{firstFlashcard.entry.simplified}</div>
+                {firstFlashcard.entry.traditional !==
+                  firstFlashcard.entry.simplified && (
+                  <div>{firstFlashcard.entry.simplified}</div>
+                )}
               </div>
 
               {((): JSX.Element => {
