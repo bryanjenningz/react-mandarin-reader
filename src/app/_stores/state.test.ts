@@ -53,4 +53,23 @@ describe("reducer", () => {
     };
     expect(actual).toEqual(expected);
   });
+
+  it("sets the reader text", () => {
+    const initState: State = {
+      ...state,
+      reader: { text: "before text", date: 1, pageIndex: 2, selection: 3 },
+    };
+    const action: Action = {
+      type: "SET_READER_TEXT",
+      text: "new text",
+      date: 123,
+      pageIndex: 5,
+    };
+    const actual = reducer(initState, action);
+    const expected: State = {
+      ...state,
+      reader: { text: "new text", date: 123, pageIndex: 5, selection: null },
+    };
+    expect(actual).toEqual(expected);
+  });
 });
