@@ -26,7 +26,7 @@ describe("reducer", () => {
   it("sets the reader size", () => {
     const initState: State = { ...state, readerSize: { width: 0, height: 0 } };
     const action: Action = { type: "SET_READER_SIZE", width: 1, height: 2 };
-    const [actual] = reducer(initState, action);
+    const actual = reducer(initState, action);
     const expected: State = { ...state, readerSize: { width: 1, height: 2 } };
     expect(actual).toEqual(expected);
   });

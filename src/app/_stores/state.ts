@@ -53,17 +53,14 @@ export type Action =
   | { type: "FAIL_FLASHCARD" }
   | { type: "TOGGLE_SETTINGS_OPTION"; name: keyof SettingsOptions };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = () => {};
-
-export const reducer = (state: State, action: Action): [State, () => void] => {
+export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "SET_READER_SIZE": {
       const readerSize: BoxSize = {
         width: action.width,
         height: action.height,
       };
-      return [{ ...state, readerSize }, noop];
+      return { ...state, readerSize };
     }
     case "PASTE_READER_TEXT": {
       const reader: ActiveReader = {
@@ -73,7 +70,7 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         selection: null,
       };
       const readerHistory: Reader[] = [reader, ...state.readerHistory];
-      return [{ ...state, reader, readerHistory }, noop];
+      return { ...state, reader, readerHistory };
     }
     case "SET_READER_TEXT": {
       const reader: ActiveReader = {
@@ -82,20 +79,20 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         pageIndex: action.pageIndex,
         selection: null,
       };
-      return [{ ...state, reader }, noop];
+      return { ...state, reader };
     }
     case "DELETE_READER_HISTORY_ITEM": {
       const readerHistory: Reader[] = state.readerHistory.filter(
         (x) => x.date !== action.date,
       );
-      return [{ ...state, readerHistory }, noop];
+      return { ...state, readerHistory };
     }
     case "SET_READER_SELECTION": {
       const reader: ActiveReader = {
         ...state.reader,
         selection: action.selection,
       };
-      return [{ ...state, reader }, noop];
+      return { ...state, reader };
     }
     case "INCREMENT_PAGE_INDEX": {
       const pageCount = getPageCount(state.reader.text, state.readerSize);
@@ -112,7 +109,7 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         if (reader.date !== state.reader.date) return reader;
         return { ...reader, pageIndex };
       });
-      return [{ ...state, reader, readerHistory }, noop];
+      return { ...state, reader, readerHistory };
     }
     case "DECREMENT_PAGE_INDEX": {
       const pageIndex = Math.max(0, state.reader.pageIndex - 1);
@@ -125,7 +122,7 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         if (reader.date !== state.reader.date) return reader;
         return { ...reader, pageIndex };
       });
-      return [{ ...state, reader, readerHistory }, noop];
+      return { ...state, reader, readerHistory };
     }
     case "ADD_OR_REMOVE_FLASHCARD": {
       const containsFlashcard = !!state.flashcards.find(
@@ -135,17 +132,17 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         const flashcards = state.flashcards.filter(
           (card) => card.entry.traditional !== action.entry.traditional,
         );
-        return [{ ...state, flashcards }, noop];
+        return { ...state, flashcards };
       }
       const flashcards: Flashcard[] = [
         ...state.flashcards,
         { entry: action.entry, correct: 0 },
       ];
-      return [{ ...state, flashcards }, noop];
+      return { ...state, flashcards };
     }
     case "PASS_FLASHCARD": {
       const flashcard = state.flashcards[0];
-      if (!flashcard) return [state, noop];
+      if (!flashcard) return state;
       const newFlashcard: Flashcard = {
         ...flashcard,
         correct: flashcard.correct + 1,
@@ -158,15 +155,12 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         newFlashcard,
         ...remainingFlashcards.slice(index),
       ];
-      return [{ ...state, flashcards }, noop];
+      return { ...state, flashcards };
     }
     case "FAIL_FLASHCARD": {
       const flashcard = state.flashcards[0];
-      if (!flashcard) return [state, noop];
-      const newFlashcard: Flashcard = {
-        ...flashcard,
-        correct: 0,
-      };
+      if (!flashcard) return state;
+      const newFlashcard: Flashcard = { ...flashcard, correct: 0 };
       const index = 2;
       const remainingFlashcards = state.flashcards.slice(1);
       const flashcards: Flashcard[] = [
@@ -174,7 +168,7 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
         newFlashcard,
         ...remainingFlashcards.slice(index),
       ];
-      return [{ ...state, flashcards }, noop];
+      return { ...state, flashcards };
     }
     case "TOGGLE_SETTINGS_OPTION": {
       const settings: SettingsOptions = {
@@ -184,7 +178,7 @@ export const reducer = (state: State, action: Action): [State, () => void] => {
           enabled: !state.settings[action.name].enabled,
         },
       };
-      return [{ ...state, settings }, noop];
+      return { ...state, settings };
     }
   }
 };
@@ -215,11 +209,7 @@ export const useStateStore = create<StateStore>()(
         },
       },
       dispatch: (action: Action): void =>
-        set((state) => {
-          const [newState, sideEffect] = reducer(state, action);
-          setTimeout(() => sideEffect(), 1);
-          return newState;
-        }),
+        set((state) => reducer(state, action)),
     }),
     { name: "state" },
   ),
