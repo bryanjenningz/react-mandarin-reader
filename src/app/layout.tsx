@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     "A Mandarin Chinese PDF, subtitle, and clipboard text reader with a popup dictionary and built-in spaced-repetition flashcards.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   manifest: "/app.webmanifest",
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
