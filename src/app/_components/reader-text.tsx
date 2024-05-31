@@ -34,7 +34,7 @@ export const ReaderText = ({
   return (
     <section
       id={readerContainerId}
-      className="flex h-[60dvh] w-full max-w-2xl shrink-0 flex-col"
+      className="flex h-[60svh] w-full max-w-2xl shrink-0 flex-col"
       style={{ fontSize: charWidth }}
     >
       {((): JSX.Element => {

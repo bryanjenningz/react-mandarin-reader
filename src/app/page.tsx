@@ -78,7 +78,7 @@ const HomePage = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    <div className="flex h-[100dvh] flex-col items-center overflow-hidden bg-black text-white">
+    <div className="flex h-[100svh] flex-col items-center overflow-hidden bg-black text-white">
       <div className="flex h-full w-full max-w-2xl grow flex-col">
         <ReaderHeader
           openSideMenu={() => dispatch({ type: "OPEN_MENU" })}
