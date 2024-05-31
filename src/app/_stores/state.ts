@@ -42,6 +42,8 @@ export type SettingsOption = {
 };
 
 export type Action =
+  | { type: "OPEN_MENU" }
+  | { type: "CLOSE_MENU" }
   | { type: "SET_READER_SIZE"; width: number; height: number }
   | { type: "PASTE_READER_TEXT"; text: string; date: number }
   | { type: "SET_READER_TEXT"; text: string; date: number; pageIndex: number }
@@ -56,6 +58,12 @@ export type Action =
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case "OPEN_MENU": {
+      return { ...state, isMenuOpen: true };
+    }
+    case "CLOSE_MENU": {
+      return { ...state, isMenuOpen: false };
+    }
     case "SET_READER_SIZE": {
       const readerSize: BoxSize = {
         width: action.width,
