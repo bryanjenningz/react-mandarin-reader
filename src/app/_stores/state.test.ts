@@ -207,5 +207,34 @@ describe("reducer", () => {
       };
       expect(actual).toEqual(expected);
     });
+
+    it("removes a flashcard if it's already added", () => {
+      const flashcard: Flashcard = {
+        entry: {
+          traditional: "t",
+          simplified: "s",
+          pinyin: "p",
+          meanings: ["m"],
+        },
+        correct: 1,
+      };
+      const entry: DictionaryEntry = {
+        traditional: "t",
+        simplified: "s",
+        pinyin: "p",
+        meanings: ["m"],
+      };
+      const initState: State = {
+        ...state,
+        flashcards: [flashcard],
+      };
+      const action: Action = { type: "ADD_OR_REMOVE_FLASHCARD", entry };
+      const actual = reducer(initState, action);
+      const expected: State = {
+        ...initState,
+        flashcards: [],
+      };
+      expect(actual).toEqual(expected);
+    });
   });
 });
