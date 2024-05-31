@@ -24,10 +24,6 @@ export const ReaderText = ({
   setSelection: (selection: number) => void;
   pageIndex: number;
 }): JSX.Element => {
-  if (!text) {
-    return <EmptyMessage message="You haven't added any text." />;
-  }
-
   const { charsPerLine, charsPerPage } = getReaderInfo(size);
   const pageText = text.slice(
     pageIndex * charsPerPage,
@@ -41,35 +37,45 @@ export const ReaderText = ({
       className="flex h-[60dvh] w-full max-w-2xl shrink-0 flex-col"
       style={{ fontSize: charWidth }}
     >
-      {readerLines.map((line, y) => {
+      {((): JSX.Element => {
+        if (!text) {
+          return <EmptyMessage message="You haven't added any text." />;
+        }
+
         return (
-          <div
-            key={`${date}-${y}`}
-            className="flex justify-center"
-            style={{ height: charHeight }}
-          >
-            {line.map((char, x) => {
-              const i = charsPerLine * y + x;
+          <>
+            {readerLines.map((line, y) => {
               return (
-                <button
-                  key={`${date}-${y}-${x}`}
-                  className={cn(
-                    "flex items-center justify-center",
-                    selection !== null &&
-                      i >= selection.start &&
-                      i < selection.end &&
-                      "bg-blue-600",
-                  )}
-                  style={{ width: charWidth, height: charHeight }}
-                  onPointerDown={() => setSelection(i)}
+                <div
+                  key={`${date}-${y}`}
+                  className="flex justify-center"
+                  style={{ height: charHeight }}
                 >
-                  {char}
-                </button>
+                  {line.map((char, x) => {
+                    const i = charsPerLine * y + x;
+                    return (
+                      <button
+                        key={`${date}-${y}-${x}`}
+                        className={cn(
+                          "flex items-center justify-center",
+                          selection !== null &&
+                            i >= selection.start &&
+                            i < selection.end &&
+                            "bg-blue-600",
+                        )}
+                        style={{ width: charWidth, height: charHeight }}
+                        onPointerDown={() => setSelection(i)}
+                      >
+                        {char}
+                      </button>
+                    );
+                  })}
+                </div>
               );
             })}
-          </div>
+          </>
         );
-      })}
+      })()}
     </section>
   );
 };

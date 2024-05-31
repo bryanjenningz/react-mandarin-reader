@@ -14,7 +14,7 @@ export const EmptyMessage = ({ message }: { message: string }): JSX.Element => {
   return (
     <article
       className={cn(
-        "flex grow flex-col items-center justify-center gap-4",
+        "flex grow flex-col items-center justify-center gap-4 text-base",
         isShown ? "opacity-100" : "opacity-0",
       )}
     >
