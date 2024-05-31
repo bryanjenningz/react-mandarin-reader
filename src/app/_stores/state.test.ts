@@ -25,6 +25,26 @@ const state: State = {
 };
 
 describe("reducer", () => {
+  describe("OPEN_MENU", () => {
+    it("opens the menu", () => {
+      const initState: State = { ...state, isMenuOpen: false };
+      const action: Action = { type: "OPEN_MENU" };
+      const actual = reducer(initState, action);
+      const expected: State = { ...initState, isMenuOpen: true };
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe("CLOSE_MENU", () => {
+    it("opens the menu", () => {
+      const initState: State = { ...state, isMenuOpen: true };
+      const action: Action = { type: "CLOSE_MENU" };
+      const actual = reducer(initState, action);
+      const expected: State = { ...initState, isMenuOpen: false };
+      expect(actual).toEqual(expected);
+    });
+  });
+
   describe("SET_READER_SIZE", () => {
     it("sets the reader size", () => {
       const initState: State = {
