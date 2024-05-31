@@ -305,4 +305,44 @@ describe("reducer", () => {
       expect(actual).toEqual(expected);
     });
   });
+
+  describe("TOGGLE_SETTINGS_OPTION", () => {
+    it("toggles the playAudioOnWordLookup settings option you pass in", () => {
+      const action: Action = {
+        type: "TOGGLE_SETTINGS_OPTION",
+        name: "playAudioOnWordLookup",
+      };
+      const actual = reducer(state, action);
+      const expected: State = {
+        ...state,
+        settings: {
+          ...state.settings,
+          playAudioOnWordLookup: {
+            ...state.settings.playAudioOnWordLookup,
+            enabled: !state.settings.playAudioOnWordLookup.enabled,
+          },
+        },
+      };
+      expect(actual).toEqual(expected);
+    });
+
+    it("toggles the playAudioOnFlashcardBack settings option you pass in", () => {
+      const action: Action = {
+        type: "TOGGLE_SETTINGS_OPTION",
+        name: "playAudioOnFlashcardBack",
+      };
+      const actual = reducer(state, action);
+      const expected: State = {
+        ...state,
+        settings: {
+          ...state.settings,
+          playAudioOnFlashcardBack: {
+            ...state.settings.playAudioOnFlashcardBack,
+            enabled: !state.settings.playAudioOnFlashcardBack.enabled,
+          },
+        },
+      };
+      expect(actual).toEqual(expected);
+    });
+  });
 });
