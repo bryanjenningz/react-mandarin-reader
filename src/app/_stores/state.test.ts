@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { type State, reducer, type Action } from "./state";
+import { type State, reducer, type Action, Flashcard } from "./state";
+import { DictionaryEntry } from "../_utils/dictionary";
 
 const state: State = {
   readerSize: { width: 390, height: 600 },
@@ -172,6 +173,37 @@ describe("reducer", () => {
       const expected: State = {
         ...initState,
         reader: { ...initState.reader, selection: null },
+      };
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe("ADD_OR_REMOVE_FLASHCARD", () => {
+    it("adds a flashcard to the end if it isn't already added", () => {
+      const flashcard: Flashcard = {
+        entry: {
+          traditional: "t",
+          simplified: "s",
+          pinyin: "p",
+          meanings: ["m"],
+        },
+        correct: 1,
+      };
+      const entry: DictionaryEntry = {
+        traditional: "t2",
+        simplified: "s2",
+        pinyin: "p2",
+        meanings: ["m2"],
+      };
+      const initState: State = {
+        ...state,
+        flashcards: [flashcard],
+      };
+      const action: Action = { type: "ADD_OR_REMOVE_FLASHCARD", entry };
+      const actual = reducer(initState, action);
+      const expected: State = {
+        ...initState,
+        flashcards: [...initState.flashcards, { entry, correct: 0 }],
       };
       expect(actual).toEqual(expected);
     });
