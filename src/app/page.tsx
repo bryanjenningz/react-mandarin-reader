@@ -118,12 +118,14 @@ const HomePage = (): JSX.Element => {
             )}
           </div>
 
-          <ReaderBottomNav
-            pageIndex={reader.pageIndex}
-            pageCount={pageCount}
-            onClickLeft={() => dispatch({ type: "DECREMENT_PAGE_INDEX" })}
-            onClickRight={() => dispatch({ type: "INCREMENT_PAGE_INDEX" })}
-          />
+          {reader.text && (
+            <ReaderBottomNav
+              pageIndex={reader.pageIndex}
+              pageCount={pageCount}
+              onClickLeft={() => dispatch({ type: "DECREMENT_PAGE_INDEX" })}
+              onClickRight={() => dispatch({ type: "INCREMENT_PAGE_INDEX" })}
+            />
+          )}
         </div>
 
         <SideMenu selectedItem="Reader" />
