@@ -4,6 +4,7 @@ import { type DictionaryEntry } from "../_utils/dictionary";
 import { getPageCount } from "../_utils/reader/get-page-count";
 
 export type State = {
+  isMenuOpen: boolean;
   readerSize: BoxSize;
   reader: ActiveReader;
   readerHistory: Reader[];
@@ -193,6 +194,7 @@ type StateStore = State & { dispatch: Dispatch };
 export const useStateStore = create<StateStore>()(
   persist(
     (set) => ({
+      isMenuOpen: false,
       readerSize: { width: 390, height: 600 },
       reader: { text: "", date: 0, pageIndex: 0, selection: null },
       readerHistory: [],

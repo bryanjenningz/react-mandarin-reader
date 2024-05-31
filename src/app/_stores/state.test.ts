@@ -3,6 +3,7 @@ import { type State, reducer, type Action, type Flashcard } from "./state";
 import { type DictionaryEntry } from "../_utils/dictionary";
 
 const state: State = {
+  isMenuOpen: false,
   readerSize: { width: 390, height: 600 },
   reader: { text: "", date: 0, pageIndex: 0, selection: null },
   readerHistory: [],
