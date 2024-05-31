@@ -22,7 +22,7 @@ const ReaderHistoryPage = (): JSX.Element => {
         }
 
         return (
-          <ul className="flex flex-col">
+          <ul className="flex w-full max-w-2xl flex-col">
             {readerHistory.map((historyItem) => {
               return (
                 <li key={historyItem.date}>
