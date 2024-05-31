@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useStateStore } from "~/app/_stores/state";
 import { SideMenu } from "~/app/_components/side-menu";
 import { EmptyMessage } from "../_components/empty-message";
@@ -10,13 +9,12 @@ import { DeleteForever } from "../_icons/delete-forever";
 
 const ReaderHistoryPage = (): JSX.Element => {
   const router = useRouter();
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const readerHistory = useStateStore((state) => state.readerHistory);
   const dispatch = useStateStore((state) => state.dispatch);
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <SimpleHeader title="History" setIsSideMenuOpen={setIsSideMenuOpen} />
+      <SimpleHeader title="History" />
 
       {((): JSX.Element => {
         if (readerHistory.length === 0) {
@@ -68,11 +66,7 @@ const ReaderHistoryPage = (): JSX.Element => {
         );
       })()}
 
-      <SideMenu
-        selectedItem="History"
-        isSideMenuOpen={isSideMenuOpen}
-        setIsSideMenuOpen={setIsSideMenuOpen}
-      />
+      <SideMenu selectedItem="History" />
     </div>
   );
 };

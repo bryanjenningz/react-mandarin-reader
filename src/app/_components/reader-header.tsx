@@ -2,17 +2,17 @@ import { ContentPasteGoIcon } from "../_icons/content-paste-go";
 import { MenuIcon } from "../_icons/menu";
 
 export const ReaderHeader = ({
-  setIsSideMenuOpen,
+  openSideMenu,
   setReaderText,
 }: {
-  setIsSideMenuOpen: (isSideMenuOpen: boolean) => void;
+  openSideMenu: () => void;
   setReaderText: (readerText: string) => void;
 }): JSX.Element => {
   return (
     <header className="flex h-14 w-full max-w-2xl items-center">
       <button
         className="flex h-14 w-14 shrink-0 items-center justify-center"
-        onClick={() => setIsSideMenuOpen(true)}
+        onClick={openSideMenu}
       >
         <MenuIcon width={32} height={32} />
         <span className="sr-only">Open menu</span>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useStateStore } from "~/app/_stores/state";
 import { SideMenu } from "~/app/_components/side-menu";
 
@@ -9,13 +8,12 @@ import { SimpleHeader } from "../_components/simple-header";
 import { DeleteForever } from "../_icons/delete-forever";
 
 const BrowseFlashcardsPage = (): JSX.Element => {
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const flashcards = useStateStore((x) => x.flashcards);
   const dispatch = useStateStore((x) => x.dispatch);
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <SimpleHeader title="Flashcards" setIsSideMenuOpen={setIsSideMenuOpen} />
+      <SimpleHeader title="Flashcards" />
 
       {((): JSX.Element => {
         if (flashcards.length === 0) {
@@ -71,11 +69,7 @@ const BrowseFlashcardsPage = (): JSX.Element => {
         );
       })()}
 
-      <SideMenu
-        selectedItem="Browse flashcards"
-        isSideMenuOpen={isSideMenuOpen}
-        setIsSideMenuOpen={setIsSideMenuOpen}
-      />
+      <SideMenu selectedItem="Browse flashcards" />
     </div>
   );
 };

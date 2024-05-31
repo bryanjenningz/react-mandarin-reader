@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useStateStore } from "~/app/_stores/state";
 import { type MenuItemName, SideMenu } from "~/app/_components/side-menu";
 import { EmptyMessage } from "../_components/empty-message";
@@ -21,7 +20,6 @@ export const FlashcardPage = ({
   front: (dictionaryEntry: DictionaryEntry) => JSX.Element;
   back: (dictionaryEntry: DictionaryEntry) => JSX.Element;
 }): JSX.Element => {
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const flashcards = useStateStore((x) => x.flashcards);
   const firstFlashcard = flashcards[0];
   const dispatch = useStateStore((x) => x.dispatch);
@@ -30,7 +28,6 @@ export const FlashcardPage = ({
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
       <SimpleHeader
         title={selectedMenuItem}
-        setIsSideMenuOpen={setIsSideMenuOpen}
         rightButton={
           <button
             className="flex h-full w-full items-center justify-center"
@@ -116,11 +113,7 @@ export const FlashcardPage = ({
         );
       })()}
 
-      <SideMenu
-        selectedItem={selectedMenuItem}
-        isSideMenuOpen={isSideMenuOpen}
-        setIsSideMenuOpen={setIsSideMenuOpen}
-      />
+      <SideMenu selectedItem={selectedMenuItem} />
     </div>
   );
 };

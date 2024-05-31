@@ -12,6 +12,7 @@ import { SettingsIcon } from "../_icons/settings";
 import { SubtitlesIcon } from "../_icons/subtitles";
 import { TranslateIcon } from "../_icons/translate";
 import { cn } from "../_utils/class-names";
+import { useStateStore } from "../_stores/state";
 
 type MenuSection = {
   name: string;
@@ -78,26 +79,25 @@ export type MenuItemName =
 
 export const SideMenu = ({
   selectedItem,
-  isSideMenuOpen,
-  setIsSideMenuOpen,
 }: {
   selectedItem: MenuItemName;
-  isSideMenuOpen: boolean;
-  setIsSideMenuOpen: (isSideMenuOpen: boolean) => void;
 }): JSX.Element => {
+  const isMenuOpen = useStateStore((x) => x.isMenuOpen);
+  const dispatch = useStateStore((x) => x.dispatch);
+
   return (
     <>
-      {isSideMenuOpen && (
+      {isMenuOpen && (
         <div
           className="fixed inset-0 bg-black opacity-80 transition-opacity"
-          onClick={() => setIsSideMenuOpen(false)}
+          onClick={() => dispatch({ type: "CLOSE_MENU" })}
         ></div>
       )}
 
       <aside
         className={cn(
           "fixed bottom-0 top-0 flex flex-col bg-black text-white shadow shadow-slate-800 transition-[left]",
-          isSideMenuOpen ? "left-0" : "-left-80",
+          isMenuOpen ? "left-0" : "-left-80",
         )}
       >
         <h2 className="flex h-12 items-center justify-center text-xl">Menu</h2>
@@ -118,6 +118,7 @@ export const SideMenu = ({
                       "flex items-center gap-2 px-4 py-2 text-lg",
                       menuItem.name === selectedItem && "bg-blue-900",
                     )}
+                    onClick={() => dispatch({ type: "CLOSE_MENU" })}
                   >
                     {menuItem.icon}
                     {menuItem.name}

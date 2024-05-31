@@ -8,14 +8,13 @@ import { useRouter } from "next/navigation";
 import { SimpleHeader } from "../_components/simple-header";
 
 const ImportPdfPage = (): JSX.Element => {
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [pdfText, setPdfText] = useState("");
   const dispatch = useStateStore((x) => x.dispatch);
   const router = useRouter();
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <SimpleHeader title="Import PDF" setIsSideMenuOpen={setIsSideMenuOpen} />
+      <SimpleHeader title="Import PDF" />
 
       <div className="flex grow flex-col items-center justify-center gap-2">
         <PictureAsPdfIcon width={120} height={120} />
@@ -60,11 +59,7 @@ const ImportPdfPage = (): JSX.Element => {
         </button>
       </div>
 
-      <SideMenu
-        selectedItem="Import PDF"
-        isSideMenuOpen={isSideMenuOpen}
-        setIsSideMenuOpen={setIsSideMenuOpen}
-      />
+      <SideMenu selectedItem="Import PDF" />
     </div>
   );
 };

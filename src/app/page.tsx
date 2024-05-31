@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { SideMenu } from "./_components/side-menu";
 import { ReaderHeader } from "./_components/reader-header";
 import { ReaderText } from "./_components/reader-text";
@@ -15,8 +15,6 @@ import { getPageCount } from "./_utils/reader/get-page-count";
 import { getReaderBoxSize } from "./_utils/reader/get-reader-box-size";
 
 const HomePage = (): JSX.Element => {
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
-
   const dispatch = useStateStore((state) => state.dispatch);
   const reader = useStateStore((state) => state.reader);
   const readerSize = useStateStore((x) => x.readerSize);
@@ -79,7 +77,7 @@ const HomePage = (): JSX.Element => {
     <div className="flex h-[100dvh] flex-col items-center overflow-hidden bg-black text-white">
       <div className="flex h-full w-full max-w-2xl grow flex-col">
         <ReaderHeader
-          setIsSideMenuOpen={setIsSideMenuOpen}
+          openSideMenu={() => dispatch({ type: "OPEN_MENU" })}
           setReaderText={(readerText) => {
             dispatch({
               type: "PASTE_READER_TEXT",
@@ -128,11 +126,7 @@ const HomePage = (): JSX.Element => {
           />
         </div>
 
-        <SideMenu
-          selectedItem="Reader"
-          isSideMenuOpen={isSideMenuOpen}
-          setIsSideMenuOpen={setIsSideMenuOpen}
-        />
+        <SideMenu selectedItem="Reader" />
       </div>
     </div>
   );

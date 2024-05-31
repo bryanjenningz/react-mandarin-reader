@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { SideMenu } from "~/app/_components/side-menu";
 import {
   type Dispatch,
@@ -11,13 +10,12 @@ import {
 import { SimpleHeader } from "../_components/simple-header";
 
 const SettingsPage = (): JSX.Element => {
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const settings = useStateStore((x) => x.settings);
   const dispatch = useStateStore((x) => x.dispatch);
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <SimpleHeader title="Settings" setIsSideMenuOpen={setIsSideMenuOpen} />
+      <SimpleHeader title="Settings" />
 
       <ul className="w-full max-w-2xl">
         {Object.entries(settings).map(([settingsName, settingsOption]) => {
@@ -32,11 +30,7 @@ const SettingsPage = (): JSX.Element => {
         })}
       </ul>
 
-      <SideMenu
-        selectedItem="Settings"
-        isSideMenuOpen={isSideMenuOpen}
-        setIsSideMenuOpen={setIsSideMenuOpen}
-      />
+      <SideMenu selectedItem="Settings" />
     </div>
   );
 };

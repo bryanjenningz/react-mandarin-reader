@@ -9,17 +9,13 @@ import { formatSubtitles } from "./_utils/format-subtitles";
 import { SimpleHeader } from "../_components/simple-header";
 
 const ImportSubtitlesPage = (): JSX.Element => {
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [subtitlesText, setSubtitlesText] = useState("");
   const dispatch = useStateStore((x) => x.dispatch);
   const router = useRouter();
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-black text-white">
-      <SimpleHeader
-        title="Import subtitles"
-        setIsSideMenuOpen={setIsSideMenuOpen}
-      />
+      <SimpleHeader title="Import subtitles" />
 
       <div className="flex grow flex-col items-center justify-center gap-2">
         <SubtitlesIcon width={120} height={120} />
@@ -65,11 +61,7 @@ const ImportSubtitlesPage = (): JSX.Element => {
         </button>
       </div>
 
-      <SideMenu
-        selectedItem="Import subtitles"
-        isSideMenuOpen={isSideMenuOpen}
-        setIsSideMenuOpen={setIsSideMenuOpen}
-      />
+      <SideMenu selectedItem="Import subtitles" />
     </div>
   );
 };

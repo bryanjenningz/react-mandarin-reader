@@ -1,19 +1,20 @@
 import { MenuIcon } from "../_icons/menu";
+import { useStateStore } from "../_stores/state";
 
 export const SimpleHeader = ({
   title,
-  setIsSideMenuOpen,
   rightButton,
 }: {
   title: string;
-  setIsSideMenuOpen: (isSideMenuOpen: boolean) => void;
   rightButton?: JSX.Element;
 }): JSX.Element => {
+  const dispatch = useStateStore((x) => x.dispatch);
+
   return (
     <header className="flex h-14 w-full max-w-2xl items-center">
       <button
         className="flex h-14 w-14 shrink-0 items-center justify-center"
-        onClick={() => setIsSideMenuOpen(true)}
+        onClick={() => dispatch({ type: "OPEN_MENU" })}
       >
         <MenuIcon width={32} height={32} />
         <span className="sr-only">Open menu</span>
