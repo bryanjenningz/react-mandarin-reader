@@ -13,6 +13,7 @@ import { textToSpeech } from "./_utils/text-to-speech";
 import { getReaderInfo } from "./_utils/reader/get-reader-info";
 import { getPageCount } from "./_utils/reader/get-page-count";
 import { getReaderBoxSize } from "./_utils/reader/get-reader-box-size";
+import { useServiceWorker } from "./_utils/use-service-worker";
 
 const HomePage = (): JSX.Element => {
   const dispatch = useStateStore((state) => state.dispatch);
@@ -43,6 +44,9 @@ const HomePage = (): JSX.Element => {
     !!flashcards.find(
       (card) => card.entry.traditional === dictionaryEntry.traditional,
     );
+
+  // SERVICE WORKER FOR OFFLINE MODE
+  useServiceWorker();
 
   // LOAD DICTIONARY
   const loadDictionary = useDictionaryStore((x) => x.loadDictionary);
