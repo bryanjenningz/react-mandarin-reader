@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { type State, reducer, type Action, Flashcard } from "./state";
-import { DictionaryEntry } from "../_utils/dictionary";
+import { type State, reducer, type Action, type Flashcard } from "./state";
+import { type DictionaryEntry } from "../_utils/dictionary";
 
 const state: State = {
   readerSize: { width: 390, height: 600 },
