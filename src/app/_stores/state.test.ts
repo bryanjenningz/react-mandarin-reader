@@ -271,4 +271,38 @@ describe("reducer", () => {
       expect(actual).toEqual(expected);
     });
   });
+
+  describe("FAIL_FLASHCARD", () => {
+    it("passes the first flashcard", () => {
+      const flashcard: Flashcard = {
+        entry: {
+          traditional: "t",
+          simplified: "s",
+          pinyin: "p",
+          meanings: ["m"],
+        },
+        correct: 1,
+      };
+      const flashcard2: Flashcard = {
+        entry: {
+          traditional: "t2",
+          simplified: "s2",
+          pinyin: "p2",
+          meanings: ["m2"],
+        },
+        correct: 0,
+      };
+      const initState: State = {
+        ...state,
+        flashcards: [flashcard, flashcard2],
+      };
+      const action: Action = { type: "FAIL_FLASHCARD" };
+      const actual = reducer(initState, action);
+      const expected: State = {
+        ...initState,
+        flashcards: [flashcard2, { ...flashcard, correct: 0 }],
+      };
+      expect(actual).toEqual(expected);
+    });
+  });
 });
