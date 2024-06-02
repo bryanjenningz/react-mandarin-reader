@@ -4,6 +4,8 @@ import { VolumeUpIcon } from "../_icons/volume-up";
 import { type DictionaryEntry } from "../_utils/dictionary";
 import { textToSpeech } from "../_utils/text-to-speech";
 
+export const addFlashcardButtonId = "add-flashcard-button";
+
 export const WordLookup = ({
   containsFlashcard,
   dictionaryEntry,
@@ -23,7 +25,10 @@ export const WordLookup = ({
           )}
         </div>
 
-        <button onClick={() => addOrRemoveFlashcard(dictionaryEntry)}>
+        <button
+          id={addFlashcardButtonId}
+          onClick={() => addOrRemoveFlashcard(dictionaryEntry)}
+        >
           {(() => {
             if (containsFlashcard) {
               return <CancelCircleIcon width={32} height={32} />;

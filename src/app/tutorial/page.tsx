@@ -6,6 +6,9 @@ import Link from "next/link";
 import { clipboardPasteButtonId } from "../_components/reader-header";
 import { useStateStore } from "../_stores/state";
 import { readerContainerId } from "../_utils/reader/constants";
+import { addFlashcardButtonId } from "../_components/word-lookup";
+import { lookupLongest } from "../_utils/dictionary";
+import { useDictionaryStore } from "../_stores/dictionary";
 
 type TutorialStep =
   | { type: "START" }
@@ -23,6 +26,7 @@ const tutorialSampleText =
 
 const TutorialPage = (): JSX.Element => {
   const dispatch = useStateStore((x) => x.dispatch);
+  const dictionary = useDictionaryStore((x) => x.dictionary);
   const [tutorialIndex, setTutorialIndex] = useState(0);
   const tutorialSteps: TutorialStep[] = [
     { type: "START" },
@@ -48,6 +52,16 @@ const TutorialPage = (): JSX.Element => {
           type: "SET_READER_SELECTION",
           selection: 0,
         });
+      },
+    },
+    {
+      type: "CLICK",
+      nodeId: addFlashcardButtonId,
+      instructions: "Save the word as a flashcard.",
+      onClick: () => {
+        const entry = lookupLongest(dictionary, tutorialSampleText.slice(0, 1));
+        if (!entry) return;
+        dispatch({ type: "ADD_OR_REMOVE_FLASHCARD", entry });
       },
     },
   ];
