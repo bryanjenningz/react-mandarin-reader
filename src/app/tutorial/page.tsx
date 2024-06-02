@@ -72,7 +72,7 @@ const TutorialPage = (): JSX.Element => {
           }
           case "CLICK": {
             return (
-              <div className="fixed inset-0 z-50 flex flex-col items-center justify-end gap-4 bg-black bg-gradient-to-b from-transparent to-black p-4 text-center text-2xl text-white md:justify-center">
+              <div className="fixed inset-0 z-50 flex flex-col items-center justify-end gap-4 bg-gradient-to-b from-transparent to-black p-4 text-center text-2xl text-white md:justify-center">
                 <p className="w-full max-w-2xl text-center text-2xl">
                   {tutorialStep.instructions}
                 </p>
@@ -85,17 +85,21 @@ const TutorialPage = (): JSX.Element => {
                 >
                   Click to start
                 </button>
-                {clickElement && (
-                  <button
-                    className="absolute h-10 w-10 animate-pulse rounded-full bg-blue-600 text-white"
-                    style={{
-                      left: clickElement.clientLeft,
-                      top: clickElement.clientTop,
-                    }}
-                  >
-                    Click
-                  </button>
-                )}
+                {((): JSX.Element => {
+                  if (!clickElement) return <></>;
+
+                  return (
+                    <button
+                      className="absolute h-10 w-10 animate-pulse rounded-full bg-blue-600 text-white"
+                      style={{
+                        left: clickElement.clientLeft,
+                        top: clickElement.clientTop,
+                      }}
+                    >
+                      Click
+                    </button>
+                  );
+                })()}
               </div>
             );
           }
