@@ -52,7 +52,22 @@ const TutorialPage = (): JSX.Element => {
             );
           }
           case "CLICK": {
-            return <></>;
+            return (
+              <div className="fixed inset-0 z-50 flex flex-col items-center justify-end gap-4 bg-black bg-gradient-to-b from-transparent to-black p-4 text-center text-2xl text-white md:justify-center">
+                <p className="w-full max-w-2xl text-center text-2xl">
+                  {tutorialStep.instructions}
+                </p>
+                <button
+                  className="w-full max-w-2xl rounded-full bg-blue-700 px-4 py-2 text-white hover:brightness-110"
+                  onClick={() => {
+                    tutorialStep.onClick();
+                    setTutorialIndex(tutorialIndex + 1);
+                  }}
+                >
+                  Click to start
+                </button>
+              </div>
+            );
           }
         }
       })()}
