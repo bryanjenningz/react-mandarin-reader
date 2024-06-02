@@ -76,24 +76,22 @@ const TutorialPage = (): JSX.Element => {
                 <p className="w-full max-w-2xl text-center text-2xl">
                   {tutorialStep.instructions}
                 </p>
-                <button
-                  className="w-full max-w-2xl rounded-full bg-blue-700 px-4 py-2 text-white hover:brightness-110"
-                  onClick={() => {
-                    tutorialStep.onClick();
-                    setTutorialIndex(tutorialIndex + 1);
-                  }}
-                >
-                  Click to start
-                </button>
+
                 {((): JSX.Element => {
                   if (!clickElement) return <></>;
 
+                  const { left, top } = clickElement.getBoundingClientRect();
+
                   return (
                     <button
-                      className="absolute h-10 w-10 animate-pulse rounded-full bg-blue-600 text-white"
+                      className="absolute flex h-10 w-10 animate-pulse items-center justify-center rounded-full bg-blue-600 text-sm text-white"
                       style={{
-                        left: clickElement.clientLeft,
-                        top: clickElement.clientTop,
+                        left,
+                        top,
+                      }}
+                      onClick={() => {
+                        tutorialStep.onClick();
+                        setTutorialIndex(tutorialIndex + 1);
                       }}
                     >
                       Click
