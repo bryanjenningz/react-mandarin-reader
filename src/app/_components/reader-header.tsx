@@ -1,6 +1,7 @@
 import { ContentPasteGoIcon } from "../_icons/content-paste-go";
 import { MenuIcon } from "../_icons/menu";
 
+export const openMenuButtonId = "open-menu-button";
 export const clipboardPasteButtonId = "clipboard-paste-button";
 
 export const ReaderHeader = ({
@@ -13,6 +14,7 @@ export const ReaderHeader = ({
   return (
     <header className="flex h-14 w-full max-w-2xl items-center">
       <button
+        id={openMenuButtonId}
         className="flex h-14 w-14 shrink-0 items-center justify-center"
         onClick={openSideMenu}
       >
