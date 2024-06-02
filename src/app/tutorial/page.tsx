@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import HomePage from "../page";
 import Link from "next/link";
 import { clipboardPasteButtonId } from "../_components/reader-header";
+import { useStateStore } from "../_stores/state";
 
 type TutorialStep =
   | { type: "START" }
@@ -14,7 +15,13 @@ type TutorialStep =
       onClick: () => void;
     };
 
+const tutorialSampleText =
+  "這是本教程中使用的一些範例文字。此範例文字可用作展示文字閱讀器如何運作的示範。我希望您喜歡使用這個網頁應用程式。".repeat(
+    10,
+  );
+
 const TutorialPage = (): JSX.Element => {
+  const dispatch = useStateStore((x) => x.dispatch);
   const [tutorialIndex, setTutorialIndex] = useState(0);
   const tutorialSteps: TutorialStep[] = [
     { type: "START" },
@@ -24,7 +31,11 @@ const TutorialPage = (): JSX.Element => {
       instructions:
         "Click on the clipboard paste button to paste your clipboard text into the reader.",
       onClick: () => {
-        console.log("Clipboard paste button clicked");
+        dispatch({
+          type: "PASTE_READER_TEXT",
+          text: tutorialSampleText,
+          date: Date.now(),
+        });
       },
     },
   ];
