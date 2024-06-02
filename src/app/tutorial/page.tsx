@@ -109,7 +109,7 @@ const TutorialPage = (): JSX.Element => {
           }
           case "CLICK": {
             return (
-              <div className="fixed inset-0 z-50 flex flex-col items-center justify-end gap-4 bg-gradient-to-b from-transparent to-black p-4 text-center text-2xl text-white md:justify-center">
+              <div className="fixed inset-0 z-50 flex flex-col items-center justify-end gap-4 bg-gradient-to-b from-transparent to-black p-4 text-center text-2xl text-white">
                 <p className="w-full max-w-2xl text-center text-2xl">
                   {tutorialStep.instructions}
                 </p>
