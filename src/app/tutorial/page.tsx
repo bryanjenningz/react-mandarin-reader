@@ -5,6 +5,7 @@ import HomePage from "../page";
 import Link from "next/link";
 import { clipboardPasteButtonId } from "../_components/reader-header";
 import { useStateStore } from "../_stores/state";
+import { readerContainerId } from "../_utils/reader/constants";
 
 type TutorialStep =
   | { type: "START" }
@@ -35,6 +36,17 @@ const TutorialPage = (): JSX.Element => {
           type: "PASTE_READER_TEXT",
           text: tutorialSampleText,
           date: Date.now(),
+        });
+      },
+    },
+    {
+      type: "CLICK",
+      nodeId: readerContainerId,
+      instructions: "Click on the reader text to look up words.",
+      onClick: () => {
+        dispatch({
+          type: "SET_READER_SELECTION",
+          selection: 0,
         });
       },
     },
