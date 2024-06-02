@@ -135,6 +135,15 @@ const TutorialPage = (): JSX.Element => {
                     </button>
                   );
                 })()}
+
+                <div className="h-5 w-full max-w-2xl overflow-hidden rounded-full bg-slate-700">
+                  <div
+                    className="h-5 bg-blue-700 transition-[width]"
+                    style={{
+                      width: `${(tutorialIndex / tutorialSteps.length) * 100}%`,
+                    }}
+                  ></div>
+                </div>
               </div>
             );
           }
