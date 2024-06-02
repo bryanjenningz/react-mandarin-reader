@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import HomePage from "../page";
 import Link from "next/link";
+import { clipboardPasteButtonId } from "../_components/reader-header";
 
 type TutorialStep =
   | { type: "START" }
@@ -15,7 +16,18 @@ type TutorialStep =
 
 const TutorialPage = (): JSX.Element => {
   const [tutorialIndex, setTutorialIndex] = useState(0);
-  const tutorialSteps: TutorialStep[] = [{ type: "START" }];
+  const tutorialSteps: TutorialStep[] = [
+    { type: "START" },
+    {
+      type: "CLICK",
+      nodeId: clipboardPasteButtonId,
+      instructions:
+        "Click on the clipboard paste button to paste your clipboard text into the reader.",
+      onClick: () => {
+        console.log("Clipboard paste button clicked");
+      },
+    },
+  ];
   const tutorialStep = tutorialSteps[tutorialIndex];
 
   const [clickElement, setClickElement] = useState<Element | null>(null);

@@ -1,6 +1,8 @@
 import { ContentPasteGoIcon } from "../_icons/content-paste-go";
 import { MenuIcon } from "../_icons/menu";
 
+export const clipboardPasteButtonId = "clipboard-paste-button";
+
 export const ReaderHeader = ({
   openSideMenu,
   setReaderText,
@@ -19,6 +21,7 @@ export const ReaderHeader = ({
       </button>
       <h1 className="grow text-center text-2xl">Reader</h1>
       <button
+        id={clipboardPasteButtonId}
         className="flex h-14 w-14 shrink-0 items-center justify-center"
         onClick={() => {
           void (async () => {
