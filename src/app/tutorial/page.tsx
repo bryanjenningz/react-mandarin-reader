@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HomePage from "../page";
 import Link from "next/link";
 
@@ -17,6 +17,13 @@ const TutorialPage = (): JSX.Element => {
   const [tutorialIndex, setTutorialIndex] = useState(0);
   const tutorialSteps: TutorialStep[] = [{ type: "START" }];
   const tutorialStep = tutorialSteps[tutorialIndex];
+
+  const [clickElement, setClickElement] = useState<Element | null>(null);
+  useEffect(() => {
+    if (tutorialStep?.type === "CLICK") {
+      setClickElement(document.getElementById(tutorialStep.nodeId));
+    }
+  }, [tutorialStep]);
 
   return (
     <>
@@ -66,6 +73,17 @@ const TutorialPage = (): JSX.Element => {
                 >
                   Click to start
                 </button>
+                {clickElement && (
+                  <button
+                    className="absolute h-10 w-10 animate-pulse rounded-full bg-blue-600 text-white"
+                    style={{
+                      left: clickElement.clientLeft,
+                      top: clickElement.clientTop,
+                    }}
+                  >
+                    Click
+                  </button>
+                )}
               </div>
             );
           }
