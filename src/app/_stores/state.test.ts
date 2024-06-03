@@ -50,10 +50,15 @@ describe("reducer", () => {
       const initState: State = {
         ...state,
         readerSize: { width: 0, height: 0 },
+        reader: { ...state.reader, selection: 1 },
       };
       const action: Action = { type: "SET_READER_SIZE", width: 1, height: 2 };
       const actual = reducer(initState, action);
-      const expected: State = { ...state, readerSize: { width: 1, height: 2 } };
+      const expected: State = {
+        ...state,
+        readerSize: { width: 1, height: 2 },
+        reader: { ...state.reader, selection: null },
+      };
       expect(actual).toEqual(expected);
     });
   });

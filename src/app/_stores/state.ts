@@ -69,11 +69,14 @@ export const reducer = (state: State, action: Action): State => {
         width: action.width,
         height: action.height,
       };
-      const reader: ActiveReader = updateReaderPageIndex({
-        reader: state.reader,
-        oldReaderSize: state.readerSize,
-        newReaderSize: readerSize,
-      });
+      const reader: ActiveReader = {
+        ...updateReaderPageIndex({
+          reader: state.reader,
+          oldReaderSize: state.readerSize,
+          newReaderSize: readerSize,
+        }),
+        selection: null,
+      };
       const readerHistory: Reader[] = state.readerHistory.map((reader) => {
         return updateReaderPageIndex({
           reader,
