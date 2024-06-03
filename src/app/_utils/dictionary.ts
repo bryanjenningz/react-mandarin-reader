@@ -40,6 +40,7 @@ export const lookupLongest = (
   dictionary: Dictionary,
   text: string,
 ): DictionaryEntry | null => {
+  text = text.replace(/\s/g, "");
   while (text.length > 0) {
     const entry =
       lookup(dictionary, text, false) ?? lookup(dictionary, text, true);
