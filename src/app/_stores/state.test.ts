@@ -90,7 +90,7 @@ describe("reducer", () => {
   });
 
   describe("PASTE_READER_TEXT", () => {
-    it("pastes new reader text", () => {
+    it("sets new reader, prepends new reader to reader history", () => {
       const initState: State = {
         ...state,
         reader: { text: "before text", date: 1, pageIndex: 2, selection: 3 },
