@@ -10,7 +10,9 @@ export type DictionaryEntry = {
   meanings: string[];
 };
 
-export const loadDictionary = async (): Promise<Dictionary> => {
+export const loadDictionary = async (
+  fetch: typeof globalThis.fetch = globalThis.fetch,
+): Promise<Dictionary> => {
   const response = await fetch("/dictionary.txt");
   const dictionaryText = await response.text();
   const traditional = dictionaryText.split("\n");
