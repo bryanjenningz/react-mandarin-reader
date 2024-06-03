@@ -5,6 +5,7 @@ import {
   type Action,
   type Flashcard,
   type ActiveReader,
+  type Reader,
 } from "./state";
 import { type DictionaryEntry } from "../_utils/dictionary";
 
@@ -52,17 +53,25 @@ describe("reducer", () => {
   });
 
   describe("SET_READER_SIZE", () => {
-    it("sets the reader size", () => {
+    it("sets the reader size, adjusts the reader page index, unselects reader, adjusts reader history page indexes", () => {
       const initReader: ActiveReader = {
         ...state.reader,
         text: "a".repeat(1000),
         selection: 1,
         pageIndex: 4,
       };
+      const initReaderHistory = [
+        {
+          text: initReader.text,
+          date: initReader.date,
+          pageIndex: initReader.pageIndex,
+        },
+      ] as const satisfies Reader[];
       const initState: State = {
         ...state,
         readerSize: { width: 300, height: 400 },
         reader: initReader,
+        readerHistory: initReaderHistory,
       };
       const action: Action = {
         type: "SET_READER_SIZE",
@@ -71,9 +80,10 @@ describe("reducer", () => {
       };
       const actual = reducer(initState, action);
       const expected: State = {
-        ...state,
+        ...initState,
         readerSize: { width: 600, height: 400 },
         reader: { ...initReader, pageIndex: 2, selection: null },
+        readerHistory: [{ ...initReaderHistory[0], pageIndex: 2 }],
       };
       expect(actual).toEqual(expected);
     });
