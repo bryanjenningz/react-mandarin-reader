@@ -115,7 +115,7 @@ describe("reducer", () => {
   });
 
   describe("SET_READER_TEXT", () => {
-    it("sets the reader text", () => {
+    it("sets the reader text, date, page index, and sets the selection to null", () => {
       const initState: State = {
         ...state,
         reader: { text: "before text", date: 1, pageIndex: 2, selection: 3 },
