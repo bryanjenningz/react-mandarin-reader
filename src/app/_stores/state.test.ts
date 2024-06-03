@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { type State, reducer, type Action, type Flashcard } from "./state";
+import {
+  type State,
+  reducer,
+  type Action,
+  type Flashcard,
+  type ActiveReader,
+} from "./state";
 import { type DictionaryEntry } from "../_utils/dictionary";
 
 const state: State = {
@@ -47,17 +53,27 @@ describe("reducer", () => {
 
   describe("SET_READER_SIZE", () => {
     it("sets the reader size", () => {
+      const initReader: ActiveReader = {
+        ...state.reader,
+        text: "a".repeat(1000),
+        selection: 1,
+        pageIndex: 4,
+      };
       const initState: State = {
         ...state,
-        readerSize: { width: 0, height: 0 },
-        reader: { ...state.reader, selection: 1 },
+        readerSize: { width: 300, height: 400 },
+        reader: initReader,
       };
-      const action: Action = { type: "SET_READER_SIZE", width: 1, height: 2 };
+      const action: Action = {
+        type: "SET_READER_SIZE",
+        width: 600,
+        height: 400,
+      };
       const actual = reducer(initState, action);
       const expected: State = {
         ...state,
-        readerSize: { width: 1, height: 2 },
-        reader: { ...state.reader, selection: null },
+        readerSize: { width: 600, height: 400 },
+        reader: { ...initReader, pageIndex: 2, selection: null },
       };
       expect(actual).toEqual(expected);
     });
