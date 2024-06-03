@@ -14,7 +14,20 @@ A Mandarin Chinese PDF, subtitle, and clipboard text reader with a popup diction
 
 ## Screenshots
 
-- TODO
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+  <img width="200" src="screenshots/reader.png" alt="" />
+  <img width="200" src="screenshots/reader-menu-open.png" alt="" />
+  <img width="200" src="screenshots/reader-history.png" alt="" />
+  <img width="200" src="screenshots/import-subtitles.png" alt="" />
+  <img width="200" src="screenshots/mandarin-flashcard-before.png" alt="" />
+  <img width="200" src="screenshots/mandarin-flashcard-after.png" alt="" />
+  <img width="200" src="screenshots/audio-flashcard-before.png" alt="" />
+  <img width="200" src="screenshots/audio-flashcard-after.png" alt="" />
+  <img width="200" src="screenshots/tutorial-1.png" alt="" />
+  <img width="200" src="screenshots/tutorial-2.png" alt="" />
+  <img width="200" src="screenshots/tutorial-3.png" alt="" />
+  <img width="200" src="screenshots/tutorial-4.png" alt="" />
+</div>
 
 ## Credits
 
