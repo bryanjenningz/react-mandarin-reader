@@ -11,6 +11,7 @@ A Mandarin Chinese PDF, subtitle, and clipboard text reader with a popup diction
 - Flashcards use a spaced-repetition algorithm to maximize learning efficiency
 - Works entirely offline
 - Installable on mobile and desktop as a progressive web app (works on Android, iOS, Windows, Mac OS, and Linux)
+- A tutorial that teaches you how to lookup and save flashcards
 
 ## Screenshots
 
