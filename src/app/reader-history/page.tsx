@@ -43,7 +43,7 @@ const ReaderHistoryPage = (): JSX.Element => {
                         {formatTime(historyItem.date)}
                       </time>
                       <span className="line-clamp-4 text-sm">
-                        {historyItem.text}
+                        {historyItem.text.slice(0, 1000)}
                       </span>
                     </button>
                     <button
