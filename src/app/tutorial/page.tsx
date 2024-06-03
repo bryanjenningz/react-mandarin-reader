@@ -3,10 +3,7 @@
 import { useEffect, useState } from "react";
 import HomePage from "../page";
 import Link from "next/link";
-import {
-  clipboardPasteButtonId,
-  openMenuButtonId,
-} from "../_components/reader-header";
+import { clipboardPasteButtonId } from "../_components/reader-header";
 import { useStateStore } from "../_stores/state";
 import { readerContainerId } from "../_utils/reader/constants";
 import { addFlashcardButtonId } from "../_components/word-lookup";
@@ -65,14 +62,6 @@ const TutorialPage = (): JSX.Element => {
         const entry = lookupLongest(dictionary, tutorialSampleText.slice(0, 1));
         if (!entry) return;
         dispatch({ type: "ADD_OR_REMOVE_FLASHCARD", entry });
-      },
-    },
-    {
-      type: "CLICK",
-      nodeId: openMenuButtonId,
-      instructions: "Click the open menu button.",
-      onClick: () => {
-        dispatch({ type: "OPEN_MENU" });
       },
     },
   ];
