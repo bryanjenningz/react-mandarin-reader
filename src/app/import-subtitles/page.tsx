@@ -36,29 +36,31 @@ const ImportSubtitlesPage = (): JSX.Element => {
         />
 
         {subtitlesText && (
-          <div className="flex flex-col items-center gap-2 py-4">
-            <h2>Preview</h2>
-            <div className="line-clamp-4 w-full max-w-2xl px-4 text-slate-400">
-              {subtitlesText.slice(0, 1000)}
+          <>
+            <div className="flex flex-col items-center gap-2 py-4">
+              <h2>Preview</h2>
+              <div className="line-clamp-4 w-full max-w-2xl px-4 text-slate-400">
+                {subtitlesText.slice(0, 1000)}
+              </div>
             </div>
-          </div>
-        )}
 
-        <button
-          className="rounded-lg bg-blue-900 px-4 py-2 text-white transition hover:brightness-110"
-          onClick={() => {
-            if (subtitlesText) {
-              dispatch({
-                type: "PASTE_READER_TEXT",
-                text: subtitlesText,
-                date: Date.now(),
-              });
-              router.push("/");
-            }
-          }}
-        >
-          Save subtitles
-        </button>
+            <button
+              className="rounded-lg bg-blue-900 px-4 py-2 text-white transition hover:brightness-110"
+              onClick={() => {
+                if (subtitlesText) {
+                  dispatch({
+                    type: "PASTE_READER_TEXT",
+                    text: subtitlesText,
+                    date: Date.now(),
+                  });
+                  router.push("/");
+                }
+              }}
+            >
+              Save subtitles
+            </button>
+          </>
+        )}
       </div>
 
       <SideMenu selectedItem="Import subtitles" />
