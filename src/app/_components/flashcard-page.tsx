@@ -29,21 +29,23 @@ export const FlashcardPage = ({
       <SimpleHeader
         title={selectedMenuItem}
         rightButton={
-          <button
-            className="flex h-full w-full items-center justify-center"
-            onClick={() => {
-              if (firstFlashcard) {
-                dispatch({
-                  type: "ADD_OR_REMOVE_FLASHCARD",
-                  entry: firstFlashcard.entry,
-                });
-                setIsFlashcardBackShown(false);
-              }
-            }}
-          >
-            <DeleteForever width={32} height={32} />
-            <span className="sr-only">Delete flashcard</span>
-          </button>
+          firstFlashcard ? (
+            <button
+              className="flex h-full w-full items-center justify-center"
+              onClick={() => {
+                if (firstFlashcard) {
+                  dispatch({
+                    type: "ADD_OR_REMOVE_FLASHCARD",
+                    entry: firstFlashcard.entry,
+                  });
+                  setIsFlashcardBackShown(false);
+                }
+              }}
+            >
+              <DeleteForever width={32} height={32} />
+              <span className="sr-only">Delete flashcard</span>
+            </button>
+          ) : undefined
         }
       />
 
