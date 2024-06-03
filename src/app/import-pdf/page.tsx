@@ -36,8 +36,8 @@ const ImportPdfPage = (): JSX.Element => {
         {pdfText && (
           <div className="flex flex-col items-center gap-2 py-4">
             <h2>Preview</h2>
-            <div className="line-clamp-4 overflow-auto px-4 text-slate-400">
-              {pdfText}
+            <div className="line-clamp-4 w-full max-w-2xl px-4 text-slate-400">
+              {pdfText.slice(0, 1000)}
             </div>
           </div>
         )}
