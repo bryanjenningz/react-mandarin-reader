@@ -69,7 +69,19 @@ export const reducer = (state: State, action: Action): State => {
         width: action.width,
         height: action.height,
       };
-      return { ...state, readerSize };
+      const reader: ActiveReader = updateReaderPageIndex({
+        reader: state.reader,
+        oldReaderSize: state.readerSize,
+        newReaderSize: readerSize,
+      });
+      const readerHistory: Reader[] = state.readerHistory.map((reader) => {
+        return updateReaderPageIndex({
+          reader,
+          oldReaderSize: state.readerSize,
+          newReaderSize: readerSize,
+        });
+      });
+      return { ...state, readerSize, reader, readerHistory };
     }
     case "PASTE_READER_TEXT": {
       const reader: ActiveReader = {
@@ -193,6 +205,24 @@ export const reducer = (state: State, action: Action): State => {
       return { ...state, settings };
     }
   }
+};
+
+const updateReaderPageIndex = <R extends Reader>({
+  reader,
+  oldReaderSize,
+  newReaderSize,
+}: {
+  reader: R;
+  oldReaderSize: BoxSize;
+  newReaderSize: BoxSize;
+}): R => {
+  const pageCount = getPageCount(reader.text, oldReaderSize);
+  const newPageCount = getPageCount(reader.text, newReaderSize);
+  const newPageIndex = Math.min(
+    newPageCount - 1,
+    Math.max(0, Math.round((reader.pageIndex / pageCount) * newPageCount)),
+  );
+  return { ...reader, pageIndex: newPageIndex };
 };
 
 export type Dispatch = (action: Action) => void;

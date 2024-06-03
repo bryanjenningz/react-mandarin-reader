@@ -6,5 +6,5 @@ export const getPageCount = (
   readerSize: BoxSize,
 ): number => {
   const { charsPerPage } = getReaderInfo(readerSize);
-  return Math.ceil(readerText.length / charsPerPage);
+  return Math.max(1, Math.ceil(readerText.length / charsPerPage));
 };
