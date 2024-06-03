@@ -4,6 +4,7 @@ import {
   lookupLongest,
   type DictionaryEntry,
   loadDictionary,
+  lookupMany,
 } from "./dictionary";
 import fs from "fs/promises";
 import { resolve } from "path";
@@ -47,6 +48,54 @@ describe("lookupLongest", () => {
       simplified: "诱导",
       traditional: "誘導",
     };
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("lookupMany", () => {
+  it("looks up dictionary entries that starts with the text", () => {
+    const text = "誘導病患洗腎";
+    const actual = lookupMany(dictionary, text);
+    const expected: DictionaryEntry[] = [
+      {
+        meanings: [
+          "to induce; to encourage; to provide guidance",
+          "(medicine, chemistry) to induce",
+        ],
+        pinyin: "yòu dǎo",
+        simplified: "诱导",
+        traditional: "誘導",
+      },
+      {
+        meanings: ["(literary) to induce; to entice"],
+        pinyin: "yòu",
+        simplified: "诱",
+        traditional: "誘",
+      },
+    ];
+    expect(actual).toEqual(expected);
+  });
+
+  it("works even if there are spaces/newlines/tabs in the middle of a word", () => {
+    const text = "誘 \n\t 導病患洗腎";
+    const actual = lookupMany(dictionary, text);
+    const expected: DictionaryEntry[] = [
+      {
+        meanings: [
+          "to induce; to encourage; to provide guidance",
+          "(medicine, chemistry) to induce",
+        ],
+        pinyin: "yòu dǎo",
+        simplified: "诱导",
+        traditional: "誘導",
+      },
+      {
+        meanings: ["(literary) to induce; to entice"],
+        pinyin: "yòu",
+        simplified: "诱",
+        traditional: "誘",
+      },
+    ];
     expect(actual).toEqual(expected);
   });
 });
