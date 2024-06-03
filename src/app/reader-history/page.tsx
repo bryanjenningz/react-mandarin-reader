@@ -42,7 +42,7 @@ const ReaderHistoryPage = (): JSX.Element => {
                       <time className="text-left text-sm font-bold text-blue-500">
                         {formatTime(historyItem.date)}
                       </time>
-                      <span className="line-clamp-4 text-sm">
+                      <span className="line-clamp-4 text-left text-sm">
                         {historyItem.text.slice(0, 1000)}
                       </span>
                     </button>
