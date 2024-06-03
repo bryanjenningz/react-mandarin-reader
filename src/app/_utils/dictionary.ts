@@ -50,6 +50,21 @@ export const lookupLongest = (
   return null;
 };
 
+export const lookupMany = (
+  dictionary: Dictionary,
+  text: string,
+): DictionaryEntry[] => {
+  text = text.replace(/\s/g, "");
+  const result: DictionaryEntry[] = [];
+  while (text.length > 0) {
+    const entry =
+      lookup(dictionary, text, false) ?? lookup(dictionary, text, true);
+    if (entry) result.push(entry);
+    text = text.slice(0, -1);
+  }
+  return result;
+};
+
 const lookup = (
   dictionary: Dictionary,
   text: string,
