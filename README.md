@@ -1,6 +1,6 @@
 # Mandarin Reader
 
-A Mandarin Chinese PDF, subtitle, and clipboard text reader with a popup dictionary and built-in spaced-repetition flashcards. Installable as a progressive web app on mobile and desktop (Android, iOS, Windows, Mac OS, and Linux) and works entirely offline. Written with [React](https://react.dev), [TypeScript](https://www.typescriptlang.org), [Next.js](https://nextjs.org), [TailwindCSS](https://tailwindcss.com), and [Zustand](https://github.com/pmndrs/zustand). Inspired by [Pleco](https://www.pleco.com). Initialized with [create-react-app](https://create.t3.gg).
+A Mandarin Chinese PDF, subtitle, and clipboard text reader with a popup dictionary and built-in spaced-repetition flashcards. Installable as a progressive web app on mobile and desktop (Android, iOS, Windows, Mac OS, and Linux) and works entirely offline. Written with [React](https://react.dev), [TypeScript](https://www.typescriptlang.org), [Next.js](https://nextjs.org), [TailwindCSS](https://tailwindcss.com), and [Zustand](https://github.com/pmndrs/zustand). Inspired by [Pleco](https://www.pleco.com). Initialized with [create-t3-app](https://create.t3.gg).
 
 ## Features
 
