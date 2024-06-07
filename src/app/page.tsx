@@ -5,56 +5,18 @@ import { SideMenu } from "./_components/side-menu";
 import { ReaderHeader } from "./_components/reader-header";
 import { ReaderText } from "./_components/reader-text";
 import {
-  type Reader,
   useStateStore,
   type BoxSize,
   type ActiveReader,
 } from "./_stores/state";
 import { ReaderBottomNav } from "./_components/reader-bottom-nav";
 import { WordLookup } from "./_components/word-lookup";
-import {
-  type DictionaryEntry,
-  lookupMany,
-  type Dictionary,
-} from "./_utils/dictionary";
 import { useDictionaryStore } from "./_stores/dictionary";
 import { textToSpeech } from "./_utils/text-to-speech";
-import { getReaderInfo } from "./_utils/reader/get-reader-info";
 import { getPageCount } from "./_utils/reader/get-page-count";
 import { getReaderBoxSize } from "./_utils/reader/get-reader-box-size";
 import { useServiceWorker } from "./_utils/use-service-worker";
-
-const getPageText = (reader: Reader, readerSize: BoxSize): string => {
-  const { charsPerPage } = getReaderInfo(readerSize);
-  const pageText = reader.text.slice(
-    reader.pageIndex * charsPerPage,
-    (reader.pageIndex + 1) * charsPerPage,
-  );
-  return pageText;
-};
-
-const getSelectedText = (reader: ActiveReader, readerSize: BoxSize): string => {
-  const maxSelectedTextLength = 12;
-  const pageText = getPageText(reader, readerSize);
-  const selectedText =
-    typeof reader.selection === "number"
-      ? pageText.slice(
-          reader.selection,
-          reader.selection + maxSelectedTextLength,
-        )
-      : "";
-  return selectedText;
-};
-
-const getDictionaryEntries = (
-  reader: ActiveReader,
-  readerSize: BoxSize,
-  dictionary: Dictionary,
-): DictionaryEntry[] => {
-  const selectedText = getSelectedText(reader, readerSize);
-  const dictionaryEntries = lookupMany(dictionary, selectedText);
-  return dictionaryEntries;
-};
+import { getDictionaryEntries } from "./_utils/reader/get-dictionary-entries";
 
 const useDictionaryEntries = (reader: ActiveReader, readerSize: BoxSize) => {
   const dictionary = useDictionaryStore((x) => x.dictionary);
