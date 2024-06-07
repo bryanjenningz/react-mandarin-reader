@@ -12,7 +12,7 @@ import {
 } from "./_stores/state";
 import { ReaderBottomNav } from "./_components/reader-bottom-nav";
 import { WordLookup } from "./_components/word-lookup";
-import { lookupMany } from "./_utils/dictionary";
+import { Dictionary, lookupMany } from "./_utils/dictionary";
 import { useDictionaryStore } from "./_stores/dictionary";
 import { textToSpeech } from "./_utils/text-to-speech";
 import { getReaderInfo } from "./_utils/reader/get-reader-info";
@@ -42,6 +42,14 @@ const getSelectedText = (reader: ActiveReader, readerSize: BoxSize): string => {
   return selectedText;
 };
 
+const useDictionaryEntries = (dictionary: Dictionary, selectedText: string) => {
+  const dictionaryEntries = useMemo(
+    () => lookupMany(dictionary, selectedText),
+    [dictionary, selectedText],
+  );
+  return dictionaryEntries;
+};
+
 const HomePage = (): JSX.Element => {
   const dispatch = useStateStore((state) => state.dispatch);
   const reader = useStateStore((state) => state.reader);
@@ -50,10 +58,7 @@ const HomePage = (): JSX.Element => {
   const dictionary = useDictionaryStore((x) => x.dictionary);
   const flashcards = useStateStore((x) => x.flashcards);
   const selectedText = getSelectedText(reader, readerSize);
-  const dictionaryEntries = useMemo(
-    () => lookupMany(dictionary, selectedText),
-    [dictionary, selectedText],
-  );
+  const dictionaryEntries = useDictionaryEntries(dictionary, selectedText);
 
   // SERVICE WORKER FOR OFFLINE MODE
   useServiceWorker();
