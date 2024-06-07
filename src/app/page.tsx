@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { SideMenu } from "./_components/side-menu";
 import { ReaderHeader } from "./_components/reader-header";
 import { ReaderText } from "./_components/reader-text";
 import { useStateStore } from "./_stores/state";
 import { ReaderBottomNav } from "./_components/reader-bottom-nav";
 import { WordLookup } from "./_components/word-lookup";
-import { lookupLongest } from "./_utils/dictionary";
+import { lookupMany } from "./_utils/dictionary";
 import { useDictionaryStore } from "./_stores/dictionary";
 import { textToSpeech } from "./_utils/text-to-speech";
 import { getReaderInfo } from "./_utils/reader/get-reader-info";
@@ -29,21 +29,16 @@ const HomePage = (): JSX.Element => {
   );
   const maxSelectedTextLength = 12;
   const selectedText =
-    reader.selection !== null
+    typeof reader.selection === "number"
       ? pageText.slice(
           reader.selection,
           reader.selection + maxSelectedTextLength,
         )
       : "";
-  const dictionaryEntry = useMemo(
-    () => lookupLongest(dictionary, selectedText),
+  const dictionaryEntries = useMemo(
+    () => lookupMany(dictionary, selectedText),
     [dictionary, selectedText],
   );
-  const containsFlashcard =
-    !!dictionaryEntry &&
-    !!flashcards.find(
-      (card) => card.entry.traditional === dictionaryEntry.traditional,
-    );
 
   // SERVICE WORKER FOR OFFLINE MODE
   useServiceWorker();
@@ -58,12 +53,22 @@ const HomePage = (): JSX.Element => {
   const playAudioOnWordLookupEnabled = useStateStore(
     (x) => x.settings.playAudioOnWordLookup.enabled,
   );
+  // The reason why we need `shouldPlayAudio` is because if the user comes back to the page
+  // and we have text selected, it will play the text audio, but we only want to play
+  // the text audio right after we select the word. `shouldPlayAudio` will only be true
+  // directly after we selected the text.
+  const shouldPlayAudio = useRef(false);
   useEffect(() => {
-    if (dictionaryEntry && playAudioOnWordLookupEnabled) {
-      textToSpeech(dictionaryEntry.simplified);
+    if (
+      dictionaryEntries[0] &&
+      playAudioOnWordLookupEnabled &&
+      shouldPlayAudio.current
+    ) {
+      textToSpeech(dictionaryEntries[0].simplified);
     }
-  }, [dictionaryEntry, playAudioOnWordLookupEnabled]);
-  const wordLength = dictionaryEntry?.traditional.length ?? 0;
+    shouldPlayAudio.current = false;
+  }, [dictionaryEntries, playAudioOnWordLookupEnabled]);
+  const wordLength = dictionaryEntries[0]?.traditional.length ?? 0;
 
   // SET READER SIZE
   useEffect(() => {
@@ -99,7 +104,7 @@ const HomePage = (): JSX.Element => {
               date={reader.date}
               pageIndex={reader.pageIndex}
               selection={
-                reader.selection !== null
+                typeof reader.selection === "number"
                   ? {
                       start: reader.selection,
                       end: reader.selection + wordLength,
@@ -108,13 +113,15 @@ const HomePage = (): JSX.Element => {
               }
               setSelection={(selection) => {
                 dispatch({ type: "SET_READER_SELECTION", selection });
+                shouldPlayAudio.current = true;
               }}
             />
 
-            {dictionaryEntry && (
+            {dictionaryEntries.length > 0 && (
               <WordLookup
-                containsFlashcard={containsFlashcard}
-                dictionaryEntry={dictionaryEntry}
+                key={dictionaryEntries[0]?.traditional}
+                flashcards={flashcards}
+                dictionaryEntries={dictionaryEntries}
                 addOrRemoveFlashcard={(entry) => {
                   dispatch({ type: "ADD_OR_REMOVE_FLASHCARD", entry });
                 }}
