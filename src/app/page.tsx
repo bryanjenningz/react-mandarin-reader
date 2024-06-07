@@ -4,7 +4,12 @@ import { useEffect, useMemo, useRef } from "react";
 import { SideMenu } from "./_components/side-menu";
 import { ReaderHeader } from "./_components/reader-header";
 import { ReaderText } from "./_components/reader-text";
-import { type Reader, useStateStore, type BoxSize } from "./_stores/state";
+import {
+  type Reader,
+  useStateStore,
+  type BoxSize,
+  type ActiveReader,
+} from "./_stores/state";
 import { ReaderBottomNav } from "./_components/reader-bottom-nav";
 import { WordLookup } from "./_components/word-lookup";
 import { lookupMany } from "./_utils/dictionary";
@@ -15,13 +20,26 @@ import { getPageCount } from "./_utils/reader/get-page-count";
 import { getReaderBoxSize } from "./_utils/reader/get-reader-box-size";
 import { useServiceWorker } from "./_utils/use-service-worker";
 
-const getPageText = (reader: Reader, readerSize: BoxSize) => {
+const getPageText = (reader: Reader, readerSize: BoxSize): string => {
   const { charsPerPage } = getReaderInfo(readerSize);
   const pageText = reader.text.slice(
     reader.pageIndex * charsPerPage,
     (reader.pageIndex + 1) * charsPerPage,
   );
   return pageText;
+};
+
+const getSelectedText = (reader: ActiveReader, readerSize: BoxSize): string => {
+  const maxSelectedTextLength = 12;
+  const pageText = getPageText(reader, readerSize);
+  const selectedText =
+    typeof reader.selection === "number"
+      ? pageText.slice(
+          reader.selection,
+          reader.selection + maxSelectedTextLength,
+        )
+      : "";
+  return selectedText;
 };
 
 const HomePage = (): JSX.Element => {
@@ -31,15 +49,7 @@ const HomePage = (): JSX.Element => {
   const pageCount = getPageCount(reader.text, readerSize);
   const dictionary = useDictionaryStore((x) => x.dictionary);
   const flashcards = useStateStore((x) => x.flashcards);
-  const pageText = getPageText(reader, readerSize);
-  const maxSelectedTextLength = 12;
-  const selectedText =
-    typeof reader.selection === "number"
-      ? pageText.slice(
-          reader.selection,
-          reader.selection + maxSelectedTextLength,
-        )
-      : "";
+  const selectedText = getSelectedText(reader, readerSize);
   const dictionaryEntries = useMemo(
     () => lookupMany(dictionary, selectedText),
     [dictionary, selectedText],
