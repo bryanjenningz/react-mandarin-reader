@@ -12,7 +12,7 @@ import {
 } from "./_stores/state";
 import { ReaderBottomNav } from "./_components/reader-bottom-nav";
 import { WordLookup } from "./_components/word-lookup";
-import { Dictionary, lookupMany } from "./_utils/dictionary";
+import { lookupMany } from "./_utils/dictionary";
 import { useDictionaryStore } from "./_stores/dictionary";
 import { textToSpeech } from "./_utils/text-to-speech";
 import { getReaderInfo } from "./_utils/reader/get-reader-info";
@@ -42,7 +42,9 @@ const getSelectedText = (reader: ActiveReader, readerSize: BoxSize): string => {
   return selectedText;
 };
 
-const useDictionaryEntries = (dictionary: Dictionary, selectedText: string) => {
+const useDictionaryEntries = (reader: ActiveReader, readerSize: BoxSize) => {
+  const dictionary = useDictionaryStore((x) => x.dictionary);
+  const selectedText = getSelectedText(reader, readerSize);
   const dictionaryEntries = useMemo(
     () => lookupMany(dictionary, selectedText),
     [dictionary, selectedText],
@@ -55,10 +57,10 @@ const HomePage = (): JSX.Element => {
   const reader = useStateStore((state) => state.reader);
   const readerSize = useStateStore((x) => x.readerSize);
   const pageCount = getPageCount(reader.text, readerSize);
-  const dictionary = useDictionaryStore((x) => x.dictionary);
+
   const flashcards = useStateStore((x) => x.flashcards);
-  const selectedText = getSelectedText(reader, readerSize);
-  const dictionaryEntries = useDictionaryEntries(dictionary, selectedText);
+
+  const dictionaryEntries = useDictionaryEntries(reader, readerSize);
 
   // SERVICE WORKER FOR OFFLINE MODE
   useServiceWorker();
