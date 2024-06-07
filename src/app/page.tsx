@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { SideMenu } from "./_components/side-menu";
 import { ReaderHeader } from "./_components/reader-header";
 import { ReaderText } from "./_components/reader-text";
-import { useStateStore } from "./_stores/state";
+import { type Reader, useStateStore, type BoxSize } from "./_stores/state";
 import { ReaderBottomNav } from "./_components/reader-bottom-nav";
 import { WordLookup } from "./_components/word-lookup";
 import { lookupMany } from "./_utils/dictionary";
@@ -15,18 +15,23 @@ import { getPageCount } from "./_utils/reader/get-page-count";
 import { getReaderBoxSize } from "./_utils/reader/get-reader-box-size";
 import { useServiceWorker } from "./_utils/use-service-worker";
 
-const HomePage = (): JSX.Element => {
-  const dispatch = useStateStore((state) => state.dispatch);
-  const reader = useStateStore((state) => state.reader);
-  const readerSize = useStateStore((x) => x.readerSize);
+const getPageText = (reader: Reader, readerSize: BoxSize) => {
   const { charsPerPage } = getReaderInfo(readerSize);
-  const pageCount = getPageCount(reader.text, readerSize);
-  const dictionary = useDictionaryStore((x) => x.dictionary);
-  const flashcards = useStateStore((x) => x.flashcards);
   const pageText = reader.text.slice(
     reader.pageIndex * charsPerPage,
     (reader.pageIndex + 1) * charsPerPage,
   );
+  return pageText;
+};
+
+const HomePage = (): JSX.Element => {
+  const dispatch = useStateStore((state) => state.dispatch);
+  const reader = useStateStore((state) => state.reader);
+  const readerSize = useStateStore((x) => x.readerSize);
+  const pageCount = getPageCount(reader.text, readerSize);
+  const dictionary = useDictionaryStore((x) => x.dictionary);
+  const flashcards = useStateStore((x) => x.flashcards);
+  const pageText = getPageText(reader, readerSize);
   const maxSelectedTextLength = 12;
   const selectedText =
     typeof reader.selection === "number"
