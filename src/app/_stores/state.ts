@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { type DictionaryEntry } from "../_utils/dictionary";
 import { getPageCount } from "../_utils/reader/get-page-count";
+import { getReaderInfo } from "../_utils/reader/get-reader-info";
 
 export type State = {
   isMenuOpen: boolean;
@@ -69,13 +70,18 @@ export const reducer = (state: State, action: Action): State => {
         width: action.width,
         height: action.height,
       };
+      const { charsPerPage } = getReaderInfo(readerSize);
       const reader: ActiveReader = {
         ...updateReaderPageIndex({
           reader: state.reader,
           oldReaderSize: state.readerSize,
           newReaderSize: readerSize,
         }),
-        selection: null,
+        selection: ((): number | null => {
+          if (state.reader.selection === null) return null;
+          if (state.reader.selection >= charsPerPage) return null;
+          return state.reader.selection;
+        })(),
       };
       const readerHistory: Reader[] = state.readerHistory.map((reader) => {
         return updateReaderPageIndex({

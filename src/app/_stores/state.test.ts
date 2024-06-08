@@ -53,11 +53,46 @@ describe("reducer", () => {
   });
 
   describe("SET_READER_SIZE", () => {
-    it("sets the reader size, adjusts the reader page index, unselects reader, adjusts reader history page indexes", () => {
+    it("sets the reader size, adjusts the reader page index, keeps reader selected if it fits in new reader size, adjusts reader history page indexes", () => {
       const initReader: ActiveReader = {
         ...state.reader,
         text: "a".repeat(1000),
         selection: 1,
+        pageIndex: 4,
+      };
+      const initReaderHistory = [
+        {
+          text: initReader.text,
+          date: initReader.date,
+          pageIndex: initReader.pageIndex,
+        },
+      ] as const satisfies Reader[];
+      const initState: State = {
+        ...state,
+        readerSize: { width: 300, height: 400 },
+        reader: initReader,
+        readerHistory: initReaderHistory,
+      };
+      const action: Action = {
+        type: "SET_READER_SIZE",
+        width: 600,
+        height: 400,
+      };
+      const actual = reducer(initState, action);
+      const expected: State = {
+        ...initState,
+        readerSize: { width: 600, height: 400 },
+        reader: { ...initReader, pageIndex: 2 },
+        readerHistory: [{ ...initReaderHistory[0], pageIndex: 2 }],
+      };
+      expect(actual).toEqual(expected);
+    });
+
+    it("sets the reader size, adjusts the reader page index, unselects text if it doesn't fit in the new reader size, adjusts reader history page indexes", () => {
+      const initReader: ActiveReader = {
+        ...state.reader,
+        text: "a".repeat(1000),
+        selection: 1000,
         pageIndex: 4,
       };
       const initReaderHistory = [
