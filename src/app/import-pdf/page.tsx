@@ -21,7 +21,7 @@ const ImportPdfPage = (): JSX.Element => {
   const router = useRouter();
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-black text-white">
+    <div className="flex min-h-[100svh] flex-col items-center bg-black text-white">
       <SimpleHeader title="Import PDF" />
 
       <div className="flex grow flex-col items-center justify-center gap-2">

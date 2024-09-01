@@ -13,7 +13,7 @@ const ReaderHistoryPage = (): JSX.Element => {
   const dispatch = useStateStore((state) => state.dispatch);
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-black text-white">
+    <div className="flex min-h-[100svh] flex-col items-center bg-black text-white">
       <SimpleHeader title="History" />
 
       {((): JSX.Element => {
