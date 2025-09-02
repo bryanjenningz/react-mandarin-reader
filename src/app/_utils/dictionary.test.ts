@@ -98,4 +98,24 @@ describe("lookupMany", () => {
     ];
     expect(actual).toEqual(expected);
   });
+
+  it("looks up 狼頭 which has definition 'variant of 榔頭|榔头'", () => {
+    const text = "狼頭";
+    const actual = lookupMany(dictionary, text);
+    const expected: DictionaryEntry[] = [
+      {
+        meanings: ["variant of 榔頭|榔头[láng tou]"],
+        pinyin: "láng tou",
+        simplified: "狼头",
+        traditional: "狼頭",
+      },
+      {
+        meanings: ["wolf", "CL:匹[pǐ],隻|只[zhī],條|条[tiáo]"],
+        pinyin: "láng",
+        simplified: "狼",
+        traditional: "狼",
+      },
+    ];
+    expect(actual).toEqual(expected);
+  });
 });
