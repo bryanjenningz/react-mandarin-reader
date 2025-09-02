@@ -133,4 +133,16 @@ describe("getVariant", () => {
     const expected = "榔頭";
     expect(actual).toEqual(expected);
   });
+
+  it("returns null if there isn't a variant", () => {
+    const entry: DictionaryEntry = {
+      meanings: ["wolf", "CL:匹[pǐ],隻|只[zhī],條|条[tiáo]"],
+      pinyin: "láng",
+      simplified: "狼",
+      traditional: "狼",
+    };
+    const actual = getVariant(entry);
+    const expected = null;
+    expect(actual).toEqual(expected);
+  });
 });
