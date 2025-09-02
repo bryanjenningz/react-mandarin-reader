@@ -6,7 +6,7 @@ import {
 import {
   type Dictionary,
   type DictionaryEntry,
-  lookupMany,
+  lookupManyWithVariants,
 } from "../dictionary";
 import { getReaderInfo } from "./get-reader-info";
 
@@ -38,6 +38,6 @@ export const getDictionaryEntries = (
   dictionary: Dictionary,
 ): DictionaryEntry[] => {
   const selectedText = getSelectedText(reader, readerSize);
-  const dictionaryEntries = lookupMany(dictionary, selectedText);
+  const dictionaryEntries = lookupManyWithVariants(dictionary, selectedText);
   return dictionaryEntries;
 };
