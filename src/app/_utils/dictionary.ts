@@ -65,6 +65,17 @@ export const lookupMany = (
   return result;
 };
 
+export const getVariant = (entry: DictionaryEntry): string | null => {
+  if (entry.meanings.length !== 1) return null;
+  const pattern = /variant of (?<words>[^\]]+)\[[^\]]+\]$/;
+  const match = entry.meanings[0]?.match(pattern);
+  const words = match?.groups?.words;
+  if (!words) return null;
+  const word = words.split("|")[0];
+  if (!word) return null;
+  return word;
+};
+
 const lookup = (
   dictionary: Dictionary,
   text: string,
