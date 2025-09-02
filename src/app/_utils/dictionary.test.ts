@@ -5,6 +5,7 @@ import {
   type DictionaryEntry,
   loadDictionary,
   lookupMany,
+  getVariant,
 } from "./dictionary";
 import fs from "fs/promises";
 import { resolve } from "path";
@@ -116,6 +117,20 @@ describe("lookupMany", () => {
         traditional: "狼",
       },
     ];
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("getVariant", () => {
+  it("gets the variant of a dictionary entry", () => {
+    const entry: DictionaryEntry = {
+      meanings: ["variant of 榔頭|榔头[láng tou]"],
+      pinyin: "láng tou",
+      simplified: "狼头",
+      traditional: "狼頭",
+    };
+    const actual = getVariant(entry);
+    const expected = "榔頭";
     expect(actual).toEqual(expected);
   });
 });
